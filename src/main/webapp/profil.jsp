@@ -23,7 +23,7 @@
         <p>Expérience: ${enseignant.experience}</p>
         <p>Compétence: ${enseignant.competence}</p>
         <p>Intéret: ${enseignant.interet}</p>
-        <p>Evaluation: ${enseignant.evaluation}</p>
+        <p>Evaluation: ${enseignant.evaluation}</p>:
         <p>Niveau souhaité: ${enseignant.niveauSouhaite}</p>
         <p>Autres informations: ${enseignant.autresInformations}</p>
         <p>Disponibilité: ${enseignant.disponibilite}</p>
@@ -43,6 +43,10 @@
         <p>Rôle non reconnu.</p>
     </c:otherwise>
 </c:choose>
-
+    <input type="submit" value="Éditer">
+    <form action="/votre-servlet" method="post" id="saveForm" class="editable">
+        <!-- Bouton "Enregistrer" pour envoyer une requête HTTP pour sauvegarder les modifications -->
+        <input type="submit" value="Enregistrer">
+    </form>
 </body>
 </html>

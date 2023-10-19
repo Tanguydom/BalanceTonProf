@@ -58,7 +58,7 @@ public class ConnexionServlet extends HttpServlet {
             request.getRequestDispatcher("/profil-servlet").forward(request, response);
         }else{
             request.setAttribute("messageErreur", MESSAGE_ERREUR_CREDENTIALS_KO);
-            request.getRequestDispatcher("connexion.jsp").forward(request, response);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }
 

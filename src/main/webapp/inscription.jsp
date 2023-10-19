@@ -36,7 +36,7 @@
     </select>
     <input type="submit" name="action" value="Inscription" class="btn btn-primary"/>
   </form>
-  <a href="connexion.jsp" class="btn btn-secondary">Retour</a>
+  <a href="index.jsp" class="btn btn-secondary">Retour</a>
 
   </body>
   </html>

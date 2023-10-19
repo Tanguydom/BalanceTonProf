@@ -41,7 +41,7 @@ public class InscriptionServlet extends HttpServlet {
 
         UtilisateurSessionBean.insererUtilisateur(nouvelUtilisateur);
 
-        request.getRequestDispatcher("connexion.jsp").forward(request, response);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
 
     }
 }

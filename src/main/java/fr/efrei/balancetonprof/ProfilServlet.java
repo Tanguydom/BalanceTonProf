@@ -38,6 +38,22 @@ public class ProfilServlet extends HttpServlet {
             RecruteurEntity recruteur = recruteurSessionBean.getRecruteurById(userId);
             request.setAttribute("recruteur", recruteur);
         }
+        String mode = request.getParameter("mode");
+
+        if ("edit".equals(mode)) {
+            System.out.println("######################");
+            System.out.println("EDIT");
+            System.out.println("######################");
+        } else if ("save".equals(mode)) {
+            // L'utilisateur souhaite sauvegarder les modifications
+            // Traitez ici les données du formulaire et sauvegardez-les
+            System.out.println("######################");
+            System.out.println("SAVE");
+            System.out.println("######################");
+
+        } else {
+            // Affichez les champs en lecture seule
+        }
 
         // Transférez le contrôle à la page de profil
         request.getRequestDispatcher("profil.jsp").forward(request, response);
