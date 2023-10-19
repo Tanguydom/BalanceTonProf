@@ -19,7 +19,7 @@
                         <h3 class="panel-title">Login</h3>
                     </div>
                     <div class="panel-body">
-                        <form action="hello-servlet" method="post">
+                        <form action="connexion-servlet" method="post">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Login" name="champLogin" autofocus="">
@@ -30,6 +30,7 @@
 
                                 <input type="submit" name="action" value="Login" class="btn btn-primary"/>
                             </fieldset>
+                        <a href="inscription.jsp" class="btn btn-secondary">S'inscrire</a>
                         </form>
                     </div>
                 </div>

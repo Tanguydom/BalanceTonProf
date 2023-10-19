@@ -6,14 +6,33 @@
 
 
     <servlet>
-        <servlet-name>helloServlet</servlet-name>
-        <servlet-class>fr.efrei.balancetonprof.HelloServlet</servlet-class>
+        <servlet-name>connexionServlet</servlet-name>
+        <servlet-class>fr.efrei.balancetonprof.ConnexionServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>helloServlet</servlet-name>
-        <url-pattern>/hello-servlet</url-pattern>
+        <servlet-name>connexionServlet</servlet-name>
+        <url-pattern>/connexion-servlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>inscriptionServlet</servlet-name>
+        <servlet-class>fr.efrei.balancetonprof.InscriptionServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>inscriptionServlet</servlet-name>
+        <url-pattern>/inscription-servlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>profilServlet</servlet-name>
+        <servlet-class>fr.efrei.balancetonprof.ProfilServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>profilServlet</servlet-name>
+        <url-pattern>/profil-servlet</url-pattern>
+    </servlet-mapping>
 
 </web-app>

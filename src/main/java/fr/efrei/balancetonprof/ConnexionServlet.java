@@ -1,7 +1,6 @@
 package fr.efrei.balancetonprof;
 
 import java.io.*;
-import java.util.List;
 
 import fr.efrei.balancetonprof.model.UtilisateurEntity;
 import fr.efrei.balancetonprof.model.UtilisateurSessionBean;
@@ -10,8 +9,8 @@ import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
-//@WebServlet(name = "helloServlet", value = "/hello-servlet")
-public class HelloServlet extends HttpServlet {
+//@WebServlet(name = "connexionServlet", value = "/connexion-servlet")
+public class ConnexionServlet extends HttpServlet {
 
     @EJB
     private UtilisateurSessionBean UtilisateurSessionBean;
@@ -19,21 +18,25 @@ public class HelloServlet extends HttpServlet {
     public static final String MESSAGE_ERREUR_CREDENTIALS_KO = "Infos de connexion non valides. Merci de les saisir à nouveau";
 
     public void processRequest (HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        // Les données saisies par l'utilisateur sont placées dans le contexte
         placerUtilisateurDansContexte(request);
-
-        // Récupération de la liste de tous les employés via notre service getTousLesEmployes()
-        List<UtilisateurEntity> tousLesUtilisateurs = UtilisateurSessionBean.getTousLesUtilisateurs();
-
-        // Je mets la liste dans l'objet request afin qu'il soit accessible dans les autres couches, notamment la Vue
-        request.setAttribute("tousLesUtilisateurs", tousLesUtilisateurs);
 
         aiguillerVersLaProchainePage(request, response);
     }
 
-    // Une tâche <-> une méthode
     public boolean verifierInfosConnexion(Utilisateur unUtilisateur){
-        return UtilisateurSessionBean.utilisateurExist(unUtilisateur.getLoginSaisi(), unUtilisateur.getMotDePasseSaisi());
+        int id = UtilisateurSessionBean.utilisateurExist(unUtilisateur.getLoginSaisi(), unUtilisateur.getMotDePasseSaisi());
+        boolean check = id != -1;
+        if(check){
+            UtilisateurEntity utilisateurEntity = UtilisateurSessionBean.getUtilisateurById(id);
+            unUtilisateur.setId_utilisateur(id);
+            unUtilisateur.setNom(utilisateurEntity.getNom());
+            unUtilisateur.setPrenom(utilisateurEntity.getPrenom());
+            unUtilisateur.setRole(utilisateurEntity.getRole());
+            unUtilisateur.setEmail(utilisateurEntity.getEmail());
+            unUtilisateur.setSite(utilisateurEntity.getSiteWeb());
+            unUtilisateur.setTelephone(utilisateurEntity.getTelephone());
+        }
+        return check;
     }
 
 
@@ -47,11 +50,15 @@ public class HelloServlet extends HttpServlet {
     }
 
     public void aiguillerVersLaProchainePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (verifierInfosConnexion(unUtilisateur )){
-            request.getRequestDispatcher("bienvenue.jsp").forward(request, response);
+        if (verifierInfosConnexion(unUtilisateur)){
+
+            HttpSession session = request.getSession();
+            session.setAttribute("utilisateur", unUtilisateur);
+
+            request.getRequestDispatcher("/profil-servlet").forward(request, response);
         }else{
             request.setAttribute("messageErreur", MESSAGE_ERREUR_CREDENTIALS_KO);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher("connexion.jsp").forward(request, response);
         }
     }
 
@@ -66,7 +73,13 @@ public class HelloServlet extends HttpServlet {
     }
 
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+
+        if ("Inscription".equals(action)) {
+            request.getRequestDispatcher("/inscription-servlet").forward(request, response);
+        } else {
+            processRequest(request, response);
+        }
     }
 
 }

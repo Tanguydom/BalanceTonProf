@@ -1,9 +1,6 @@
 package fr.efrei.balancetonprof.model;
 import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.Query;
+import jakarta.persistence.*;
 
 import java.util.List;
 @Stateless
@@ -16,19 +13,26 @@ public class UtilisateurSessionBean {
         return  q.getResultList();
     }
 
-    public UtilisateurEntity getUtilisateurParId(int idUtilisateur){
-        Query q = em.createQuery("select e from UtilisateurEntity e where e.idUtilisateur = :idUtilisateur");
-        q.setParameter("idUtilisateur", idUtilisateur);
-        return (UtilisateurEntity) q.getSingleResult();
+    public UtilisateurEntity getUtilisateurById(int id) {
+        return em.find(UtilisateurEntity.class, id);
     }
 
-    public Boolean utilisateurExist(String pseudo, String mdp) {
-        Query query = em.createQuery("SELECT COUNT(e) FROM UtilisateurEntity e WHERE e.pseudo = :pseudo AND e.motDePasse = :mdp");
-        query.setParameter("pseudo", pseudo);
-        query.setParameter("mdp", mdp);
+    public int utilisateurExist(String pseudo, String mdp) {
+        try{
+            TypedQuery<Integer> query = em.createQuery("SELECT e.idUtilisateur  FROM UtilisateurEntity e WHERE e.pseudo = :pseudo AND e.motDePasse = :mdp", Integer.class);
+            query.setParameter("pseudo", pseudo);
+            query.setParameter("mdp", mdp);
 
-        long count = (long) query.getSingleResult();
-
-        return count > 0;
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return -1;
+        }
     }
+
+    public void insererUtilisateur(UtilisateurEntity nouvelUtilisateur) {
+        em.getTransaction().begin();
+        em.persist(nouvelUtilisateur);
+        em.getTransaction().commit();
+    }
+
 }
