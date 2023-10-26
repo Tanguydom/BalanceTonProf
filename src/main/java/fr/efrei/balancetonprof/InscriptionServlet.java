@@ -1,7 +1,6 @@
 package fr.efrei.balancetonprof;
 
-import fr.efrei.balancetonprof.model.UtilisateurEntity;
-import fr.efrei.balancetonprof.model.UtilisateurSessionBean;
+import fr.efrei.balancetonprof.model.*;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -16,6 +15,11 @@ public class InscriptionServlet extends HttpServlet {
     // Injectez votre session bean pour gérer les utilisateurs
     @EJB
     private UtilisateurSessionBean UtilisateurSessionBean;
+
+    @EJB
+    private EnseignantSessionBean enseignantSessionBean;
+    @EJB
+    private RecruteurSessionBean recruteurSessionBean;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.getRequestDispatcher("inscription.jsp").forward(request, response);
@@ -40,6 +44,13 @@ public class InscriptionServlet extends HttpServlet {
         nouvelUtilisateur.setRole(roleId);
 
         UtilisateurSessionBean.insererUtilisateur(nouvelUtilisateur);
+        if(roleId == 1){
+            EnseignantEntity enseignant = new EnseignantEntity(nouvelUtilisateur.getIdUtilisateur());
+            enseignantSessionBean.insererEnseignant(enseignant);
+        }else if(roleId == 2){
+            RecruteurEntity recruteur = new RecruteurEntity(nouvelUtilisateur.getIdUtilisateur());
+            recruteurSessionBean.insererRecruteur(recruteur);
+        }
 
         request.getRequestDispatcher("index.jsp").forward(request, response);
 

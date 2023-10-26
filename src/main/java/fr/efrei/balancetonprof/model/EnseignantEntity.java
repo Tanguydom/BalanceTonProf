@@ -30,6 +30,27 @@ public class EnseignantEntity {
     @Basic
     @Column(name = "disponibilite", nullable = true)
     private Integer disponibilite;
+    @Basic
+    @Column(name = "id_utilisateur", nullable = true)
+    private Integer idUtilisateur;
+
+    public EnseignantEntity(int userId, String experience, String competence, String interet, String evaluation, String niveauSouhaite, String autresInformations, String disponibilite) {
+        this.idUtilisateur = userId;
+        this.experience = experience;
+        this.competence = competence;
+        this.interet = interet;
+        this.evaluation = evaluation;
+        this.niveauSouhaite = niveauSouhaite;
+        this.autresInformations = autresInformations;
+        this.disponibilite = Integer.valueOf(disponibilite);
+    }
+    public EnseignantEntity(){
+
+    }
+
+    public EnseignantEntity(int idUtilisateur) {
+        this.idUtilisateur = idUtilisateur;
+    }
 
     public int getIdEnseignant() {
         return idEnseignant;
@@ -128,5 +149,13 @@ public class EnseignantEntity {
         result = 31 * result + (autresInformations != null ? autresInformations.hashCode() : 0);
         result = 31 * result + (disponibilite != null ? disponibilite.hashCode() : 0);
         return result;
+    }
+
+    public Integer getIdUtilisateur() {
+        return idUtilisateur;
+    }
+
+    public void setIdUtilisateur(Integer idUtilisateur) {
+        this.idUtilisateur = idUtilisateur;
     }
 }

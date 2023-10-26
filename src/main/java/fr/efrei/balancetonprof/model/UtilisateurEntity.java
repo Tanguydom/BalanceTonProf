@@ -34,6 +34,23 @@ public class UtilisateurEntity {
     @Column(name = "site_web", nullable = true, length = 255)
     private String siteWeb;
 
+    public UtilisateurEntity(int userId, String pseudo, String motDePasse, String nom, String prenom, int role, String email, String telephone, String site) {
+        this.idUtilisateur = userId;
+        this.nom = nom;
+        this.email = email;
+        this.prenom = prenom;
+        this.motDePasse = motDePasse;
+        this.role = role;
+        this.siteWeb = site;
+        this.telephone = telephone;
+        this.pseudo = pseudo;
+
+    }
+
+    public UtilisateurEntity() {
+
+    }
+
     public int getIdUtilisateur() {
         return idUtilisateur;
     }

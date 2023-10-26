@@ -12,6 +12,17 @@ public class RecruteurEntity {
     @Basic
     @Column(name = "id_entreprise", nullable = true)
     private Integer idEntreprise;
+    @Basic
+    @Column(name = "id_utilisateur", nullable = true)
+    private Integer idUtilisateur;
+
+    public RecruteurEntity(int idUtilisateur) {
+        this.idUtilisateur = idUtilisateur;
+    }
+
+    public RecruteurEntity() {
+
+    }
 
     public int getIdRecruteur() {
         return idRecruteur;
@@ -47,5 +58,13 @@ public class RecruteurEntity {
         int result = idRecruteur;
         result = 31 * result + (idEntreprise != null ? idEntreprise.hashCode() : 0);
         return result;
+    }
+
+    public Integer getIdUtilisateur() {
+        return idUtilisateur;
+    }
+
+    public void setIdUtilisateur(Integer idUtilisateur) {
+        this.idUtilisateur = idUtilisateur;
     }
 }

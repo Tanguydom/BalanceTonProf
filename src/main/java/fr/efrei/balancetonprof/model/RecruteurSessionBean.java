@@ -23,5 +23,10 @@ public class RecruteurSessionBean {
         em.persist(recruteur);
     }
 
+    public RecruteurEntity findRecruteurByIdUtilisateur(int id_utilisateur) {
+        return em.createQuery("SELECT e FROM RecruteurEntity e WHERE e.idUtilisateur = :id_utilisateur", RecruteurEntity.class)
+                .setParameter("id_utilisateur", id_utilisateur)
+                .getSingleResult();
+    }
 }
 

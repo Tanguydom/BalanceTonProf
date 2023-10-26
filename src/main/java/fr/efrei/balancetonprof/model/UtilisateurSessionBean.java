@@ -13,6 +13,19 @@ public class UtilisateurSessionBean {
         return  q.getResultList();
     }
 
+    public List<UtilisateurEntity> getTousLesProfesseurs(){ // role = 1
+        Query q = em.createQuery("select e from UtilisateurEntity e where e.role = 1");
+        return  q.getResultList();
+    }
+    public List<UtilisateurEntity> getTousLesRecruteurs(){ // role = 2
+        Query q = em.createQuery("select e from UtilisateurEntity e where e.role = 2");
+        return  q.getResultList();
+    }
+    public List<UtilisateurEntity> getTousLesAdministrateurs(int id){ // role = 0
+        Query q = em.createQuery("select e from UtilisateurEntity e where e.role = 0 and e.idUtilisateur != :id");
+        q.setParameter("id", id); // Liez le paramètre 'id' ici
+        return q.getResultList();
+    }
     public UtilisateurEntity getUtilisateurById(int id) {
         return em.find(UtilisateurEntity.class, id);
     }
@@ -28,10 +41,21 @@ public class UtilisateurSessionBean {
             return -1;
         }
     }
-
     public void insererUtilisateur(UtilisateurEntity nouvelUtilisateur) {
         em.getTransaction().begin();
         em.persist(nouvelUtilisateur);
+        em.getTransaction().commit();
+    }
+
+    public void updateUtilisateur(UtilisateurEntity utilisateur) {
+        em.getTransaction().begin();
+        em.merge(utilisateur);
+        em.getTransaction().commit();
+    }
+    public void supprimerUtilisateur(int id) {
+        em.getTransaction().begin();
+        UtilisateurEntity utilisateur = em.find(UtilisateurEntity.class, id);
+        em.remove(utilisateur);
         em.getTransaction().commit();
     }
 
