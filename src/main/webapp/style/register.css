@@ -1,0 +1,33 @@
+.form-title {
+    padding: 8px;
+    text-align: center;
+    color: var(--color-dark)
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: .5rem;
+    width: 350px;
+}
+
+.form-group label {
+    color: var(--color-dark);
+    font-weight: bold;
+}
+
+.register {
+    display: flex;
+    padding: .5rem;
+    justify-content: flex-end;
+}
+
+.register-text:hover {
+    text-decoration: underline;
+}
+
+.grid-2 {
+    display: flex;
+    grid-template-rows: repeat(2,1fr);
+}

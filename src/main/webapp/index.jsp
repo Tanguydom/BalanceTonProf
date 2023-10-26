@@ -3,37 +3,49 @@
 
 <html>
     <head>
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-       <!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>  -->
-        <title>Jakarta EE - Login</title>
+        <link href="style/login.css" rel="stylesheet" id="login_form">
+        <link href="style/style.css" rel="stylesheet" id="global_css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <title>BalanceTonProf - Connexion</title>
     </head>
 
     <body>
-        <div class="container" style="margin-top:30px">
-            <div class="col-md-4">
+        <nav>
+            <div class="wrapper">
+                <div class="logo">
+                    <a href="#">
+                        <img class="logo-progAv" src="img/logo_progAv.png"></img>
+                    </a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="inscription.jsp" class="btn btn-primary">S'inscrire</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="form-box">
+            <div class="card">
                 <div style="color:red">
                     ${messageErreur}
                 </div>
-                <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Login</h3>
+                <form action="connexion-servlet" method="post">
+                    <h2 class="form-title">Connexion</h2>
+                    <div class="form-group">
+                        <label for="champLogin">Nom d'utilisateur</label>
+                        <input placeholder="Entrer le nom d'utilisateur" name="champLogin" id="champLogin" autofocus="">
                     </div>
-                    <div class="panel-body">
-                        <form action="connexion-servlet" method="post">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Login" name="champLogin" autofocus="">
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Mot de passe" name="champMotDePasse" type="password">
-                                </div>
+                    <div class="form-group">
+                        <label for="champMotDePasse">Mot de passe</label>
+                        <input placeholder="Entrer le mot de passe" name="champMotDePasse" id="champMotDePasse" type="password">
+                    </div>
 
-                                <input type="submit" name="action" value="Login" class="btn btn-primary"/>
-                            </fieldset>
-                        <a href="inscription.jsp" class="btn btn-secondary">S'inscrire</a>
-                        </form>
+                    <div class="register">
+                        <a href="inscription.jsp" class="register-text text-muted">S'inscrire</a>
                     </div>
-                </div>
+
+
+                    <input type="submit" name="action" value="Login" class="btn btn-primary"/>
+                </form>
             </div>
         </div>
     </body>
