@@ -1,6 +1,7 @@
 package fr.efrei.balancetonprof;
 
 import fr.efrei.balancetonprof.model.*;
+import fr.efrei.balancetonprof.utils.Constantes;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 //@WebServlet(name = "profilServlet", value = "/profil-servlet")
@@ -16,110 +18,92 @@ import java.util.List;
 public class ProfilServlet extends HttpServlet {
     @EJB
     private UtilisateurSessionBean utilisateurSessionBean;
+
+    @EJB
+    private RecruteurSessionBean recruteurSessionBean;
+
+    @EJB
+    private CandidatureSessionBean candidatureSessionBean;
+    @EJB
+    private EntrepriseSessionBean entrepriseSessionBean;
     @EJB
     private EnseignantSessionBean enseignantSessionBean;
     @EJB
-    private RecruteurSessionBean recruteurSessionBean;
+    private RecrutementSessionBean recrutementSessionBean;
     @EJB
     private OffreSessionBean offreSessionBean;
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         HttpSession session = request.getSession();
-        Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+        Utilisateur utilisateur = (Utilisateur) session.getAttribute(Constantes.UTILISATEUR);
 
         int userId = utilisateur.getId_utilisateur();
-        request.setAttribute("utilisateur", utilisateur);
+        request.setAttribute(Constantes.UTILISATEUR, utilisateur);
 
         String path = "" ;
 
-        String action = request.getParameter("action");
+        String action = request.getParameter(Constantes.ACTION);
 
+        //change to Constantes.SAUVEGARDE_UTILISATEUR
         if(utilisateur.getRole() != 0 && action.equals("sauvegarde")){
             sauvegardeUtilisateur(request, utilisateur, userId);
-            session.setAttribute("utilisateur", utilisateur);
+            session.setAttribute(Constantes.UTILISATEUR, utilisateur);
         }
+        List<OffreEmploiEntity> listeOffresEntity;
+        List<Offre> listOffres;
 
-        path = "profil.jsp";
+        path = Constantes.PROFIL_PATH;
 
         switch (utilisateur.getRole()){
             case 0 :
                 List<UtilisateurEntity> listeAdministrateurs = utilisateurSessionBean.getTousLesAdministrateurs(utilisateur.getId_utilisateur());
-                request.setAttribute("listeAdministrateurs", listeAdministrateurs);
-
-                if (action.equals("ajouter_admin")) {
-                    //formulaire ajout addAdmin
-                    try {
-                        createUtilisateur(request, 0);
-                    } catch (Exception e) {
-                        System.out.println(e.toString());
-                    }
-                } else if (action.equals("ajouter_prof")) {
-                    //formulaire ajout addProf
-                    try {
-                        createUtilisateur(request, 1);
-                    } catch (Exception e) {
-                        System.out.println(e.toString());
-                    }
-                } else if (action.equals("ajouter_recruteur")) {
-                    //formulaire ajout addRecruteur
-                    try {
-                        createUtilisateur(request, 2);
-                    } catch (Exception e) {
-                        System.out.println(e.toString());
-                    }
-                } else if (action.equals("supprimer_utilisateur")) {
-                    //suppression d'un utilisateur
-                    try {
-                        int id = Integer.parseInt(request.getParameter("id"));
+                request.setAttribute(Constantes.LIST_ADMIN, listeAdministrateurs);
+                switch (action){
+                    case Constantes.AJOUT_ADMIN : createUtilisateur(request, 0); break;
+                    case Constantes.AJOUT_ENS : createUtilisateur(request, 1); break;
+                    case Constantes.AJOUT_REC : createUtilisateur(request, 2); break;
+                    case Constantes.SUP_ENS :
+                        int id = Integer.parseInt(request.getParameter(Constantes.ID_UTILISATEUR));
                         deleteUtilisateur(id);
-                    } catch (Exception e) {
-                        System.out.println(e.toString());
-                    }
-                } else if (action.equals("ajouter_offre")) {
-                    //formulaire ajout addOffre
-                    try {
-                        createOffre(request);
-                    } catch (Exception e) {
-                        System.out.println(e.toString());
-                    }
-                } else if (action.equals("supprimer_offre")) {
-                    //suppression d'une offre
-                    try {
-                        deleteOffre();
-                    } catch (Exception e) {
-                        System.out.println(e.toString());
-                    }
-                } else if (action.equals("modifier_offre")) {
-                    try {
-                        updateUtilisateur(request);
-                    } catch (Exception e) {
-                        System.out.println(e.toString());
-                    }
+                        break;
+                    case Constantes.AJOUT_OFFRE : createOffre(request); break;
+                    case Constantes.SUP_OFFRE : deleteOffre(); break;
+                    case Constantes.MOD_OFFRE : updateUtilisateur(request); break;
+
                 }
-                // ajouter les modifications
 
                 List<UtilisateurEntity> listeProfesseurs = utilisateurSessionBean.getTousLesProfesseurs();
-                request.setAttribute("listeProfesseurs", listeProfesseurs);
+                request.setAttribute(Constantes.LIST_ENS, listeProfesseurs);
 
                 List<UtilisateurEntity> listeRecruteurs = utilisateurSessionBean.getTousLesRecruteurs();
-                request.setAttribute("listeRecruteurs", listeRecruteurs);
+                request.setAttribute(Constantes.LIST_REC, listeRecruteurs);
 
-                List<OffreEmploiEntity> listeOffres = offreSessionBean.getToutesLesOffres();
-                request.setAttribute("listeOffres", listeOffres);
+                listeOffresEntity = offreSessionBean.getToutesLesOffres();
+                request.setAttribute(Constantes.LIST_OFFRE, listeOffresEntity);
 
-                path = "admin.jsp";
+                path = Constantes.ADMIN_PATH;
 
                 break ;
             case 1 :
                 EnseignantEntity enseignant = enseignantSessionBean.findEnseignantByIdUtilisateur(userId);
-                request.setAttribute("enseignant", enseignant);
+                listeOffresEntity = offreSessionBean.getToutesLesOffres();
+                listOffres = offreEntityToOffre(listeOffresEntity);
+                request.setAttribute(Constantes.LIST_OFFRE, listOffres);
+                request.setAttribute(Constantes.ENSEIGNANT, enseignant);
+                //change to SAUVGARDE_DETAIL
                 if("sauvegardeDetail".equals(action)){
                     sauvegardeEnseignant(request, userId);
                 }break;
             case 2 :
                 RecruteurEntity recruteur = recruteurSessionBean.findRecruteurByIdUtilisateur(userId);
-                request.setAttribute("recruteur", recruteur);
+                EntrepriseEntity entrepriseEntity = entrepriseSessionBean.getEntrepriseById(recruteur.getIdEntreprise());
+                // a modifier temporaire
+                listeOffresEntity = offreSessionBean.getToutesLesOffresPourUnRecruteur(recruteur.getIdUtilisateur());
+                listOffres = offreEntityToOffre(listeOffresEntity);
+                request.setAttribute(Constantes.RECRUTEUR, recruteur);
+                request.setAttribute(Constantes.ENTREPRISE, entrepriseEntity);
+                request.setAttribute(Constantes.LIST_OFFRE, listOffres);
                 if("sauvegardeDetail".equals(action)){
                     //save recruteur
                 }break;
@@ -128,13 +112,43 @@ public class ProfilServlet extends HttpServlet {
         request.getRequestDispatcher(path).forward(request, response);
     }
 
+    public List<Offre> offreEntityToOffre(List<OffreEmploiEntity> entityList){
+        List<Offre> offreList = new ArrayList<>();
+        for(OffreEmploiEntity entity : entityList){
+            Offre offre = new Offre();
+
+            offre.setIdOffre(entity.getIdOffre());
+            offre.setIntitule(entity.getIntitule());
+            offre.setDescription(entity.getDescription());
+            offre.setIdEntreprise(entity.getIdEntreprise());
+
+            EntrepriseEntity entrepriseEntity  = entrepriseSessionBean.getEntrepriseById(offre.getIdEntreprise());
+            offre.setNomEntreprise(entrepriseEntity.getNom());
+            offre.setSiteWebEntreprise(entrepriseEntity.getSiteWeb());
+            offre.setAdresseEntreprise(entrepriseEntity.getAdresse());
+
+            int nbCandidat = candidatureSessionBean.getNombreCandidaturesPourOffre(offre.getIdOffre());
+            offre.setNbCandidat(nbCandidat);
+
+            Integer idRecruteur = recrutementSessionBean.getIdRecruteurPourOffre(offre.getIdOffre());
+            if(idRecruteur != null) {
+              //  RecruteurEntity recruteurEntity = recruteurSessionBean.getRecruteurById(idRecruteur);
+                UtilisateurEntity utilisateurEntity = utilisateurSessionBean.getUtilisateurById(idRecruteur);
+                offre.setEmailRecruteur(utilisateurEntity.getEmail());
+                offre.setTelephoneRecruteur(utilisateurEntity.getTelephone());
+            }
+            offreList.add(offre);
+        }
+        return offreList;
+    }
+
     public void createUtilisateur(HttpServletRequest request, int role){
-        String pseudo = request.getParameter("pseudo");
-        String motDePasse = request.getParameter("motDePasse");
-        String nom = request.getParameter("nom");
-        String prenom = request.getParameter("prenom");
-        String email = request.getParameter("email");
-        String telephone = request.getParameter("telephone");
+        String pseudo = request.getParameter(Constantes.PSEUDO);
+        String motDePasse = request.getParameter(Constantes.MOT_DE_PASSE);
+        String nom = request.getParameter(Constantes.NOM);
+        String prenom = request.getParameter(Constantes.PRENOM);
+        String email = request.getParameter(Constantes.EMAIL);
+        String telephone = request.getParameter(Constantes.TELEPHONE);
 
         //creation de l'admin
         UtilisateurEntity utilisateur = new UtilisateurEntity();
@@ -158,12 +172,6 @@ public class ProfilServlet extends HttpServlet {
         }
     }
     public void updateUtilisateur(HttpServletRequest request){
-        try {
-            System.out.println("######################");
-        } catch (Exception e)
-        {
-            System.out.println(e.toString());
-        }
     }
     public void createOffre(HttpServletRequest request){
     }
@@ -173,14 +181,14 @@ public class ProfilServlet extends HttpServlet {
     public void sauvegardeUtilisateur(HttpServletRequest request, Utilisateur utilisateur, int userId) {
         UtilisateurEntity newUtilisateurEntity = new UtilisateurEntity(
                 userId,
-                request.getParameter("pseudo"),
-                request.getParameter("motDePasse"),
-                request.getParameter("nom"),
-                request.getParameter("prenom"),
+                request.getParameter(Constantes.PSEUDO),
+                request.getParameter(Constantes.MOT_DE_PASSE),
+                request.getParameter(Constantes.NOM),
+                request.getParameter(Constantes.PRENOM),
                 utilisateur.getRole(),
-                request.getParameter("email"),
-                request.getParameter("telephone"),
-                request.getParameter("site")
+                request.getParameter(Constantes.EMAIL),
+                request.getParameter(Constantes.TELEPHONE),
+                request.getParameter(Constantes.SITE)
         );
         utilisateurSessionBean.updateUtilisateur(newUtilisateurEntity);
         utilisateur.setLoginSaisi(newUtilisateurEntity.getPseudo());
@@ -193,13 +201,13 @@ public class ProfilServlet extends HttpServlet {
     }
 
     public void sauvegardeEnseignant(HttpServletRequest request, int userId){
-        String experience = request.getParameter("experience");
-        String competence = request.getParameter("competence");
-        String interet = request.getParameter("interet");
-        String evaluation = request.getParameter("evaluation");
-        String niveauSouhaite = request.getParameter("niveauSouhaite");
-        String autresInformations = request.getParameter("autresInformations");
-        String disponibilite = request.getParameter("disponibilite");
+        String experience = request.getParameter(Constantes.EXPERIENCE);
+        String competence = request.getParameter(Constantes.COMPETENCE);
+        String interet = request.getParameter(Constantes.INTERET);
+        String evaluation = request.getParameter(Constantes.EVALUATION);
+        String niveauSouhaite = request.getParameter(Constantes.NIVEAU_SOUHAITE);
+        String autresInformations = request.getParameter(Constantes.AUTRES_INFORMATIONS);
+        String disponibilite = request.getParameter(Constantes.DISPONIBILITE);
 
         EnseignantEntity newEnseignantEntity = new EnseignantEntity(
                 userId,
@@ -211,10 +219,10 @@ public class ProfilServlet extends HttpServlet {
                 autresInformations,
                 disponibilite
         );
-        EnseignantEntity entity = (EnseignantEntity) request.getAttribute("enseignant");
+        EnseignantEntity entity = (EnseignantEntity) request.getAttribute(Constantes.ENSEIGNANT);
         if(entity != null){
             enseignantSessionBean.updateEnseignant(newEnseignantEntity);
-            request.setAttribute("enseignant", newEnseignantEntity);
+            request.setAttribute(Constantes.ENSEIGNANT, newEnseignantEntity);
         }
     }
 }

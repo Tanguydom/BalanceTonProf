@@ -16,6 +16,14 @@ public class OffreSessionBean {
         Query q = em.createQuery("select e from OffreEmploiEntity e");
         return  q.getResultList();
     }
+
+    public List<OffreEmploiEntity> getToutesLesOffresPourUnRecruteur(int id) {
+        //a modifier temporaire
+        Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e, RecrutementEntity r WHERE e.idOffre = r.idOffre AND r.idRecruteur = :id");
+        q.setParameter("id", id);
+        return q.getResultList();
+    }
+
     public void insererOffre(OffreEmploiEntity nouvelleOffre) {
         em.getTransaction().begin();
         em.persist(nouvelleOffre);
@@ -27,4 +35,5 @@ public class OffreSessionBean {
         em.remove(offre);
         em.getTransaction().commit();
     }
+
 }

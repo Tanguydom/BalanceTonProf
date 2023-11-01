@@ -1,6 +1,7 @@
 package fr.efrei.balancetonprof;
 
 import fr.efrei.balancetonprof.model.*;
+import fr.efrei.balancetonprof.utils.Constantes;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -22,17 +23,17 @@ public class InscriptionServlet extends HttpServlet {
     private RecruteurSessionBean recruteurSessionBean;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("inscription.jsp").forward(request, response);
+        request.getRequestDispatcher(Constantes.INSCRIPTION_PATH).forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // Récupérez les données du formulaire d'inscription
-        String login = request.getParameter("champLogin");
-        String motDePasse = request.getParameter("champMotDePasse");
-        String nom = request.getParameter("champNom");
-        String prenom = request.getParameter("champPrenom");
-        String email = request.getParameter("champEmail");
-        String role = request.getParameter("champRole");
+        String login = request.getParameter(Constantes.CHAMP_LOGIN);
+        String motDePasse = request.getParameter(Constantes.CHAMP_MDP);
+        String nom = request.getParameter(Constantes.CHAMP_NOM);
+        String prenom = request.getParameter(Constantes.CHAMP_PRENOM);
+        String email = request.getParameter(Constantes.CHAMP_EMAIL);
+        String role = request.getParameter(Constantes.CHAMP_ROLE);
         int roleId = Integer.parseInt(role);
 
         UtilisateurEntity nouvelUtilisateur = new UtilisateurEntity();
@@ -52,7 +53,7 @@ public class InscriptionServlet extends HttpServlet {
             recruteurSessionBean.insererRecruteur(recruteur);
         }
 
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher(Constantes.INDEX_PATH).forward(request, response);
 
     }
 }

@@ -5,6 +5,7 @@ import java.io.*;
 import fr.efrei.balancetonprof.model.UtilisateurEntity;
 import fr.efrei.balancetonprof.model.UtilisateurSessionBean;
 
+import fr.efrei.balancetonprof.utils.Constantes;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -15,8 +16,6 @@ public class ConnexionServlet extends HttpServlet {
     @EJB
     private UtilisateurSessionBean UtilisateurSessionBean;
     Utilisateur unUtilisateur;
-    public static final String MESSAGE_ERREUR_CREDENTIALS_KO = "Infos de connexion non valides. Merci de les saisir à nouveau";
-
     public void processRequest (HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         placerUtilisateurDansContexte(request);
 
@@ -43,22 +42,22 @@ public class ConnexionServlet extends HttpServlet {
     public void placerUtilisateurDansContexte(HttpServletRequest request){
         unUtilisateur = new Utilisateur();
 
-        unUtilisateur.setLoginSaisi(request.getParameter("champLogin"));
-        unUtilisateur.setMotDePasseSaisi(request.getParameter("champMotDePasse"));
+        unUtilisateur.setLoginSaisi(request.getParameter(Constantes.CHAMP_LOGIN));
+        unUtilisateur.setMotDePasseSaisi(request.getParameter(Constantes.CHAMP_MDP));
 
-        request.setAttribute("utilisateur", unUtilisateur);
+        request.setAttribute(Constantes.UTILISATEUR, unUtilisateur);
     }
 
     public void aiguillerVersLaProchainePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (verifierInfosConnexion(unUtilisateur)){
 
             HttpSession session = request.getSession();
-            session.setAttribute("utilisateur", unUtilisateur);
+            session.setAttribute(Constantes.UTILISATEUR, unUtilisateur);
 
-            request.getRequestDispatcher("/profil-servlet").forward(request, response);
+            request.getRequestDispatcher(Constantes.PROFIL_SERVLET).forward(request, response);
         }else{
-            request.setAttribute("messageErreur", MESSAGE_ERREUR_CREDENTIALS_KO);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_CREDENTIALS_KO);
+            request.getRequestDispatcher(Constantes.INDEX_PATH).forward(request, response);
         }
     }
 
@@ -73,10 +72,10 @@ public class ConnexionServlet extends HttpServlet {
     }
 
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String action = request.getParameter("action");
+        String action = request.getParameter(Constantes.ACTION);
 
-        if ("Inscription".equals(action)) {
-            request.getRequestDispatcher("/inscription-servlet").forward(request, response);
+        if (Constantes.INSCRIPTION.equals(action)) {
+            request.getRequestDispatcher(Constantes.INSCRIPTION_SERVLET).forward(request, response);
         } else {
             processRequest(request, response);
         }
