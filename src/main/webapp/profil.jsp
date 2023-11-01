@@ -43,7 +43,7 @@
                         <label for="site">Site web:</label>
                         <input type="text" class="form-control" id="site" name="site" value="${utilisateur.site}">
                     </div>
-                    <input type="submit" class="btn btn-primary" name="action" value="Sauvegarde">
+                    <button type="submit" class="btn btn-primary" name="action" value="sauvegardeUtilisateur">Sauvegarder</button>
                 </form>
             </div>
 
@@ -100,8 +100,7 @@
                                     </c:forEach>
                                 </select>
                             </div>
-
-                            <input type="submit" class="btn btn-primary" name="action" value="SauvegardeDetail">
+                            <button type="submit" class="btn btn-primary" name="action" value="sauvegardeDetail">Sauvegarder</button>
                         </form>
                     </c:when>
                     <c:when test="${utilisateur.role == 2}">
@@ -142,19 +141,19 @@
                     <c:when test="${utilisateur.role == 2}">
                         <div class="container">
                             <h2 class="mt-5">Créer une Offre d'Emploi</h2>
-                            <form action="votre_action_servlet" method="POST">
+                            <form action="profil-servlet" method="POST">
                                 <div class="form-group">
-                                    <label for="intitule">Intitulé de l'offre:</label>
-                                    <input type="text" class="form-control" id="intitule" name="intitule" required>
+                                    <label for="coe.intitule">Intitulé de l'offre:</label>
+                                    <input type="text" class="form-control" id="coe.intitule" name="coe.intitule" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="description">Description de l'offre:</label>
-                                    <textarea class="form-control" id="description" name="description" required></textarea>
+                                    <label for="coe.description">Description de l'offre:</label>
+                                    <textarea class="form-control" id="coe.description" name="coe.description" required></textarea>
                                 </div>
 
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Créer l'offre</button>
+                                    <button type="submit" class="btn btn-primary" name="action" value="ajouter_offre">Créer l'offre</button>
                                 </div>
                             </form>
                         </div>
@@ -173,50 +172,45 @@
                         <li class="list-group-item">
                             <c:choose>
                                 <c:when test="${utilisateur.role == 1}">
-                                    <strong>${offre.intitule}</strong>
-                                    <p>Entreprise: ${offre.nomEntreprise}</p>
-                                    <p>Description: ${offre.description}</p>
-                                    <p>Nombres de candidats: ${offre.nbCandidat}</p>
-                                    <p>Email: ${offre.emailRecruteur}</p>
-                                    <p>Telephone: ${offre.telephoneRecruteur}</p>
-                                    <p>Site Web: ${offre.siteWebEntreprise}</p>
-                                    <p>Adresse: ${offre.adresseEntreprise}</p></c:when>
+                                    <form action="profil-servlet" method="post">
+                                        <strong>${offre.intitule}</strong>
+                                        <p>Entreprise: ${offre.nomEntreprise}</p>
+                                        <p>Description: ${offre.description}</p>
+                                        <p>Nombres de candidats: ${offre.nbCandidat}</p>
+                                        <p>Email: ${offre.emailRecruteur}</p>
+                                        <p>Telephone: ${offre.telephoneRecruteur}</p>
+                                        <p>Site Web: ${offre.siteWebEntreprise}</p>
+                                        <p>Adresse: ${offre.adresseEntreprise}</p>
+                                        <input type="hidden" name="offreId" value="${offre.idOffre}">
+                                        <button type="button" class="btn btn-success" onclick="toggleButtonText(this)">Candidater</button>
+                                    </form>
+                                </c:when>
                                 <c:when test="${utilisateur.role == 2}">
                                     <!-- Champs modifiables pour le rôle 2 -->
-                                    <label for="intitule">Initule:</label>
-                                    <input type="text" class="form-control" id="intitule" name="intitule" value="${offre.intitule}">
-                                    <label for="nomEntreprise">Nom de l'entreprise:</label>
-                                    <input type="text" class="form-control" id="nomEntreprise" name="nomEntreprise" value="${offre.nomEntreprise}">
-                                    <label for="description">Description:</label>
-                                    <input type="text" class="form-control" id="description" name="description" value="${offre.description}">
-                                    <label for="nbCandidat">Nombre de candidat:</label>
-                                    <input type="text" class="form-control" id="nbCandidat" name="nbCandidat" value="${offre.nbCandidat}">
-                                    <label for="emailRecruteur">Email du recruteur:</label>
-                                    <input type="text" class="form-control" id="emailRecruteur" name="emailRecruteur" value="${offre.emailRecruteur}">
-                                    <label for="telephoneRecruteur">Telephone du recruteur:</label>
-                                    <input type="text" class="form-control" id="telephoneRecruteur" name="telephoneRecruteur" value="${offre.telephoneRecruteur}">
-                                    <label for="siteWebEntreprise">Site web de l'entreprise:</label>
-                                    <input type="text" class="form-control" id="siteWebEntreprise" name="siteWebEntreprise" value="${offre.siteWebEntreprise}">
-                                    <label for="adresseEntreprise">Adresse de l'entreprise:</label>
-                                    <input type="text" class="form-control" id="adresseEntreprise" name="adresseEntreprise" value="${offre.adresseEntreprise}">
+                                    <form action="profil-servlet" method="post">
+                                        <label for="io.intitule">Initule:</label>
+                                        <input type="text" class="form-control" id="io.intitule" name="io.intitule" value="${offre.intitule}">
+                                        <label for="nomEntreprise">Nom de l'entreprise:</label>
+                                        <input type="text" class="form-control" id="nomEntreprise" name="nomEntreprise" value="${offre.nomEntreprise}" readonly>
+                                        <label for="io.description">Description:</label>
+                                        <input type="text" class="form-control" id="io.description" name="io.description" value="${offre.description}">
+                                        <label for="nbCandidat">Nombre de candidat:</label>
+                                        <input type="text" class="form-control" id="nbCandidat" name="nbCandidat" value="${offre.nbCandidat}" readonly>
+                                        <label for="emailRecruteur">Email du recruteur:</label>
+                                        <input type="text" class="form-control" id="emailRecruteur" name="emailRecruteur" value="${offre.emailRecruteur}"readonly>
+                                        <label for="telephoneRecruteur">Telephone du recruteur:</label>
+                                        <input type="text" class="form-control" id="telephoneRecruteur" name="telephoneRecruteur" value="${offre.telephoneRecruteur}"readonly>
+                                        <label for="siteWebEntreprise">Site web de l'entreprise:</label>
+                                        <input type="text" class="form-control" id="siteWebEntreprise" name="siteWebEntreprise" value="${offre.siteWebEntreprise}"readonly>
+                                        <label for="adresseEntreprise">Adresse de l'entreprise:</label>
+                                        <input type="text" class="form-control" id="adresseEntreprise" name="adresseEntreprise" value="${offre.adresseEntreprise}"readonly>
+                                        <input type="hidden" name="offreId" value="${offre.idOffre}">
+                                        <button type="submit" class="btn btn-danger" name="action" value="supprimer_offre">Supprimer</button>
+                                        <button type="submit" class="btn btn-warning" name="action" value="modifier_offre">Modifier</button>
+                                    </form>
                                 </c:when>
                             </c:choose>
                         </li>
-                        <c:choose>
-                            <c:when test="${utilisateur.role == 1}">
-                                <form action="profil-servlet" method="post">
-                                    <input type="hidden" name="offreId" value="${offre.idOffre}">
-                                    <button type="button" class="btn btn-success" onclick="toggleButtonText(this)">Candidater</button>
-                                </form>
-                            </c:when>
-                            <c:when test="${utilisateur.role == 2}">
-                                <form action="profil-servlet" method="post">
-                                    <!-- Ajouter, Supprimer, Modifier boutons pour le rôle 2 -->
-                                    <button type="submit" class="btn btn-danger" name="action" value="supprimer">Supprimer</button>
-                                    <button type="submit" class="btn btn-warning" name="action" value="modifier">Modifier</button>
-                                </form>
-                            </c:when>
-                        </c:choose>
                     </c:forEach>
                 </ul>
             </div>

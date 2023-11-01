@@ -19,6 +19,9 @@ public class OffreEmploiEntity {
     @Column(name = "description", nullable = true, length = 255)
     private String description;
 
+    public OffreEmploiEntity() {
+    }
+
     public int getIdOffre() {
         return idOffre;
     }

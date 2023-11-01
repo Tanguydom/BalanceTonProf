@@ -45,8 +45,7 @@ public class ProfilServlet extends HttpServlet {
 
         String action = request.getParameter(Constantes.ACTION);
 
-        //change to Constantes.SAUVEGARDE_UTILISATEUR
-        if(utilisateur.getRole() != 0 && action.equals("sauvegarde")){
+        if(utilisateur.getRole() != 0 && action.equals(Constantes.SAUVEGARDE_UTILISATEUR)){
             sauvegardeUtilisateur(request, utilisateur, userId);
             session.setAttribute(Constantes.UTILISATEUR, utilisateur);
         }
@@ -67,10 +66,10 @@ public class ProfilServlet extends HttpServlet {
                         int id = Integer.parseInt(request.getParameter(Constantes.ID_UTILISATEUR));
                         deleteUtilisateur(id);
                         break;
-                    case Constantes.AJOUT_OFFRE : createOffre(request); break;
-                    case Constantes.SUP_OFFRE : deleteOffre(); break;
+                    case Constantes.AJOUT_OFFRE : createOffre(request, 0, 0); break;
+                    case Constantes.SUP_OFFRE : deleteOffre(null, 0); break;
                     case Constantes.MOD_OFFRE : updateUtilisateur(request); break;
-
+                    default:break;
                 }
 
                 List<UtilisateurEntity> listeProfesseurs = utilisateurSessionBean.getTousLesProfesseurs();
@@ -91,10 +90,11 @@ public class ProfilServlet extends HttpServlet {
                 listOffres = offreEntityToOffre(listeOffresEntity);
                 request.setAttribute(Constantes.LIST_OFFRE, listOffres);
                 request.setAttribute(Constantes.ENSEIGNANT, enseignant);
-                //change to SAUVGARDE_DETAIL
-                if("sauvegardeDetail".equals(action)){
-                    sauvegardeEnseignant(request, userId);
+                switch (action){
+                    case Constantes.SAUVGARDE_DETAIL :sauvegardeEnseignant(request, userId); break;
+                    default:break;
                 }break;
+
             case 2 :
                 RecruteurEntity recruteur = recruteurSessionBean.findRecruteurByIdUtilisateur(userId);
                 EntrepriseEntity entrepriseEntity = entrepriseSessionBean.getEntrepriseById(recruteur.getIdEntreprise());
@@ -104,9 +104,20 @@ public class ProfilServlet extends HttpServlet {
                 request.setAttribute(Constantes.RECRUTEUR, recruteur);
                 request.setAttribute(Constantes.ENTREPRISE, entrepriseEntity);
                 request.setAttribute(Constantes.LIST_OFFRE, listOffres);
-                if("sauvegardeDetail".equals(action)){
-                    //save recruteur
-                }break;
+                switch (action){
+                    case Constantes.SAUVGARDE_DETAIL:sauvegardeEnseignant(request, userId); break;
+                    case Constantes.AJOUT_OFFRE: createOffre(request, entrepriseEntity.getIdEntreprise(), recruteur.getIdUtilisateur());break;
+                    case Constantes.SUP_OFFRE: deleteOffre(request, recruteur.getIdUtilisateur());break;
+                    case Constantes.MOD_OFFRE: modifieOffre(request); break;
+                    default:break;
+                }
+                //besoin pour refresh
+                listeOffresEntity = offreSessionBean.getToutesLesOffresPourUnRecruteur(recruteur.getIdUtilisateur());
+                listOffres = offreEntityToOffre(listeOffresEntity);
+                request.setAttribute(Constantes.RECRUTEUR, recruteur);
+                request.setAttribute(Constantes.ENTREPRISE, entrepriseEntity);
+                request.setAttribute(Constantes.LIST_OFFRE, listOffres);
+                break;
             default:break;
         }
         request.getRequestDispatcher(path).forward(request, response);
@@ -171,11 +182,35 @@ public class ProfilServlet extends HttpServlet {
             System.out.println(e.toString());
         }
     }
+
     public void updateUtilisateur(HttpServletRequest request){
     }
-    public void createOffre(HttpServletRequest request){
+    public void createOffre(HttpServletRequest request, int idEntreprise, int idUtilisateur){
+        OffreEmploiEntity offreEmploiEntity = new OffreEmploiEntity();
+
+        String intitule = request.getParameter(Constantes.COE_INTITULE);
+        String description = request.getParameter(Constantes.COE_DESCRIPTION);
+
+        offreEmploiEntity.setIntitule(intitule);
+        offreEmploiEntity.setDescription(description);
+        offreEmploiEntity.setIdEntreprise(idEntreprise);
+        offreSessionBean.insererOffre(offreEmploiEntity);
+
+        RecrutementEntity recrutementEntity = new RecrutementEntity();
+        recrutementEntity.setIdOffre(offreEmploiEntity.getIdOffre());
+        recrutementEntity.setIdRecruteur(idUtilisateur);
+        recrutementSessionBean.insererRecrutement(recrutementEntity);
     }
-    public void deleteOffre(){
+    public void deleteOffre(HttpServletRequest request, int idRecruteur){
+        int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
+        recrutementSessionBean.supprimerRecrutement(idOffre, idRecruteur);
+        offreSessionBean.supprimerOffre(idOffre);
+    }
+    public void modifieOffre(HttpServletRequest request) {
+        int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
+        String intitule = request.getParameter(Constantes.IO_INTITULE);
+        String description = request.getParameter(Constantes.IO_DESCRIPTION);
+        offreSessionBean.modifieOffre(idOffre,intitule,description);
     }
 
     public void sauvegardeUtilisateur(HttpServletRequest request, Utilisateur utilisateur, int userId) {

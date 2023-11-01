@@ -32,10 +32,12 @@ public class RecrutementSessionBean {
         em.getTransaction().commit();
         //insertion table recrutement
     }
-    public void supprimerRecrutement(int id) {
+    public void supprimerRecrutement(int idOffre, int idRecruteur) {
         em.getTransaction().begin();
-        RecrutementEntity recrutementEntity = em.find(RecrutementEntity.class, id);
-        em.remove(recrutementEntity);
+        Query query = em.createQuery("DELETE FROM RecrutementEntity r WHERE r.idRecruteur = :idRecruteur AND r.idOffre = :idOffre");
+        query.setParameter("idRecruteur", idRecruteur);
+        query.setParameter("idOffre", idOffre);
+        query.executeUpdate();
         em.getTransaction().commit();
     }
 

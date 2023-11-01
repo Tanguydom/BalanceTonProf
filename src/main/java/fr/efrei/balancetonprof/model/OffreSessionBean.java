@@ -24,6 +24,19 @@ public class OffreSessionBean {
         return q.getResultList();
     }
 
+    public void modifieOffre(int idOffre, String initule, String description) {
+        em.getTransaction().begin();
+        Query query = em.createQuery("UPDATE OffreEmploiEntity e SET e.intitule = :initule , e.description = :description WHERE e.idOffre = :idOffre");
+        query.setParameter("initule", initule);
+        query.setParameter("description", description);
+        query.setParameter("idOffre", idOffre);
+        em.flush();
+        em.clear();
+
+        query.executeUpdate();
+        em.getTransaction().commit();
+    }
+
     public void insererOffre(OffreEmploiEntity nouvelleOffre) {
         em.getTransaction().begin();
         em.persist(nouvelleOffre);

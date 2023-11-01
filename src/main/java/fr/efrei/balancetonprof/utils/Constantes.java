@@ -33,6 +33,16 @@ public final class Constantes {
     public static final String CHAMP_ROLE = "champRole";
     public static final String MSG_ERREUR = "messageErreur";
 
+    public static final String ID_OFFRE = "offreId";
+
+    //COE -> création offre emploi
+    public static final String COE_INTITULE = "coe.intitule";
+    public static final String COE_DESCRIPTION = "coe.description";
+
+    //IO -> information offre
+    public static final String IO_INTITULE = "io.intitule";
+    public static final String IO_DESCRIPTION = "io.description";
+
     //Constante action jsp
     public static final String ACTION = "action";
     public static final String SAUVEGARDE_UTILISATEUR = "sauvegardeUtilisateur";
