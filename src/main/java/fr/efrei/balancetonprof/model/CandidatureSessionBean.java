@@ -28,6 +28,24 @@ public class CandidatureSessionBean {
         em.persist(candidatureEntity);
         em.getTransaction().commit();
     }
+    public Integer findCandidatureByIdOffreIdEns(int idOffre, int idEns) {
+        Query q = em.createQuery("SELECT COUNT(c.idCandidature) FROM CandidatureEntity c WHERE c.idOffre = :idOffre AND c.idProf = :idEns");
+        q.setParameter("idOffre", idOffre);
+        q.setParameter("idEns", idEns);
+
+        Long nombreCandidatures = (long) q.getSingleResult();
+        return nombreCandidatures.intValue();
+    }
+
+    public void supprimerCandidature(int idOffre, int idEns){
+        em.getTransaction().begin();
+        Query q = em.createQuery("DELETE FROM CandidatureEntity c WHERE c.idOffre = :idOffre AND c.idProf = :idEns");
+        q.setParameter("idOffre", idOffre);
+        q.setParameter("idEns", idEns);
+        q.executeUpdate();
+        em.getTransaction().commit();
+
+    }
     public void supprimerCandidature(int id) {
         em.getTransaction().begin();
         CandidatureEntity candidature = em.find(CandidatureEntity.class, id);

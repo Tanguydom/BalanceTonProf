@@ -158,9 +158,25 @@
                             </form>
                         </div>
                     </c:when>
+                    <c:when test="${utilisateur.role == 1}">
+                        <div class="container">
+                            <h2 class="mt-5">Mes candidatures</h2>
+                            <form action="profil-servlet" method="POST">
+                                <c:forEach var="offre" items="${listOffresCandidater}">
+                                    <li class="list-group-item">
+                                            <form action="profil-servlet" method="post">
+                                                <strong>${offre.intitule}</strong>
+                                                <p>Entreprise: ${offre.nomEntreprise}</p>
+                                                <input type="hidden" name="offreId" value="${offre.idOffre}">
+                                                <button type="submit" class="btn btn-danger" name="action" value="retirer_candidatire">Retirer ma candidature</button>
+                                            </form>
+                                    </li>
+                                </c:forEach>
+                            </form>
+                        </div>
+                    </c:when>
                 </c:choose>
         </div>
-
 
 
 
@@ -182,7 +198,7 @@
                                         <p>Site Web: ${offre.siteWebEntreprise}</p>
                                         <p>Adresse: ${offre.adresseEntreprise}</p>
                                         <input type="hidden" name="offreId" value="${offre.idOffre}">
-                                        <button type="button" class="btn btn-success" onclick="toggleButtonText(this)">Candidater</button>
+                                        <button type="submit" class="btn btn-success" name="action" value="candidater">Candidater</button>
                                     </form>
                                 </c:when>
                                 <c:when test="${utilisateur.role == 2}">
@@ -217,20 +233,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    function toggleButtonText(button) {
-        if (button.textContent === "Candidater") {
-            button.textContent = "Annuler";
-            button.classList.remove("btn-success");
-            button.classList.add("btn-danger");
-        } else {
-            button.textContent = "Candidater";
-            button.classList.remove("btn-danger");
-            button.classList.add("btn-success");
-        }
-    }
-</script>
 
 <!-- Include Bootstrap JS (you should provide the actual URL to Bootstrap JS) -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

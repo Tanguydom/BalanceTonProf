@@ -18,10 +18,8 @@ import java.util.List;
 public class ProfilServlet extends HttpServlet {
     @EJB
     private UtilisateurSessionBean utilisateurSessionBean;
-
     @EJB
     private RecruteurSessionBean recruteurSessionBean;
-
     @EJB
     private CandidatureSessionBean candidatureSessionBean;
     @EJB
@@ -86,14 +84,30 @@ public class ProfilServlet extends HttpServlet {
                 break ;
             case 1 :
                 EnseignantEntity enseignant = enseignantSessionBean.findEnseignantByIdUtilisateur(userId);
-                listeOffresEntity = offreSessionBean.getToutesLesOffres();
+                listeOffresEntity = offreSessionBean.getToutesLesOffresNonCandidater(userId);
                 listOffres = offreEntityToOffre(listeOffresEntity);
+                List<OffreEmploiEntity> listEntityOffresCandidater = offreSessionBean.getToutesLesOffresCandidater(userId);
+                List<Offre> listOffresCandidater = offreEntityToOffre(listEntityOffresCandidater);
+
+                request.setAttribute(Constantes.LIST_OFFRE_CANDIDATER, listOffresCandidater);
                 request.setAttribute(Constantes.LIST_OFFRE, listOffres);
                 request.setAttribute(Constantes.ENSEIGNANT, enseignant);
                 switch (action){
                     case Constantes.SAUVGARDE_DETAIL :sauvegardeEnseignant(request, userId); break;
+                    case Constantes.CANDIDATER: candidater(request, userId);break;
+                    case Constantes.RETIRER_CANDIDATURE: retirerCandidature(request, userId) ;break;
+                    //mettre un statut sur candidature qui correspond aux traitement de la candidature par le recruteur
                     default:break;
-                }break;
+                }
+                enseignant = enseignantSessionBean.findEnseignantByIdUtilisateur(userId);
+                listeOffresEntity = offreSessionBean.getToutesLesOffresNonCandidater(userId);
+                listOffres = offreEntityToOffre(listeOffresEntity);
+                listEntityOffresCandidater = offreSessionBean.getToutesLesOffresCandidater(userId);
+                listOffresCandidater = offreEntityToOffre(listEntityOffresCandidater);
+                request.setAttribute(Constantes.LIST_OFFRE_CANDIDATER, listOffresCandidater);
+                request.setAttribute(Constantes.LIST_OFFRE, listOffres);
+                request.setAttribute(Constantes.ENSEIGNANT, enseignant);
+                break;
 
             case 2 :
                 RecruteurEntity recruteur = recruteurSessionBean.findRecruteurByIdUtilisateur(userId);
@@ -112,6 +126,7 @@ public class ProfilServlet extends HttpServlet {
                     default:break;
                 }
                 //besoin pour refresh
+                recruteur = recruteurSessionBean.findRecruteurByIdUtilisateur(userId);
                 listeOffresEntity = offreSessionBean.getToutesLesOffresPourUnRecruteur(recruteur.getIdUtilisateur());
                 listOffres = offreEntityToOffre(listeOffresEntity);
                 request.setAttribute(Constantes.RECRUTEUR, recruteur);
@@ -123,6 +138,28 @@ public class ProfilServlet extends HttpServlet {
         request.getRequestDispatcher(path).forward(request, response);
     }
 
+    public void candidater(HttpServletRequest request, int userId){
+        int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
+        Integer res = candidatureSessionBean.findCandidatureByIdOffreIdEns(idOffre,userId);
+        if(res == null || res <= 0){
+            CandidatureEntity candidature = new CandidatureEntity();
+            candidature.setIdProf(userId);
+            candidature.setCv("mon.cv");
+            candidature.setLettreMotivation("ma.lettre");
+            candidature.setIdOffre(idOffre);
+            candidatureSessionBean.insererCandidature(candidature);
+        }else{
+            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_CANDIDATURE_EXISTANTE);
+        }
+    }
+
+    public void retirerCandidature(HttpServletRequest request, int userId){
+        int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
+        Integer res = candidatureSessionBean.findCandidatureByIdOffreIdEns(idOffre,userId);
+        if(res != null && res > 0){
+            candidatureSessionBean.supprimerCandidature(idOffre, userId);
+        }
+    }
     public List<Offre> offreEntityToOffre(List<OffreEmploiEntity> entityList){
         List<Offre> offreList = new ArrayList<>();
         for(OffreEmploiEntity entity : entityList){

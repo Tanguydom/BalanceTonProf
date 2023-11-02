@@ -7,6 +7,7 @@ public final class Constantes {
     public static final String LIST_ENS = "listeProfesseurs";
     public static final String LIST_REC = "listeRecruteurs";
     public static final String LIST_OFFRE = "listeOffres";
+    public static final String LIST_OFFRE_CANDIDATER = "listOffresCandidater";
     public static final String ID_UTILISATEUR = "id";
     public static final String ENSEIGNANT = "enseignant";
     public static final String RECRUTEUR = "recruteur";
@@ -45,8 +46,10 @@ public final class Constantes {
 
     //Constante action jsp
     public static final String ACTION = "action";
+    public static final String CANDIDATER = "candidater";
     public static final String SAUVEGARDE_UTILISATEUR = "sauvegardeUtilisateur";
     public static final String SAUVGARDE_DETAIL = "sauvegardeDetail";
+    public static final String RETIRER_CANDIDATURE = "retirer_candidatire";
     public static final String AJOUT_ADMIN = "ajouter_admin";
     public static final String AJOUT_ENS= "ajouter_prof";
     public static final String AJOUT_REC= "ajouter_recruteur";
@@ -66,6 +69,6 @@ public final class Constantes {
 
     // ERREUR & EXCEPTION
     public static final String MESSAGE_ERREUR_CREDENTIALS_KO = "Infos de connexion non valides. Merci de les saisir à nouveau";
-
+    public static final String MESSAGE_ERREUR_CANDIDATURE_EXISTANTE = "Vous avez deja candidater pour cette offre";
 
 }

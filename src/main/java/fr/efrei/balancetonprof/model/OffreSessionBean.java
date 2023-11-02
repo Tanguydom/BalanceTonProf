@@ -17,6 +17,21 @@ public class OffreSessionBean {
         return  q.getResultList();
     }
 
+    public List<OffreEmploiEntity> getToutesLesOffresNonCandidater(int id) {
+        Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e " +
+                "LEFT JOIN CandidatureEntity c ON e.idOffre = c.idOffre AND c.idProf = :id " +
+                "WHERE c.idOffre IS NULL");
+        q.setParameter("id", id);
+        return q.getResultList();
+    }
+
+    public List<OffreEmploiEntity> getToutesLesOffresCandidater(int id) {
+        Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e, CandidatureEntity c WHERE e.idOffre = c.idOffre AND c.idProf = :id");
+        q.setParameter("id", id);
+        return q.getResultList();
+    }
+
+
     public List<OffreEmploiEntity> getToutesLesOffresPourUnRecruteur(int id) {
         //a modifier temporaire
         Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e, RecrutementEntity r WHERE e.idOffre = r.idOffre AND r.idRecruteur = :id");
