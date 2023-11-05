@@ -33,9 +33,36 @@ public class CandidatureSessionBean {
         q.setParameter("idOffre", idOffre);
         q.setParameter("idEns", idEns);
 
-        Long nombreCandidatures = (long) q.getSingleResult();
-        return nombreCandidatures.intValue();
+        try {
+            Integer nombreCandidatures = (Integer) q.getSingleResult();
+            return nombreCandidatures;
+        } catch (Exception e) {
+            return null; // Aucune entreprise trouvée pour l'IDOffre donné.
+        }
     }
+
+    public void changeStatut(int idCandidature, int status){
+        em.getTransaction().begin();
+        Query q = em.createQuery("UPDATE CandidatureEntity c SET c.statut = :status WHERE c.idCandidature = :idCandidature");
+        q.setParameter("idCandidature", idCandidature);
+        q.setParameter("status", status);
+        q.executeUpdate();
+        em.getTransaction().commit();
+    }
+
+    public List<CandidatureEntity> getCandidatures(int id) {
+        Query q = em.createQuery("SELECT c FROM OffreEmploiEntity e, RecrutementEntity r, CandidatureEntity c " +
+                "WHERE e.idOffre = r.idOffre AND r.idRecruteur = :id AND c.idOffre = e.idOffre AND c.statut = 0");
+        q.setParameter("id", id);
+        return q.getResultList();
+    }
+    public List<CandidatureEntity> getCandidaturesByEns(int id) {
+        Query q = em.createQuery("SELECT c FROM OffreEmploiEntity e, RecrutementEntity r, CandidatureEntity c " +
+                "WHERE e.idOffre = r.idOffre AND c.idProf = :id AND c.idOffre = e.idOffre");
+        q.setParameter("id", id);
+        return q.getResultList();
+    }
+
 
     public void supprimerCandidature(int idOffre, int idEns){
         em.getTransaction().begin();

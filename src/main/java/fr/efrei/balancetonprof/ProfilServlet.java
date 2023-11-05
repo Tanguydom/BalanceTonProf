@@ -49,7 +49,8 @@ public class ProfilServlet extends HttpServlet {
         }
         List<OffreEmploiEntity> listeOffresEntity;
         List<Offre> listOffres;
-
+        List<CandidatureEntity> candidatureEntityList;
+        List<Candidature> listCandidature;
         path = Constantes.PROFIL_PATH;
 
         switch (utilisateur.getRole()){
@@ -87,9 +88,10 @@ public class ProfilServlet extends HttpServlet {
                 listeOffresEntity = offreSessionBean.getToutesLesOffresNonCandidater(userId);
                 listOffres = offreEntityToOffre(listeOffresEntity);
                 List<OffreEmploiEntity> listEntityOffresCandidater = offreSessionBean.getToutesLesOffresCandidater(userId);
-                List<Offre> listOffresCandidater = offreEntityToOffre(listEntityOffresCandidater);
+                candidatureEntityList = candidatureSessionBean.getCandidaturesByEns(userId);
+                listCandidature = EntityToCandidature(candidatureEntityList);
 
-                request.setAttribute(Constantes.LIST_OFFRE_CANDIDATER, listOffresCandidater);
+                request.setAttribute(Constantes.LIST_CANDIDATURE, listCandidature);
                 request.setAttribute(Constantes.LIST_OFFRE, listOffres);
                 request.setAttribute(Constantes.ENSEIGNANT, enseignant);
                 switch (action){
@@ -103,8 +105,10 @@ public class ProfilServlet extends HttpServlet {
                 listeOffresEntity = offreSessionBean.getToutesLesOffresNonCandidater(userId);
                 listOffres = offreEntityToOffre(listeOffresEntity);
                 listEntityOffresCandidater = offreSessionBean.getToutesLesOffresCandidater(userId);
-                listOffresCandidater = offreEntityToOffre(listEntityOffresCandidater);
-                request.setAttribute(Constantes.LIST_OFFRE_CANDIDATER, listOffresCandidater);
+                candidatureEntityList = candidatureSessionBean.getCandidaturesByEns(userId);
+
+                listCandidature = EntityToCandidature(candidatureEntityList);
+                request.setAttribute(Constantes.LIST_CANDIDATURE, listCandidature);
                 request.setAttribute(Constantes.LIST_OFFRE, listOffres);
                 request.setAttribute(Constantes.ENSEIGNANT, enseignant);
                 break;
@@ -112,9 +116,12 @@ public class ProfilServlet extends HttpServlet {
             case 2 :
                 RecruteurEntity recruteur = recruteurSessionBean.findRecruteurByIdUtilisateur(userId);
                 EntrepriseEntity entrepriseEntity = entrepriseSessionBean.getEntrepriseById(recruteur.getIdEntreprise());
+                candidatureEntityList = candidatureSessionBean.getCandidatures(userId);
+                listCandidature = EntityToCandidature(candidatureEntityList);
                 // a modifier temporaire
                 listeOffresEntity = offreSessionBean.getToutesLesOffresPourUnRecruteur(recruteur.getIdUtilisateur());
                 listOffres = offreEntityToOffre(listeOffresEntity);
+                request.setAttribute(Constantes.LIST_CANDIDATURE, listCandidature);
                 request.setAttribute(Constantes.RECRUTEUR, recruteur);
                 request.setAttribute(Constantes.ENTREPRISE, entrepriseEntity);
                 request.setAttribute(Constantes.LIST_OFFRE, listOffres);
@@ -123,12 +130,17 @@ public class ProfilServlet extends HttpServlet {
                     case Constantes.AJOUT_OFFRE: createOffre(request, entrepriseEntity.getIdEntreprise(), recruteur.getIdUtilisateur());break;
                     case Constantes.SUP_OFFRE: deleteOffre(request, recruteur.getIdUtilisateur());break;
                     case Constantes.MOD_OFFRE: modifieOffre(request); break;
+                    case Constantes.ACCEPTER_CANDIDATURE: accepteCandidature(request);break;
+                    case Constantes.REFUSER_CANDIDATURE: refuserCandidature(request);break;
                     default:break;
                 }
                 //besoin pour refresh
                 recruteur = recruteurSessionBean.findRecruteurByIdUtilisateur(userId);
                 listeOffresEntity = offreSessionBean.getToutesLesOffresPourUnRecruteur(recruteur.getIdUtilisateur());
                 listOffres = offreEntityToOffre(listeOffresEntity);
+                candidatureEntityList = candidatureSessionBean.getCandidatures(userId);
+                listCandidature = EntityToCandidature(candidatureEntityList);
+                request.setAttribute(Constantes.LIST_CANDIDATURE, listCandidature);
                 request.setAttribute(Constantes.RECRUTEUR, recruteur);
                 request.setAttribute(Constantes.ENTREPRISE, entrepriseEntity);
                 request.setAttribute(Constantes.LIST_OFFRE, listOffres);
@@ -138,6 +150,15 @@ public class ProfilServlet extends HttpServlet {
         request.getRequestDispatcher(path).forward(request, response);
     }
 
+    public void refuserCandidature(HttpServletRequest request){
+        int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
+        candidatureSessionBean.changeStatut(idCandidature, 2);
+    }
+
+    public void accepteCandidature(HttpServletRequest request){
+        int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
+        candidatureSessionBean.changeStatut(idCandidature, 1);
+    }
     public void candidater(HttpServletRequest request, int userId){
         int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
         Integer res = candidatureSessionBean.findCandidatureByIdOffreIdEns(idOffre,userId);
@@ -147,6 +168,7 @@ public class ProfilServlet extends HttpServlet {
             candidature.setCv("mon.cv");
             candidature.setLettreMotivation("ma.lettre");
             candidature.setIdOffre(idOffre);
+            candidature.setStatut(0);
             candidatureSessionBean.insererCandidature(candidature);
         }else{
             request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_CANDIDATURE_EXISTANTE);
@@ -158,7 +180,43 @@ public class ProfilServlet extends HttpServlet {
         Integer res = candidatureSessionBean.findCandidatureByIdOffreIdEns(idOffre,userId);
         if(res != null && res > 0){
             candidatureSessionBean.supprimerCandidature(idOffre, userId);
+        }else{
+            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_CANDIDATURE_INEXISTANTE);
         }
+    }
+
+    public List<Candidature> EntityToCandidature(List<CandidatureEntity> candidatureEntityList){
+        List<Candidature> listCandidature = new ArrayList<>();
+        for(CandidatureEntity candidatureEntity : candidatureEntityList){
+            Candidature candidature = new Candidature();
+            candidature.setIdCandidature(candidatureEntity.getIdCandidature());
+            candidature.setIdOffre(candidatureEntity.getIdOffre());
+
+            OffreEmploiEntity offre = offreSessionBean.getOffreById(candidature.getIdOffre());
+            candidature.setIntitule(offre.getIntitule());
+
+            Integer idEntreprise = offreSessionBean.getEntrepriseIdByOffreId(offre.getIdOffre());
+            EntrepriseEntity entrepriseEntity = entrepriseSessionBean.getEntrepriseById(idEntreprise);
+
+            UtilisateurEntity utilisateur = utilisateurSessionBean.getUtilisateurById(candidatureEntity.getIdProf());
+            EnseignantEntity enseignant = enseignantSessionBean.findEnseignantByIdUtilisateur(candidatureEntity.getIdProf());
+
+            candidature.setNomCandidat(utilisateur.getNom());
+            candidature.setPrenomCandidat(utilisateur.getPrenom());
+            candidature.setCompetence(enseignant.getCompetence());
+            candidature.setEvaluation(enseignant.getEvaluation());
+            candidature.setDisponibilite(enseignant.getDisponibilite());
+            candidature.setExperience(enseignant.getExperience());
+            candidature.setNiveauSouhaite(enseignant.getNiveauSouhaite());
+            candidature.setAutresInformations(enseignant.getAutresInformations());
+            candidature.setInteret(enseignant.getInteret());
+            candidature.setIdEntreprise(entrepriseEntity.getIdEntreprise());
+            candidature.setNomEntreprise(entrepriseEntity.getNom());
+            candidature.setStatut(candidatureEntity.getStatut());
+            listCandidature.add(candidature);
+        }
+
+        return listCandidature;
     }
     public List<Offre> offreEntityToOffre(List<OffreEmploiEntity> entityList){
         List<Offre> offreList = new ArrayList<>();

@@ -16,11 +16,9 @@ public class EntrepriseSessionBean {
         Query q = em.createQuery("select e from EntrepriseEntity e");
         return  q.getResultList();
     }
-
     public EntrepriseEntity getEntrepriseById(int id){
         return em.find(EntrepriseEntity.class, id);
     }
-
     public void insererEntreprise(EntrepriseEntity entrepriseEntity) {
         em.getTransaction().begin();
         em.persist(entrepriseEntity);

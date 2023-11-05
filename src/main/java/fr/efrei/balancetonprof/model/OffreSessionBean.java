@@ -25,6 +25,17 @@ public class OffreSessionBean {
         return q.getResultList();
     }
 
+    public Integer getEntrepriseIdByOffreId(int id){
+        Query q = em.createQuery("SELECT o.idEntreprise FROM OffreEmploiEntity o WHERE o.idOffre = :idOffre");
+        q.setParameter("idOffre", id);
+        try {
+            Integer nombreCandidatures = (Integer) q.getSingleResult();
+            return nombreCandidatures;
+        } catch (Exception e) {
+            return null; // Aucune entreprise trouvée pour l'IDOffre donné.
+        }
+    }
+
     public List<OffreEmploiEntity> getToutesLesOffresCandidater(int id) {
         Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e, CandidatureEntity c WHERE e.idOffre = c.idOffre AND c.idProf = :id");
         q.setParameter("id", id);
@@ -33,7 +44,6 @@ public class OffreSessionBean {
 
 
     public List<OffreEmploiEntity> getToutesLesOffresPourUnRecruteur(int id) {
-        //a modifier temporaire
         Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e, RecrutementEntity r WHERE e.idOffre = r.idOffre AND r.idRecruteur = :id");
         q.setParameter("id", id);
         return q.getResultList();
@@ -64,4 +74,8 @@ public class OffreSessionBean {
         em.getTransaction().commit();
     }
 
+    public OffreEmploiEntity getOffreById(int id){
+        OffreEmploiEntity offre = em.find(OffreEmploiEntity.class, id);
+        return offre;
+    }
 }

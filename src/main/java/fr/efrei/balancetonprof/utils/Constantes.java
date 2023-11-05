@@ -7,6 +7,7 @@ public final class Constantes {
     public static final String LIST_ENS = "listeProfesseurs";
     public static final String LIST_REC = "listeRecruteurs";
     public static final String LIST_OFFRE = "listeOffres";
+    public static final String LIST_CANDIDATURE ="listeCandidatures";
     public static final String LIST_OFFRE_CANDIDATER = "listOffresCandidater";
     public static final String ID_UTILISATEUR = "id";
     public static final String ENSEIGNANT = "enseignant";
@@ -35,6 +36,8 @@ public final class Constantes {
     public static final String MSG_ERREUR = "messageErreur";
 
     public static final String ID_OFFRE = "offreId";
+    public static final String ID_CANDIDATURE = "idCandidature";
+
 
     //COE -> création offre emploi
     public static final String COE_INTITULE = "coe.intitule";
@@ -58,6 +61,12 @@ public final class Constantes {
     public static final String SUP_OFFRE = "supprimer_offre";
     public static final String MOD_OFFRE = "modifier_offre";
     public static final String INSCRIPTION = "Inscription";
+    public static final String ACCEPTER_CANDIDATURE = "accepter_candidature";
+    public static final String REFUSER_CANDIDATURE = "refuser_candidature";
+
+    public static final String VOIR_CANDIDAT = "voir_candidat";
+
+
 
     //Constante path jsp & serlvet
     public static final String PROFIL_PATH = "profil.jsp";
@@ -70,5 +79,7 @@ public final class Constantes {
     // ERREUR & EXCEPTION
     public static final String MESSAGE_ERREUR_CREDENTIALS_KO = "Infos de connexion non valides. Merci de les saisir à nouveau";
     public static final String MESSAGE_ERREUR_CANDIDATURE_EXISTANTE = "Vous avez deja candidater pour cette offre";
+    public static final String MESSAGE_ERREUR_CANDIDATURE_INEXISTANTE = "Candidature inexistante";
+
 
 }

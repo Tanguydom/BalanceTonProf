@@ -22,6 +22,18 @@ public class CandidatureEntity {
     @Column(name = "lettre_motivation", nullable = true, length = 255)
     private String lettreMotivation;
 
+    @Basic
+    @Column(name = "statut", nullable = true, length = 255)
+    private int statut;
+
+    public int getStatut() {
+        return statut;
+    }
+
+    public void setStatut(int statut) {
+        this.statut = statut;
+    }
+
     public int getIdCandidature() {
         return idCandidature;
     }
