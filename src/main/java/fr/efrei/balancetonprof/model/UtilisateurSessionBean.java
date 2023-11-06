@@ -3,6 +3,8 @@ import fr.efrei.balancetonprof.utils.Constantes;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Stateless
 public class UtilisateurSessionBean {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("projet_java_avance");
@@ -35,5 +37,23 @@ public class UtilisateurSessionBean {
         UtilisateurEntity utilisateur = em.find(UtilisateurEntity.class, id);
         em.remove(utilisateur);
         em.getTransaction().commit();
+    }
+
+    public List<UtilisateurEntity> getTousLesAdministrateurs(int id){ // role = 0
+        Query q = em.createQuery("select e from UtilisateurEntity e where e.role = 0 and e.idUtilisateur != :id");
+        q.setParameter("id", id); // Liez le paramètre 'id' ici
+        return q.getResultList();
+    }
+    public List<UtilisateurEntity> getTousLesUtilisateurs(){
+        Query q = em.createQuery("select e from UtilisateurEntity e");
+        return  q.getResultList();
+    }
+    public List<UtilisateurEntity> getTousLesProfesseurs(){ // role = 1
+        Query q = em.createQuery("select e from UtilisateurEntity e where e.role = 1");
+        return  q.getResultList();
+    }
+    public List<UtilisateurEntity> getTousLesRecruteurs(){ // role = 2
+        Query q = em.createQuery("select e from UtilisateurEntity e where e.role = 2");
+        return  q.getResultList();
     }
 }

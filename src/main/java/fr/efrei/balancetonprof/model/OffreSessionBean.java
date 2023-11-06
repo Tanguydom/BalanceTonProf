@@ -56,4 +56,8 @@ public class OffreSessionBean {
         OffreEmploiEntity offre = em.find(OffreEmploiEntity.class, id);
         return offre;
     }
+    public List<OffreEmploiEntity> chercherToutesLesOffres(){
+        Query q = em.createQuery("select e from OffreEmploiEntity e");
+        return  q.getResultList();
+    }
 }

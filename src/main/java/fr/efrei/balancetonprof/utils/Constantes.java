@@ -3,6 +3,7 @@ package fr.efrei.balancetonprof.utils;
 public final class Constantes {
     //Constante variable de contexte / session
     public static final String UTILISATEUR = "utilisateur";
+    public static final String ID_UTILISATEUR = "id";
     public static final String LIST_ADMIN = "listeAdministrateurs";
     public static final String LIST_ENS = "listeProfesseurs";
     public static final String LIST_REC = "listeRecruteurs";
@@ -46,12 +47,14 @@ public final class Constantes {
     public static final String ACTION = "action";
     public static final String CANDIDATER = "candidater";
     public static final String SAUVEGARDE_UTILISATEUR = "sauvegardeUtilisateur";
+    public static final String SAUVEGARDE_UTILISATEURS = "sauvegardeUtilisateurs";
+
     public static final String SAUVEGARDE_DETAIL = "sauvegardeDetail";
     public static final String RETIRER_CANDIDATURE = "retirer_candidature";
     public static final String AJOUT_ADMIN = "ajouter_admin";
     public static final String AJOUT_ENS= "ajouter_prof";
     public static final String AJOUT_REC= "ajouter_recruteur";
-    public static final String SUP_ENS= "supprimer_utilisateur";
+    public static final String SUP_UTIL= "supprimer_utilisateur";
     public static final String AJOUT_OFFRE = "ajouter_offre";
     public static final String SUP_OFFRE = "supprimer_offre";
     public static final String MOD_OFFRE = "modifier_offre";
