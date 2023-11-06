@@ -1,5 +1,6 @@
 package fr.efrei.balancetonprof.model;
 
+import fr.efrei.balancetonprof.utils.Constantes;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -12,69 +13,46 @@ import java.util.List;
 public class OffreSessionBean {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("projet_java_avance");
     EntityManager em = entityManagerFactory.createEntityManager();
-    public List<OffreEmploiEntity> getToutesLesOffres(){
-        Query q = em.createQuery("select e from OffreEmploiEntity e");
-        return  q.getResultList();
-    }
-
-    public List<OffreEmploiEntity> getToutesLesOffresNonCandidater(int id) {
+    public List<OffreEmploiEntity> chercheOffresNonCandidater(int idEns) {
         Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e " +
-                "LEFT JOIN CandidatureEntity c ON e.idOffre = c.idOffre AND c.idProf = :id " +
+                "LEFT JOIN CandidatureEntity c ON e.idOffre = c.idOffre AND c.idProf = :idEns " +
                 "WHERE c.idOffre IS NULL");
-        q.setParameter("id", id);
+        q.setParameter(Constantes.ID_ENS, idEns);
         return q.getResultList();
     }
-
-    public Integer getEntrepriseIdByOffreId(int id){
+    public Integer chercheEntrepriseIdParOffreId(int idOffre){
         Query q = em.createQuery("SELECT o.idEntreprise FROM OffreEmploiEntity o WHERE o.idOffre = :idOffre");
-        q.setParameter("idOffre", id);
+        q.setParameter(Constantes.ID_OFFRE, idOffre);
+        Integer idEntreprise ;
         try {
-            Integer nombreCandidatures = (Integer) q.getSingleResult();
-            return nombreCandidatures;
+            idEntreprise = (Integer) q.getSingleResult();
         } catch (Exception e) {
-            return null; // Aucune entreprise trouvée pour l'IDOffre donné.
+            idEntreprise = null ;
         }
+        return idEntreprise;
     }
-
-    public List<OffreEmploiEntity> getToutesLesOffresCandidater(int id) {
-        Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e, CandidatureEntity c WHERE e.idOffre = c.idOffre AND c.idProf = :id");
-        q.setParameter("id", id);
+    public List<OffreEmploiEntity> chercheOffresPourUnRecruteur(int idRec) {
+        Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e, RecrutementEntity r WHERE e.idOffre = r.idOffre AND r.idRecruteur = :idRec");
+        q.setParameter(Constantes.ID_REC, idRec);
         return q.getResultList();
     }
-
-
-    public List<OffreEmploiEntity> getToutesLesOffresPourUnRecruteur(int id) {
-        Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e, RecrutementEntity r WHERE e.idOffre = r.idOffre AND r.idRecruteur = :id");
-        q.setParameter("id", id);
-        return q.getResultList();
-    }
-
-    public void modifieOffre(int idOffre, String initule, String description) {
+    public void modificationOffre(OffreEmploiEntity offreEmploiEntity) {
         em.getTransaction().begin();
-        Query query = em.createQuery("UPDATE OffreEmploiEntity e SET e.intitule = :initule , e.description = :description WHERE e.idOffre = :idOffre");
-        query.setParameter("initule", initule);
-        query.setParameter("description", description);
-        query.setParameter("idOffre", idOffre);
-        em.flush();
-        em.clear();
-
-        query.executeUpdate();
+        em.merge(offreEmploiEntity);
         em.getTransaction().commit();
     }
-
-    public void insererOffre(OffreEmploiEntity nouvelleOffre) {
+    public void insertionOffre(OffreEmploiEntity nouvelleOffre) {
         em.getTransaction().begin();
         em.persist(nouvelleOffre);
         em.getTransaction().commit();
     }
-    public void supprimerOffre(int id) {
+    public void suppressionOffre(int id) {
         em.getTransaction().begin();
         OffreEmploiEntity offre = em.find(OffreEmploiEntity.class, id);
         em.remove(offre);
         em.getTransaction().commit();
     }
-
-    public OffreEmploiEntity getOffreById(int id){
+    public OffreEmploiEntity chercheOffreParId(int id){
         OffreEmploiEntity offre = em.find(OffreEmploiEntity.class, id);
         return offre;
     }

@@ -28,12 +28,12 @@ public class InscriptionServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // Récupérez les données du formulaire d'inscription
-        String login = request.getParameter(Constantes.CHAMP_LOGIN);
-        String motDePasse = request.getParameter(Constantes.CHAMP_MDP);
-        String nom = request.getParameter(Constantes.CHAMP_NOM);
-        String prenom = request.getParameter(Constantes.CHAMP_PRENOM);
-        String email = request.getParameter(Constantes.CHAMP_EMAIL);
-        String role = request.getParameter(Constantes.CHAMP_ROLE);
+        String login = request.getParameter(Constantes.PSEUDO);
+        String motDePasse = request.getParameter(Constantes.MOT_DE_PASSE);
+        String nom = request.getParameter(Constantes.NOM);
+        String prenom = request.getParameter(Constantes.PRENOM);
+        String email = request.getParameter(Constantes.EMAIL);
+        String role = request.getParameter(Constantes.ROLE);
         int roleId = Integer.parseInt(role);
 
         UtilisateurEntity nouvelUtilisateur = new UtilisateurEntity();
@@ -44,13 +44,13 @@ public class InscriptionServlet extends HttpServlet {
         nouvelUtilisateur.setEmail(email);
         nouvelUtilisateur.setRole(roleId);
 
-        UtilisateurSessionBean.insererUtilisateur(nouvelUtilisateur);
+        UtilisateurSessionBean.insertionUtilisateur(nouvelUtilisateur);
         if(roleId == 1){
             EnseignantEntity enseignant = new EnseignantEntity(nouvelUtilisateur.getIdUtilisateur());
-            enseignantSessionBean.insererEnseignant(enseignant);
+            enseignantSessionBean.insertionEnseignant(enseignant);
         }else if(roleId == 2){
             RecruteurEntity recruteur = new RecruteurEntity(nouvelUtilisateur.getIdUtilisateur());
-            recruteurSessionBean.insererRecruteur(recruteur);
+            recruteurSessionBean.insertionRecruteur(recruteur);
         }
 
         request.getRequestDispatcher(Constantes.INDEX_PATH).forward(request, response);

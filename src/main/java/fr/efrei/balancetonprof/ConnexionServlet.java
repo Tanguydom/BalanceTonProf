@@ -21,12 +21,11 @@ public class ConnexionServlet extends HttpServlet {
 
         aiguillerVersLaProchainePage(request, response);
     }
-
     public boolean verifierInfosConnexion(Utilisateur unUtilisateur){
-        int id = UtilisateurSessionBean.utilisateurExist(unUtilisateur.getLoginSaisi(), unUtilisateur.getMotDePasseSaisi());
+        int id = UtilisateurSessionBean.verificationExistanceUtilisateur(unUtilisateur.getLoginSaisi(), unUtilisateur.getMotDePasseSaisi());
         boolean check = id != -1;
         if(check){
-            UtilisateurEntity utilisateurEntity = UtilisateurSessionBean.getUtilisateurById(id);
+            UtilisateurEntity utilisateurEntity = UtilisateurSessionBean.chercheUtilisateurById(id);
             unUtilisateur.setId_utilisateur(id);
             unUtilisateur.setNom(utilisateurEntity.getNom());
             unUtilisateur.setPrenom(utilisateurEntity.getPrenom());
@@ -38,12 +37,11 @@ public class ConnexionServlet extends HttpServlet {
         return check;
     }
 
-
     public void placerUtilisateurDansContexte(HttpServletRequest request){
         unUtilisateur = new Utilisateur();
 
-        unUtilisateur.setLoginSaisi(request.getParameter(Constantes.CHAMP_LOGIN));
-        unUtilisateur.setMotDePasseSaisi(request.getParameter(Constantes.CHAMP_MDP));
+        unUtilisateur.setLoginSaisi(request.getParameter(Constantes.PSEUDO));
+        unUtilisateur.setMotDePasseSaisi(request.getParameter(Constantes.MOT_DE_PASSE));
 
         request.setAttribute(Constantes.UTILISATEUR, unUtilisateur);
     }

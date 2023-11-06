@@ -33,40 +33,40 @@
           <h2 class="form-title">Inscription</h2>
           <div class="grid-2">
             <div class="form-group full">
-              <label for="champNom">Nom</label>
-              <input class="form-control" placeholder="Nom" name="champNom" id="champNom" required>
+              <label for="nom">Nom</label>
+              <input class="form-control" placeholder="Nom" name="nom" id="nom" required>
             </div>
 
             <div class="form-group full">
-              <label for="champPrenom">Prénom</label>
-              <input class="form-control" placeholder="Prénom" name="champPrenom" id="champPrenom" required>
+              <label for="prenom">Prénom</label>
+              <input class="form-control" placeholder="Prénom" name="prenom" id="prenom" required>
             </div>
           </div>
           <div class="form-group full">
-            <label for="champLogin">Nom d'utilisateur</label>
-            <input class="form-control" placeholder="Nom d'utilisateur" name="champLogin" autofocus="" id="champLogin" required>
+            <label for="pseudo">Nom d'utilisateur</label>
+            <input class="form-control" placeholder="Nom d'utilisateur" name="pseudo" autofocus="" id="pseudo" required>
           </div>
 
           <div class="form-group full">
-            <label for="champMotDePasse">Mot de passe</label>
-            <input class="form-control" placeholder="Mot de passe" name="champMotDePasse" type="password" id="champMotDePasse" required>
+            <label for="motDePasse">Mot de passe</label>
+            <input class="form-control" placeholder="Mot de passe" name="motDePasse" type="password" id="motDePasse" required>
           </div>
 
           <div class="form-group full">
-            <label for="champEmail">Email</label>
-            <input class="form-control" placeholder="Email" name="champEmail" type="email" id="champEmail" required>
+            <label for="email">Email</label>
+            <input class="form-control" placeholder="Email" name="email" type="email" id="email" required>
           </div>
 
           <div class="form-group full">
-            <label for="champRole">Rôle :</label>
-            <select class="form-control" name="champRole" id="champRole" required>
+            <label for="role">Rôle :</label>
+            <select class="form-control" name="role" id="role" required>
               <option value="">Sélectionnez un rôle</option>
               <option value="1">Professeur</option>
               <option value="2">Recruteur</option>
             </select>
           </div>
 
-          <input type="submit" name="action" value="Inscription" class="btn btn-primary"/>
+          <input type="submit" name="action" value="inscription" class="btn btn-primary"/>
         </form>
 
         <p class="text-muted">Vous avez déjà un compte ? &nbsp; <a href="index.jsp" class="">Se connecter</a></p>

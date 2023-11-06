@@ -31,12 +31,12 @@
                 <form action="connexion-servlet" method="post">
                     <h2 class="form-title">Connexion</h2>
                     <div class="form-group">
-                        <label for="champLogin">Nom d'utilisateur</label>
-                        <input placeholder="Entrer le nom d'utilisateur" name="champLogin" id="champLogin" autofocus="">
+                        <label for="pseudo">Nom d'utilisateur</label>
+                        <input placeholder="Entrer le nom d'utilisateur" name="pseudo" id="pseudo" autofocus="">
                     </div>
                     <div class="form-group">
-                        <label for="champMotDePasse">Mot de passe</label>
-                        <input placeholder="Entrer le mot de passe" name="champMotDePasse" id="champMotDePasse" type="password">
+                        <label for="motDePasse">Mot de passe</label>
+                        <input placeholder="Entrer le mot de passe" name="motDePasse" id="motDePasse" type="password">
                     </div>
 
                     <div class="register">
@@ -44,7 +44,7 @@
                     </div>
 
 
-                    <input type="submit" name="action" value="Login" class="btn btn-primary"/>
+                    <input type="submit" name="action" value="login" class="btn btn-primary"/>
                 </form>
             </div>
         </div>

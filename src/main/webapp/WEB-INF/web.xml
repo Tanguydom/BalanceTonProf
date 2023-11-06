@@ -35,4 +35,24 @@
         <url-pattern>/profil-servlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>offreServlet</servlet-name>
+        <servlet-class>fr.efrei.balancetonprof.OffreServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>offreServlet</servlet-name>
+        <url-pattern>/offre-servlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>candidatureServlet</servlet-name>
+        <servlet-class>fr.efrei.balancetonprof.CandidatureServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>candidatureServlet</servlet-name>
+        <url-pattern>/candidature-servlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

@@ -1,44 +1,36 @@
 package fr.efrei.balancetonprof.model;
 
+import fr.efrei.balancetonprof.utils.Constantes;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Stateless
 public class RecrutementSessionBean {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("projet_java_avance");
     EntityManager em = entityManagerFactory.createEntityManager();
-    public List<RecruteurEntity> getTousLesRecrutements(){
-        Query q = em.createQuery("select e from RecruteurEntity e");
-        return  q.getResultList();
-    }
-
-    public Integer getIdRecruteurPourOffre(int idOffre) {
+    public Integer chercheIdRecruteurParIdOffre(int idOffre) {
         Query q = em.createQuery("SELECT c.idRecruteur FROM RecrutementEntity c WHERE c.idOffre = :idOffre");
-        q.setParameter("idOffre", idOffre);
-
+        q.setParameter(Constantes.ID_OFFRE, idOffre);
+        Integer idRecruteur;
         try {
-            Integer idProf = (Integer) q.getSingleResult();
-            return idProf;
+            idRecruteur = (Integer) q.getSingleResult();
+            return idRecruteur;
         } catch (Exception e) {
-            return null; // Aucune candidature trouvée pour l'IDOffre donné.
+            idRecruteur = null;
         }
+        return idRecruteur;
     }
-
-    public void insererRecrutement(RecrutementEntity recrutementEntity) {
+    public void insertionRecrutement(RecrutementEntity recrutementEntity) {
         em.getTransaction().begin();
         em.persist(recrutementEntity);
         em.getTransaction().commit();
-        //insertion table recrutement
     }
-    public void supprimerRecrutement(int idOffre, int idRecruteur) {
+    public void suppressionRecrutement(int idOffre, int idRec) {
         em.getTransaction().begin();
-        Query query = em.createQuery("DELETE FROM RecrutementEntity r WHERE r.idRecruteur = :idRecruteur AND r.idOffre = :idOffre");
-        query.setParameter("idRecruteur", idRecruteur);
-        query.setParameter("idOffre", idOffre);
+        Query query = em.createQuery("DELETE FROM RecrutementEntity r WHERE r.idRecruteur = :idRec AND r.idOffre = :idOffre");
+        query.setParameter(Constantes.ID_REC, idRec);
+        query.setParameter(Constantes.ID_OFFRE, idOffre);
         query.executeUpdate();
         em.getTransaction().commit();
     }
-
 }
