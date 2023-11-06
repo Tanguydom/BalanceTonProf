@@ -15,11 +15,6 @@ public class RecruteurEntity {
     @Basic
     @Column(name = "id_utilisateur", nullable = true)
     private Integer idUtilisateur;
-
-    public RecruteurEntity(int idUtilisateur) {
-        this.idUtilisateur = idUtilisateur;
-    }
-
     public RecruteurEntity() {
 
     }

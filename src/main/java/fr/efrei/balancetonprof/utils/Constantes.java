@@ -9,6 +9,7 @@ public final class Constantes {
     public static final String LIST_REC = "listeRecruteurs";
     public static final String LIST_OFFRE = "listeOffres";
     public static final String LIST_CANDIDATURE ="listeCandidatures";
+    public static final String LIST_ENTREPRISE ="listeEntreprises";
     public static final String ID_UTI = "idUti";
     public static final String ID_ENS = "idEns";
     public static final String ID_REC = "idRec";
@@ -16,6 +17,8 @@ public final class Constantes {
     public static final String ENSEIGNANT = "enseignant";
     public static final String RECRUTEUR = "recruteur";
     public static final String ENTREPRISE = "entreprise";
+    public static final String ID_ENTREPRISE = "idEntreprise";
+    public static final String CHOISIR_ENTREPRISE = "choisirEntreprise";
     public static final String PSEUDO = "pseudo";
     public static final String MOT_DE_PASSE = "motDePasse";
     public static final String NOM = "nom";

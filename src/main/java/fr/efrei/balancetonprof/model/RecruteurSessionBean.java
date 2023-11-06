@@ -21,5 +21,10 @@ public class RecruteurSessionBean {
                 .setParameter(Constantes.ID_UTI, idUti)
                 .getSingleResult();
     }
+    public void changementRecruteur(RecruteurEntity recruteur) {
+        em.getTransaction().begin();
+        em.merge(recruteur);
+        em.getTransaction().commit();
+    }
 }
 

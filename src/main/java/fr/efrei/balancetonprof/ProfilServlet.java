@@ -44,6 +44,9 @@ public class ProfilServlet extends HttpServlet {
         int userId = utilisateur.getId_utilisateur();
         request.setAttribute(Constantes.UTILISATEUR, utilisateur);
 
+        List<EntrepriseEntity> entrepriseEntityList = entrepriseSessionBean.getListEntreprise();
+        request.setAttribute(Constantes.LIST_ENTREPRISE, entrepriseEntityList);
+
         String path = Constantes.PROFIL_PATH; ;
 
         String action = request.getParameter(Constantes.ACTION);
@@ -85,8 +88,7 @@ public class ProfilServlet extends HttpServlet {
                 break ;
             case 1 : //cas enseignant
                 switch (action){
-                    case Constantes.SAUVEGARDE_DETAIL :
-                        sauvegardeDetails(request); break;
+                    case Constantes.SAUVEGARDE_DETAIL : sauvegardeDetails(request); break;
                     default:break;
                 }
                 EnseignantEntity enseignant = enseignantSessionBean.chercheEnseignantParIdUtilisateur(userId);
@@ -95,10 +97,20 @@ public class ProfilServlet extends HttpServlet {
 
             case 2 : //cas recruteur
                 RecruteurEntity recruteur = recruteurSessionBean.chercheRecruteurParIdUtilisateur(userId);
-                EntrepriseEntity entrepriseEntity = entrepriseSessionBean.chercheEntrepriseParId(recruteur.getIdEntreprise());
-
+                Integer idEntreprise;
+                if(action.equals(Constantes.CHOISIR_ENTREPRISE)){
+                    idEntreprise = Integer.valueOf(request.getParameter(Constantes.ID_ENTREPRISE));
+                    recruteur.setIdEntreprise(idEntreprise);
+                    recruteurSessionBean.changementRecruteur(recruteur);
+                }else{
+                    idEntreprise = recruteur.getIdEntreprise();
+                }
+                EntrepriseEntity entrepriseEntity;
+                if(idEntreprise != null){
+                    entrepriseEntity = entrepriseSessionBean.chercheEntrepriseParId(recruteur.getIdEntreprise());
+                    request.setAttribute(Constantes.ENTREPRISE, entrepriseEntity);
+                }
                 request.setAttribute(Constantes.RECRUTEUR, recruteur);
-                request.setAttribute(Constantes.ENTREPRISE, entrepriseEntity);
                 break;
             default:break;
         }

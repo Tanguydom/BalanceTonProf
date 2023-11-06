@@ -128,34 +128,48 @@
                         </form>
                     </c:when>
                     <c:when test="${utilisateur.role == 2}">
-                    <form class="form" action="profil-servlet" method="post">
-                        <h2 class="mt-4">Entreprise ratachée</h2>
-                            <div class="form-group">
-                                <label for="nomEntreprise">Nom:</label>
-                                <input type="text" class="form-control" id="nomEntreprise" name="nomEntreprise" value="${entreprise.nom}" readonly>
-                            </div>
+                        <c:choose>
+                            <c:when test="${not empty entreprise}">
+                                <form class="form" action="profil-servlet" method="post">
+                            <h2 class="mt-4">Entreprise ratachée</h2>
+                                <div class="form-group">
+                                    <label for="nomEntreprise">Nom:</label>
+                                    <input type="text" class="form-control" id="nomEntreprise" name="nomEntreprise" value="${entreprise.nom}" readonly>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="emailEntreprise">Email:</label>
-                                <input type="text" class="form-control" id="emailEntreprise" name="emailEntreprise" value="${entreprise.email}" readonly>
-                            </div>
+                                <div class="form-group">
+                                    <label for="emailEntreprise">Email:</label>
+                                    <input type="text" class="form-control" id="emailEntreprise" name="emailEntreprise" value="${entreprise.email}" readonly>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="telephoneEntreprise">Téléphone:</label>
-                                <input type="text" class="form-control" id="telephoneEntreprise" name="telephoneEntreprise" value="${entreprise.telephone}" readonly>
-                            </div>
+                                <div class="form-group">
+                                    <label for="telephoneEntreprise">Téléphone:</label>
+                                    <input type="text" class="form-control" id="telephoneEntreprise" name="telephoneEntreprise" value="${entreprise.telephone}" readonly>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="siteWebEntreprise">Site Web:</label>
-                                <input type="text" class="form-control" id="siteWebEntreprise" name="siteWebEntreprise" value="${entreprise.siteWeb}" readonly>
-                            </div>
+                                <div class="form-group">
+                                    <label for="siteWebEntreprise">Site Web:</label>
+                                    <input type="text" class="form-control" id="siteWebEntreprise" name="siteWebEntreprise" value="${entreprise.siteWeb}" readonly>
+                                </div>
 
-                            <div class="form-group">
-                                <label for="adresseEntreprise">Adresse:</label>
-                                <input type="text" class="form-control" id="adresseEntreprise" name="adresseEntreprise" value="${entreprise.adresse}" readonly>
-                            </div>
+                                <div class="form-group">
+                                    <label for="adresseEntreprise">Adresse:</label>
+                                    <input type="text" class="form-control" id="adresseEntreprise" name="adresseEntreprise" value="${entreprise.adresse}" readonly>
+                                </div>
 
-                    </form>
+                        </form>
+                            </c:when>
+                            <c:otherwise>
+                                <form class="form" action="profil-servlet" method="post">
+                                    <select name="idEntreprise">
+                                        <c:forEach items="${listeEntreprises}" var="entreprise">
+                                            <option value="${entreprise.idEntreprise}">${entreprise.nom}</option>
+                                        </c:forEach>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary" name="action" value="choisirEntreprise">Choisir</button>
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
                     </c:when>
                     <c:otherwise>
                         <p class="mt-4">Rôle non reconnu.</p>

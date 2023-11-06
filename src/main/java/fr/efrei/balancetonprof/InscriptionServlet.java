@@ -46,10 +46,12 @@ public class InscriptionServlet extends HttpServlet {
 
         UtilisateurSessionBean.insertionUtilisateur(nouvelUtilisateur);
         if(roleId == 1){
-            EnseignantEntity enseignant = new EnseignantEntity(nouvelUtilisateur.getIdUtilisateur());
+            EnseignantEntity enseignant = new EnseignantEntity();
+            enseignant.setIdUtilisateur(nouvelUtilisateur.getIdUtilisateur());
             enseignantSessionBean.insertionEnseignant(enseignant);
         }else if(roleId == 2){
-            RecruteurEntity recruteur = new RecruteurEntity(nouvelUtilisateur.getIdUtilisateur());
+            RecruteurEntity recruteur = new RecruteurEntity();
+            recruteur.setIdUtilisateur(nouvelUtilisateur.getIdUtilisateur());
             recruteurSessionBean.insertionRecruteur(recruteur);
         }
 

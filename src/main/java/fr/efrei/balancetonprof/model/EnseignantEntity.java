@@ -47,11 +47,6 @@ public class EnseignantEntity {
     public EnseignantEntity(){
 
     }
-
-    public EnseignantEntity(int idUtilisateur) {
-        this.idUtilisateur = idUtilisateur;
-    }
-
     public int getIdEnseignant() {
         return idEnseignant;
     }
