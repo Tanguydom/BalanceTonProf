@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Offre {
     private int idOffre;
+    private Integer idRecruteur;
     private String intitule;
     private Integer idEntreprise;
     private String description;
@@ -34,6 +35,14 @@ public class Offre {
 
     public void setIdOffre(int idOffre) {
         this.idOffre = idOffre;
+    }
+
+    public Integer getIdRecruteur() {
+        return idRecruteur;
+    }
+
+    public void setIdRecruteur(Integer idRecruteur) {
+        this.idRecruteur = idRecruteur;
     }
 
     public String getIntitule() {

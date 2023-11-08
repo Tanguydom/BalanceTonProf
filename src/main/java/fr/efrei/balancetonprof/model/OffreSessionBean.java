@@ -13,6 +13,10 @@ import java.util.List;
 public class OffreSessionBean {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("projet_java_avance");
     EntityManager em = entityManagerFactory.createEntityManager();
+    public List<OffreEmploiEntity> getTousLesOffres(){
+        Query q = em.createQuery("select e from OffreEmploiEntity e");
+        return  q.getResultList();
+    }
     public List<OffreEmploiEntity> chercheOffresNonCandidater(int idEns) {
         Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e " +
                 "LEFT JOIN CandidatureEntity c ON e.idOffre = c.idOffre AND c.idProf = :idEns " +

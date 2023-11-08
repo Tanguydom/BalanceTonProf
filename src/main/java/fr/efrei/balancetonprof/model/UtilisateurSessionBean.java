@@ -38,7 +38,13 @@ public class UtilisateurSessionBean {
         em.remove(utilisateur);
         em.getTransaction().commit();
     }
-
+    public void suppresionProfesseur(int idEns){
+        em.getTransaction().begin();
+        Query q = em.createQuery("DELETE FROM EnseignantEntity e WHERE e.idUtilisateur = :idEns");
+        q.setParameter(Constantes.ID_ENS, idEns);
+        q.executeUpdate();
+        em.getTransaction().commit();
+    }
     public List<UtilisateurEntity> getTousLesAdministrateurs(int id){ // role = 0
         Query q = em.createQuery("select e from UtilisateurEntity e where e.role = 0 and e.idUtilisateur != :id");
         q.setParameter("id", id); // Liez le paramètre 'id' ici
@@ -55,5 +61,27 @@ public class UtilisateurSessionBean {
     public List<UtilisateurEntity> getTousLesRecruteurs(){ // role = 2
         Query q = em.createQuery("select e from UtilisateurEntity e where e.role = 2");
         return  q.getResultList();
+    }
+
+    public void suppresionCandidature(int idEns){
+        Query q = em.createQuery("DELETE FROM CandidatureEntity e WHERE e.idProf = :idEns");
+        em.getTransaction().begin();
+        q.setParameter(Constantes.ID_ENS, idEns);
+        q.executeUpdate();
+        em.getTransaction().commit();
+    }
+    public void mettreProfNullOnRecruteur(int idRec){
+        Query q = em.createQuery("UPDATE RecrutementEntity r SET r.idRecruteur = NULL WHERE r.idRecruteur = :idRecruteur");
+        em.getTransaction().begin();
+        q.setParameter(Constantes.ID_RECRUCTEUR, idRec);
+        q.executeUpdate();
+        em.getTransaction().commit();
+    }
+    public void suppresionRecruteur(int idRec){
+        Query q = em.createQuery("DELETE FROM RecruteurEntity e WHERE e.idUtilisateur = :idRecruteur");
+        em.getTransaction().begin();
+        q.setParameter(Constantes.ID_RECRUCTEUR, idRec);
+        q.executeUpdate();
+        em.getTransaction().commit();
     }
 }

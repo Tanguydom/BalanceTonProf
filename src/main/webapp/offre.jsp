@@ -27,12 +27,27 @@
                 <button type="submit" class="btn btn-primary" name="action" value="navOffre">Offre</button>
             </form>
         </li>
+        <c:choose>
+            <c:when test="${utilisateur.role != 0}">
         <li class="nav-item">
             <form action="candidature-servlet" method="post">
                 <button type="submit" class="btn btn-primary" name="action" value="navCandidat">Candidature</button>
             </form>
         </li>
-
+            </c:when>
+            <c:when test="${utilisateur.role == 0}">
+                <li class="nav-item">
+                    <form action="profil-servlet" method="post">
+                        <button type="submit" class="btn btn-primary" name="action" value="navProfilProf">Gestion des professeurs</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="profil-servlet" method="post">
+                        <button type="submit" class="btn btn-primary" name="action" value="navProfilRec">Gestion des recruteurs</button>
+                    </form>
+                </li>
+            </c:when>
+        </c:choose>
     </ul>
     <ul class="nav-links">
         <li><a href="index.jsp" class="btn btn-primary">Déconnexion</a></li>
@@ -42,7 +57,7 @@
     <div class="row">
         <div class="col-md-4">
             <c:choose>
-                <c:when test="${utilisateur.role == 2}">
+                <c:when test="${utilisateur.role != 1}">
                         <div class="container">
                             <h2 class="mt-5">Créer une Offre d'Emploi</h2>
                             <form action="offre-servlet" method="POST">
@@ -55,6 +70,25 @@
                                     <label for="coe_description">Description de l'offre:</label>
                                     <textarea class="form-control" id="coe_description" name="coe_description" required></textarea>
                                 </div>
+                                <c:choose>
+                                    <c:when test="${utilisateur.role == 0}">
+                                        <div>
+                                            <select name="comboRec">
+                                                <c:forEach items="${listeRecruteurs}" var="rec">
+                                                    <option value="${rec.idUtilisateur}">${rec.nom} ${rec.prenom}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <select name="comboEntr">
+                                                <c:forEach items="${listeEntreprises}" var="entre">
+                                                    <option value="${entre.idEntreprise}">${entre.nom}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </c:when>
+                                </c:choose>
+
 
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary" name="action" value="ajouter_offre">Créer l'offre</button>
@@ -89,9 +123,10 @@
                                     <button type="submit" class="btn btn-success" name="action" value="candidater">Candidater</button>
                                 </form>
                             </c:when>
-                            <c:when test="${utilisateur.role == 2}">
+                            <c:when test="${utilisateur.role != 1}">
                                 <!-- Champs modifiables pour le rôle 2 -->
                                 <form action="offre-servlet" method="post">
+                                    <input type="hidden" name="idEntreprise" value="${offre.idEntreprise}">
                                     <label for="intitule">Initule:</label>
                                     <input type="text" class="form-control" id="intitule" name="intitule" value="${offre.intitule}">
                                     <label for="nomEntreprise">Nom de l'entreprise:</label>
@@ -100,10 +135,24 @@
                                     <input type="text" class="form-control" id="description" name="description" value="${offre.description}">
                                     <label for="nbCandidat">Nombre de candidat:</label>
                                     <input type="text" class="form-control" id="nbCandidat" name="nbCandidat" value="${offre.nbCandidat}" readonly>
-                                    <label for="emailRecruteur">Email du recruteur:</label>
-                                    <input type="text" class="form-control" id="emailRecruteur" name="emailRecruteur" value="${offre.emailRecruteur}"readonly>
-                                    <label for="telephoneRecruteur">Telephone du recruteur:</label>
-                                    <input type="text" class="form-control" id="telephoneRecruteur" name="telephoneRecruteur" value="${offre.telephoneRecruteur}"readonly>
+                                <c:choose>
+                                    <c:when test="${empty offre.idRecruteur && utilisateur.role == 0}">
+                                        <div>
+                                            <select name="comboRec2">
+                                                <c:forEach items="${listeRecruteurs}" var="rec">
+                                                    <option value="${rec.idUtilisateur}">${rec.nom} ${rec.prenom}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary" name="action" value="attribuerRecruteur">Assigné un recruteur</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <label for="emailRecruteur">Email du recruteur:</label>
+                                        <input type="text" class="form-control" id="emailRecruteur" name="emailRecruteur" value="${offre.emailRecruteur}"readonly>
+                                        <label for="telephoneRecruteur">Telephone du recruteur:</label>
+                                        <input type="text" class="form-control" id="telephoneRecruteur" name="telephoneRecruteur" value="${offre.telephoneRecruteur}"readonly>
+                                    </c:otherwise>
+                                </c:choose>
                                     <label for="siteWebEntreprise">Site web de l'entreprise:</label>
                                     <input type="text" class="form-control" id="siteWebEntreprise" name="siteWebEntreprise" value="${offre.siteWebEntreprise}"readonly>
                                     <label for="adresseEntreprise">Adresse de l'entreprise:</label>

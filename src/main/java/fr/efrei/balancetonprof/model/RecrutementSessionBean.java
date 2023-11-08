@@ -14,21 +14,30 @@ public class RecrutementSessionBean {
         Integer idRecruteur;
         try {
             idRecruteur = (Integer) q.getSingleResult();
-            return idRecruteur;
         } catch (Exception e) {
             idRecruteur = null;
         }
         return idRecruteur;
     }
+    public RecrutementEntity getRecrutementParIdOffre(int idOffre) {
+        return em.createQuery("SELECT c FROM RecrutementEntity c WHERE c.idOffre = :idOffre", RecrutementEntity.class)
+                .setParameter(Constantes.ID_OFFRE, idOffre)
+                .getSingleResult();
+    }
+
     public void insertionRecrutement(RecrutementEntity recrutementEntity) {
         em.getTransaction().begin();
         em.persist(recrutementEntity);
         em.getTransaction().commit();
     }
-    public void suppressionRecrutement(int idOffre, int idRec) {
+    public void modificationRecrutement(RecrutementEntity recrutementEntity) {
         em.getTransaction().begin();
-        Query query = em.createQuery("DELETE FROM RecrutementEntity r WHERE r.idRecruteur = :idRec AND r.idOffre = :idOffre");
-        query.setParameter(Constantes.ID_REC, idRec);
+        em.merge(recrutementEntity);
+        em.getTransaction().commit();
+    }
+    public void suppressionRecrutement(int idOffre) {
+        em.getTransaction().begin();
+        Query query = em.createQuery("DELETE FROM RecrutementEntity r WHERE  r.idOffre = :idOffre");
         query.setParameter(Constantes.ID_OFFRE, idOffre);
         query.executeUpdate();
         em.getTransaction().commit();

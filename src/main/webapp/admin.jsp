@@ -4,14 +4,52 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 </head>
 <body>
-<h2>Profil de l'Utilisateur</h2>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <form action="profil-servlet" method="post">
+                <button type="submit" class="btn btn-primary" name="action" value="navProfil">Profil</button>
+            </form>
+        </li>
+        <c:choose>
+            <c:when test="${utilisateur.role == 0}">
+                <li class="nav-item">
+                    <form action="profil-servlet" method="post">
+                        <button type="submit" class="btn btn-primary" name="action" value="navProfilProf">Gestion des professeurs</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form action="profil-servlet" method="post">
+                        <button type="submit" class="btn btn-primary" name="action" value="navProfilRec">Gestion des recruteurs</button>
+                    </form>
+                </li>
+            </c:when>
+            <c:when test="${utilisateur.role != 0}">
+                <li class="nav-item">
+                    <form action="candidature-servlet" method="post">
+                        <button type="submit" class="btn btn-primary" name="action" value="navCandidat">Candidature</button>
+                    </form>
+                </li>
+            </c:when>
+        </c:choose>
+        <li class="nav-item">
+            <form action="offre-servlet" method="post">
+                <button type="submit" class="btn btn-primary" name="action" value="navOffre">Offre</button>
+            </form>
+        </li>
+    </ul>
+    <ul class="nav-links">
+        <li><a href="index.jsp" class="btn btn-primary">Déconnexion</a></li>
+    </ul>
+</nav>
+<h2 class="mt-5">Profil de l'Utilisateur</h2>
 
 <div class="information-primaire-utilisateur">
     <form class="form" action="profil-servlet" method="post">
-        <h2 class="mt-5">Profil de l'Utilisateur</h2>
         <div class="form-group">
             <label for="pseudo">Pseudo:</label>
             <input type="text" class="form-control" id="pseudo" name="pseudo" value="${utilisateur.loginSaisi}">
@@ -22,7 +60,7 @@
         </div>
         <div class="form-group">
             <label for="prenom">Prénom:</label>
-            <input type="text" class="form-control" id="prenom" name="prenom" value="${utilisateur.prenom}">
+            <input type="text" class="form-control" id="prenom" name "prenom" value="${utilisateur.prenom}">
         </div>
         <div class="form-group">
             <label for="motDePasse">Mot de passe:</label>
@@ -44,135 +82,43 @@
     </form>
 </div>
 
-
 <h2>Administrateurs</h2>
-<div class="modal" id="ajouterAdminModal">
-    <div class="modal-content">
+<div id="ajouterAdminModal">
+    <div>
         <h2>Ajouter un admin</h2>
         <form action="profil-servlet" method="post">
-            <input type="text" name="pseudo" placeholder="Pseudo" required><br>
-            <input type="password" name="motDePasse" placeholder="Mot de passe" required><br>
-            <input type="text" name="nom" placeholder="Nom" required><br>
-            <input type="text" name="prenom" placeholder="Prenom" required><br>
-            <input type="text" name="email" placeholder="Email" ><br>
-            <input type="text" name="telephone" placeholder="Telephone" ><br>
+            <input type="text" name="pseudo" class="form-control" placeholder="Pseudo" required><br>
+            <input type="password" name="motDePasse" class="form-control" placeholder="Mot de passe" required><br>
+            <input type="text" name="nom" class="form-control" placeholder="Nom" required><br>
+            <input type="text" name="prenom" class="form-control" placeholder="Prenom" required><br>
+            <input type="text" name="email" class="form-control" placeholder="Email" ><br>
+            <input type="text" name="telephone" class="form-control" placeholder="Telephone" ><br>
             <input type="submit" name="action" value="ajouter_admin" class="btn btn-primary"/>
         </form>
     </div>
 </div>
 <c:if test="${empty listeAdministrateurs}">
-    <p>Aucun administrateur trouvé.</p>
+    <p>Aucun administrateur trouvé. "${listeAdministrateurs} vbnjk"</p>
 </c:if>
-<form action="profil-servlet" method="post">
-    <c:forEach var="admin" items="${listeAdministrateurs}" varStatus="loop">
-        <input type="text" class="form-control" name="pseudo" value="${admin.pseudo}">
-        <input type="text" class="form-control" name="motDePasse" value="${admin.motDePasse}">
-        <input type="text" class="form-control" name="nom" value="${admin.nom}">
-        <input type="text" class="form-control" name="prenom" value="${admin.prenom}">
-        <input type="text" class="form-control" name="email" value="${admin.email}">
-        <input type="text" class="form-control" name="telephone" value="${admin.telephone}">
-        <input type="text" class="form-control" name="site" value="${admin.siteWeb}">
-        <input type="hidden" name="id" value="${admin.idUtilisateur}" />
-        <button type="submit" name="action" value="sauvegardeUtilisateurs">Sauvegarder</button>
-        <button type="submit" name="action" value="supprimer_utilisateur">Supprimer</button>
+<c:forEach var="admin" items="${listeAdministrateurs}">
+    <form action="profil-servlet" method="post">
+        <input type="text" class="form-control" name="adminPseudo" value="${admin.pseudo}">
+        <input type="text" class="form-control" name="adminMotDePasse" value="${admin.motDePasse}">
+        <input type="text" class="form-control" name="adminNom" value="${admin.nom}">
+        <input type="text" class="form-control" name="adminPrenom" value="${admin.prenom}">
+        <input type="text" class="form-control" name="adminEmail" value="${admin.email}">
+        <input type="text" class="form-control" name="adminTelephone" value="${admin.telephone}">
+        <input type="text" class="form-control" name="adminSite" value="${admin.siteWeb}">
+        <input type="hidden" name="adminId" value="${admin.idUtilisateur}" />
+        <button type="submit" name="action" value="sauvegardeAdmin" class="btn btn-primary">Sauvegarder</button>
+        <button type="submit" name="action" value="supprimerAdmin" class="btn btn-danger">Supprimer</button>
         <br>
-    </c:forEach>
-</form>
-
-<h2>Professeur</h2>
-<div class="modal" id="ajouterAdminModal">
-    <div class="modal-content">
-        <h2>Ajouter un Professeur</h2>
-        <form action="profil-servlet" method="post">
-            <input type="text" name="pseudo" placeholder="Pseudo" required><br>
-            <input type="password" name="motDePasse" placeholder="Mot de passe" required><br>
-            <input type="text" name="nom" placeholder="Nom" required><br>
-            <input type="text" name="prenom" placeholder="Prenom" required><br>
-            <input type="text" name="email" placeholder="email" ><br>
-            <input type="text" name="telephone" placeholder="Telephone" ><br>
-            <input type="submit" name="action" value="ajouter_prof" class="btn btn-primary"/>
-        </form>
-    </div>
-</div>
-<c:if test="${empty listeProfesseurs}">
-    <p>Aucun professeur trouvé.</p>
-</c:if>
-<c:forEach var="prof" items="${listeProfesseurs}">
-    <input type="text" class="form-control" name="pseudo" value="${prof.pseudo}">
-    <input type="text" class="form-control" name="pseudo" value="${prof.motDePasse}">
-    <input type="text" class="form-control" name="nom" value="${prof.nom}">
-    <input type="text" class="form-control" name="prenom" value="${prof.prenom}">
-    <input type="text" class="form-control" name="email" value="${prof.email}">
-    <input type="text" class="form-control" name="telephone" value="${prof.telephone}">
-    <input type="text" class="form-control" name="site" value="${prof.site}">
-
-    <form action="profil-servlet" method="post">
-        <input type="hidden" name="id" value="${prof.idUtilisateur}" />
-        <input type="hidden" name="action" value="" />
-        <input type="submit" value="sauvegarder" />
-    </form>
-
-    <form action="profil-servlet" method="post">
-        <input type="hidden" name="id" value="${prof.idUtilisateur}" />
-        <input type="hidden" name="action" value="supprimer_utilisateur" />
-        <input type="submit" value="Supprimer" />
     </form>
 </c:forEach>
-
-<h2>Recruteur</h2>
 <br>
-<div class="modal" id="ajouterAdminModal">
-    <div class="modal-content">
-        <h2>Ajouter un Recruteur</h2>
-        <form action="profil-servlet" method="post">
-            <input type="text" name="pseudo" placeholder="Pseudo" required><br>
-            <input type="password" name="motDePasse" placeholder="Mot de passe" required><br>
-            <input type="text" name="nom" placeholder="Nom" required><br>
-            <input type="text" name="prenom" placeholder="Prenom" required><br>
-            <input type="text" name="email" placeholder="Email" ><br>
-            <input type="text" name="telephone" placeholder="Telephone" ><br>
-            <input type="submit" name="action" value="ajouter_recruteur" class="btn btn-primary"/>
-        </form>
-    </div>
-</div>
-<c:if test="${empty listeRecruteurs}">
-    <p>Aucun professeur trouvé.</p>
-</c:if>
-<c:forEach var="recrut" items="${listeRecruteurs}">
-    <input type="text" class="form-control" name="pseudo" value="${recrut.pseudo}">
-    <input type="text" class="form-control" name="pseudo" value="${recrut.motDePasse}">
-    <input type="text" class="form-control" name="nom" value="${recrut.nom}">
-    <input type="text" class="form-control" name="prenom" value="${recrut.prenom}">
-    <input type="text" class="form-control" name="email" value="${recrut.email}">
-    <input type="text" class="form-control" name="telephone" value="${recrut.telephone}">
-    <input type="text" class="form-control" name="site" value="${recrut.site}">
-
-    <form action="profil-servlet" method="post">
-        <input type="hidden" name="id" value="${recrut.idUtilisateur}" />
-        <input type="hidden" name="action" value="" />
-        <input type="submit" value="sauvegarder" />
-    </form>
-
-    <form action="profil-servlet" method="post">
-        <input type="hidden" name="id" value="${recrut.idUtilisateur}" />
-        <input type="hidden" name="action" value="supprimer_utilisateur" />
-        <input type="submit" value="Supprimer" />
-    </form>
-</c:forEach>
-
-
-<h2>Offre</h2>
-<button>Ajouter Offre</button>
-<c:if test="${empty listeOffres}">
-    <p>Aucune Offre trouvé.</p>
-</c:if>
-<c:forEach var="offre" items="${listeOffres}">
-    <tr>
-        <td>${offre.intitule}</td>
-        <td>${offre.idEntreprise}</td>
-        <td>${offre.description}</td>
-    </tr>
-</c:forEach>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>
