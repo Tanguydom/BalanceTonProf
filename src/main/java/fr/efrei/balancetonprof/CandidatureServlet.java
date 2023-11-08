@@ -54,13 +54,13 @@ public class CandidatureServlet extends HttpServlet {
         switch (utilisateur.getRole()){
             case 0 :break ;
             case 1 :
-                EnseignantEntity enseignant = enseignantSessionBean.chercheEnseignantParIdUtilisateur(userId);
+                EnseignantEntity enseignant = enseignantSessionBean.getProfessorByIdUtilisateur(userId);
 
                 switch (action){
                     case Constantes.RETIRER_CANDIDATURE: retirerCandidature(request, userId) ;break;
                     default:break;
                 }
-                candidatureEntityList = candidatureSessionBean.chercheCandidaturesParEnseignantId(userId);
+                candidatureEntityList = candidatureSessionBean.getApplicationsByIdEnseignant(userId);
                 listCandidature = conversion(candidatureEntityList);
 
                 request.setAttribute(Constantes.LIST_CANDIDATURE, listCandidature);
@@ -68,15 +68,15 @@ public class CandidatureServlet extends HttpServlet {
                 break;
 
             case 2 :
-                RecruteurEntity recruteur = recruteurSessionBean.chercheRecruteurParIdUtilisateur(userId);
-                EntrepriseEntity entrepriseEntity = entrepriseSessionBean.chercheEntrepriseParId(recruteur.getIdEntreprise());
+                RecruteurEntity recruteur = recruteurSessionBean.getRecruiterByIdUtilisateur(userId);
+                EntrepriseEntity entrepriseEntity = entrepriseSessionBean.getEnterpriseById(recruteur.getIdEntreprise());
 
                 switch (action){
                     case Constantes.ACCEPTER_CANDIDATURE: accepterCandidature(request);break;
                     case Constantes.REFUSER_CANDIDATURE: refuserCandidature(request);break;
                     default:break;
                 }
-                candidatureEntityList = candidatureSessionBean.chercheCandidaturesParRecruteurId(userId);
+                candidatureEntityList = candidatureSessionBean.getApplicationsByIdRecruteur(userId);
                 listCandidature = conversion(candidatureEntityList);
 
                 request.setAttribute(Constantes.LIST_CANDIDATURE, listCandidature);
@@ -89,15 +89,15 @@ public class CandidatureServlet extends HttpServlet {
     }
     public void refuserCandidature(HttpServletRequest request){
         int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
-        candidatureSessionBean.changementStatut(idCandidature, 2);
+        candidatureSessionBean.changeStatut(idCandidature, 2);
     }
     public void accepterCandidature(HttpServletRequest request){
         int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
-        candidatureSessionBean.changementStatut(idCandidature, 1);
+        candidatureSessionBean.changeStatut(idCandidature, 1);
     }
     public void retirerCandidature(HttpServletRequest request, int userId){
         int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
-        candidatureSessionBean.suppressionCandidature(idCandidature);
+        candidatureSessionBean.deleteApplication(idCandidature);
     }
     public List<Candidature> conversion(List<CandidatureEntity> candidatureEntityList){
         List<Candidature> listCandidature = new ArrayList<>();
@@ -106,14 +106,14 @@ public class CandidatureServlet extends HttpServlet {
             candidature.setIdCandidature(candidatureEntity.getIdCandidature());
             candidature.setIdOffre(candidatureEntity.getIdOffre());
 
-            OffreEmploiEntity offre = offreSessionBean.chercheOffreParId(candidature.getIdOffre());
+            OffreEmploiEntity offre = offreSessionBean.getOfferById(candidature.getIdOffre());
             candidature.setIntitule(offre.getIntitule());
 
-            Integer idEntreprise = offreSessionBean.chercheEntrepriseIdParOffreId(offre.getIdOffre());
-            EntrepriseEntity entrepriseEntity = entrepriseSessionBean.chercheEntrepriseParId(idEntreprise);
+            Integer idEntreprise = offreSessionBean.getEnterpriseByIdOffre(offre.getIdOffre());
+            EntrepriseEntity entrepriseEntity = entrepriseSessionBean.getEnterpriseById(idEntreprise);
 
-            UtilisateurEntity utilisateur = utilisateurSessionBean.chercheUtilisateurById(candidatureEntity.getIdProf());
-            EnseignantEntity enseignant = enseignantSessionBean.chercheEnseignantParIdUtilisateur(candidatureEntity.getIdProf());
+            UtilisateurEntity utilisateur = utilisateurSessionBean.getUserById(candidatureEntity.getIdProf());
+            EnseignantEntity enseignant = enseignantSessionBean.getProfessorByIdUtilisateur(candidatureEntity.getIdProf());
 
             candidature.setNomCandidat(utilisateur.getNom());
             candidature.setPrenomCandidat(utilisateur.getPrenom());

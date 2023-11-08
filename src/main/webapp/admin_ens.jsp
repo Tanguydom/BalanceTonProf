@@ -63,15 +63,15 @@
 </c:if>
 <c:forEach var="prof" items="${listeProfesseurs}">
     <form action="profil-servlet" method="post">
-        <input type="text" class="form-control" name="profPseudo" value="${prof.pseudo}">
-        <input type="text" class="form-control" name="profMotDePasse" value="${prof.motDePasse}">
-        <input type="text" class="form-control" name="profNom" value="${prof.nom}">
-        <input type="text" class="form-control" name="profPrenom" value="${prof.prenom}">
-        <input type="text" class="form-control" name="profEmail" value="${prof.email}">
-        <input type="text" class="form-control" name="profTelephone" value="${prof.telephone}">
-        <input type="text" class="form-control" name="profSite" value="${prof.siteWeb}">
-        <input type="hidden" name="profId" value="${prof.idUtilisateur}" />
-        <button type="submit" name="action" value="sauvegardeProf" class="btn btn-primary">Sauvegarder</button>
+        <input type="text" class="form-control" name="pseudo" value="${prof.pseudo}">
+        <input type="text" class="form-control" name="motDePasse" value="${prof.motDePasse}">
+        <input type="text" class="form-control" name="nom" value="${prof.nom}">
+        <input type="text" class="form-control" name="prenom" value="${prof.prenom}">
+        <input type="text" class="form-control" name="email" value="${prof.email}">
+        <input type="text" class="form-control" name="telephone" value="${prof.telephone}">
+        <input type="text" class="form-control" name="siteWeb" value="${prof.siteWeb}">
+        <input type="hidden" name="idUtilisateur" value="${prof.idUtilisateur}" />
+        <button type="submit" name="action" value="sauvegarderUtilisateurs" class="btn btn-primary">Sauvegarder</button>
         <button type="submit" name="action" value="supprimerProf" class="btn btn-danger">Supprimer</button>
         <br>
     </form>

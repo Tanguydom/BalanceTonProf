@@ -8,23 +8,29 @@ import jakarta.persistence.*;
 public class EnseignantSessionBean {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("projet_java_avance");
     EntityManager em = entityManagerFactory.createEntityManager();
-    public void changementEnseignant(EnseignantEntity enseignant) {
+    public void updateProfessor(EnseignantEntity enseignant) {
         em.getTransaction().begin();
         em.merge(enseignant);
         em.getTransaction().commit();
     }
-    public void insertionEnseignant(EnseignantEntity enseignant) {
+    public void deleteProfessorByIdUtilisateur(int idEns){
+        em.getTransaction().begin();
+        Query q = em.createQuery("DELETE FROM EnseignantEntity e WHERE e.idUtilisateur = :idEnseignant");
+        q.setParameter(Constantes.ID_ENSEIGNANT, idEns);
+        q.executeUpdate();
+        em.getTransaction().commit();
+    }
+    public void insertProfessor(EnseignantEntity enseignant) {
         em.getTransaction().begin();
         em.persist(enseignant);
         em.getTransaction().commit();
     }
-
-    public EnseignantEntity chercheEnseignantParId(int idEns){
+    public EnseignantEntity getProfessorById(int idEns){
         return em.find(EnseignantEntity.class, idEns);
     }
-    public EnseignantEntity chercheEnseignantParIdUtilisateur(int idUti) {
-        return em.createQuery("SELECT e FROM EnseignantEntity e WHERE e.idUtilisateur = :idUti", EnseignantEntity.class)
-                .setParameter(Constantes.ID_UTI, idUti)
+    public EnseignantEntity getProfessorByIdUtilisateur(int idUti) {
+        return em.createQuery("SELECT e FROM EnseignantEntity e WHERE e.idUtilisateur = :idUtilisateur", EnseignantEntity.class)
+                .setParameter(Constantes.ID_UTILISATEUR, idUti)
                 .getSingleResult();
     }
 

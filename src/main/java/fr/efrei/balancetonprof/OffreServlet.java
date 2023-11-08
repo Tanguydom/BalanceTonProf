@@ -12,8 +12,6 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.System.out;
 //@WebServlet(name = "offreServlet", value = "/offre-servlet")
 
 public class OffreServlet extends HttpServlet {
@@ -54,10 +52,10 @@ public class OffreServlet extends HttpServlet {
                     case Constantes.ATTRIBUER_RECRUTEUR : assigneRecruteur(request); break;
                     default:break;
                 }
-                listeOffresEntity = offreSessionBean.getTousLesOffres();
+                listeOffresEntity = offreSessionBean.getOffers();
                 listOffres = conversion(listeOffresEntity);
-                List<UtilisateurEntity> recruteurList = utilisateurSessionBean.getTousLesRecruteurs();
-                List<EntrepriseEntity> entrepriseEntityList = entrepriseSessionBean.getListEntreprise();
+                List<UtilisateurEntity> recruteurList = utilisateurSessionBean.getRecruiter();
+                List<EntrepriseEntity> entrepriseEntityList = entrepriseSessionBean.getListEnterprise();
 
                 request.setAttribute(Constantes.LIST_REC, recruteurList);
                 request.setAttribute(Constantes.LIST_ENTREPRISE, entrepriseEntityList);
@@ -68,8 +66,8 @@ public class OffreServlet extends HttpServlet {
                     case Constantes.CANDIDATER: candidater(request, userId);break;
                     default:break;
                 }
-                EnseignantEntity enseignant = enseignantSessionBean.chercheEnseignantParIdUtilisateur(userId);
-                listeOffresEntity = offreSessionBean.chercheOffresNonCandidater(userId);
+                EnseignantEntity enseignant = enseignantSessionBean.getProfessorByIdUtilisateur(userId);
+                listeOffresEntity = offreSessionBean.getOffersWithNoApplicant(userId);
                 listOffres = conversion(listeOffresEntity);
 
                 request.setAttribute(Constantes.LIST_OFFRE, listOffres);
@@ -77,8 +75,8 @@ public class OffreServlet extends HttpServlet {
                 break;
 
             case 2 :
-                RecruteurEntity recruteur = recruteurSessionBean.chercheRecruteurParIdUtilisateur(userId);
-                EntrepriseEntity entrepriseEntity = entrepriseSessionBean.chercheEntrepriseParId(recruteur.getIdEntreprise());
+                RecruteurEntity recruteur = recruteurSessionBean.getRecruiterByIdUtilisateur(userId);
+                EntrepriseEntity entrepriseEntity = entrepriseSessionBean.getEnterpriseById(recruteur.getIdEntreprise());
 
                 switch (action){
                     case Constantes.AJOUT_OFFRE: creationOffre(request, entrepriseEntity.getIdEntreprise(), recruteur.getIdUtilisateur());break;
@@ -87,7 +85,7 @@ public class OffreServlet extends HttpServlet {
                     default:break;
                 }
 
-                listeOffresEntity = offreSessionBean.chercheOffresPourUnRecruteur(recruteur.getIdUtilisateur());
+                listeOffresEntity = offreSessionBean.getOffersByIdRecruteur(recruteur.getIdUtilisateur());
                 listOffres = conversion(listeOffresEntity);
                 request.setAttribute(Constantes.RECRUTEUR, recruteur);
                 request.setAttribute(Constantes.ENTREPRISE, entrepriseEntity);
@@ -105,9 +103,9 @@ public class OffreServlet extends HttpServlet {
         if(idEntreprise != null && idRecruteur !=null
                 && recruteurSessionBean.checkIfExist(idRecruteur, idEntreprise) != null
                 && recruteurSessionBean.checkIfExist(idRecruteur, idEntreprise) > 0 ){
-            RecrutementEntity recrutementEntity = recrutementSessionBean.getRecrutementParIdOffre(idOffre);
+            RecrutementEntity recrutementEntity = recrutementSessionBean.getRecruitmentByIdOffre(idOffre);
             recrutementEntity.setIdRecruteur(idRecruteur);
-            recrutementSessionBean.modificationRecrutement(recrutementEntity);
+            recrutementSessionBean.updateRecruitment(recrutementEntity);
         }
 
     }
@@ -120,12 +118,12 @@ public class OffreServlet extends HttpServlet {
         offreEmploiEntity.setIntitule(intitule);
         offreEmploiEntity.setDescription(description);
         offreEmploiEntity.setIdEntreprise(idEntreprise);
-        offreSessionBean.insertionOffre(offreEmploiEntity);
+        offreSessionBean.insertOffer(offreEmploiEntity);
 
         RecrutementEntity recrutementEntity = new RecrutementEntity();
         recrutementEntity.setIdOffre(offreEmploiEntity.getIdOffre());
         recrutementEntity.setIdRecruteur(idUtilisateur);
-        recrutementSessionBean.insertionRecrutement(recrutementEntity);
+        recrutementSessionBean.insertRecruitment(recrutementEntity);
     }
 
     public void creationOffre(HttpServletRequest request){
@@ -145,12 +143,12 @@ public class OffreServlet extends HttpServlet {
                 && recruteurSessionBean.checkIfExist(idRecruteur, idEntreprise) > 0 ){
 
             offreEmploiEntity.setIdEntreprise(idEntreprise);
-            offreSessionBean.insertionOffre(offreEmploiEntity);
+            offreSessionBean.insertOffer(offreEmploiEntity);
 
             RecrutementEntity recrutementEntity = new RecrutementEntity();
             recrutementEntity.setIdOffre(offreEmploiEntity.getIdOffre());
             recrutementEntity.setIdRecruteur(idRecruteur);
-            recrutementSessionBean.insertionRecrutement(recrutementEntity);
+            recrutementSessionBean.insertRecruitment(recrutementEntity);
         }else{
            //entreprise ou recruteur  id null ou entreprise non lié au recruteur
         }
@@ -158,25 +156,25 @@ public class OffreServlet extends HttpServlet {
     }
     public void suppressionOffre(HttpServletRequest request){
         int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
-        recrutementSessionBean.suppressionRecrutement(idOffre);
-        offreSessionBean.suppressionOffre(idOffre);
+        recrutementSessionBean.deleteRecruitment(idOffre);
+        offreSessionBean.deleteOffer(idOffre);
     }
     public void modificationOffre(HttpServletRequest request) {
         int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
-        OffreEmploiEntity offreEmploiEntity = offreSessionBean.chercheOffreParId(idOffre);
+        OffreEmploiEntity offreEmploiEntity = offreSessionBean.getOfferById(idOffre);
         offreEmploiEntity.setDescription(request.getParameter(Constantes.DESCRIPTION));
         offreEmploiEntity.setIntitule(request.getParameter(Constantes.INTITULE));
-        offreSessionBean.modificationOffre(offreEmploiEntity);
+        offreSessionBean.updateOffer(offreEmploiEntity);
     }
     public void candidater(HttpServletRequest request, int userId){
         int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
-        Integer res = candidatureSessionBean.chercheCandidatureParIdOffre_IdEns(idOffre,userId);
+        Integer res = candidatureSessionBean.getApplicationByIdOffreIdEns(idOffre,userId);
         if(res == null || res <= 0){
             CandidatureEntity candidature = new CandidatureEntity();
             candidature.setIdProf(userId);
             candidature.setIdOffre(idOffre);
             candidature.setStatut(0);
-            candidatureSessionBean.insertionCandidature(candidature);
+            candidatureSessionBean.insertApplication(candidature);
         }
     }
     public List<Offre> conversion(List<OffreEmploiEntity> entityList){
@@ -189,18 +187,18 @@ public class OffreServlet extends HttpServlet {
             offre.setDescription(entity.getDescription());
             offre.setIdEntreprise(entity.getIdEntreprise());
 
-            EntrepriseEntity entrepriseEntity  = entrepriseSessionBean.chercheEntrepriseParId(offre.getIdEntreprise());
+            EntrepriseEntity entrepriseEntity  = entrepriseSessionBean.getEnterpriseById(offre.getIdEntreprise());
             offre.setNomEntreprise(entrepriseEntity.getNom());
             offre.setSiteWebEntreprise(entrepriseEntity.getSiteWeb());
             offre.setAdresseEntreprise(entrepriseEntity.getAdresse());
 
-            Integer nbCandidat = candidatureSessionBean.nombreCandidaturesParIdOffre(offre.getIdOffre());
+            Integer nbCandidat = candidatureSessionBean.countApplicationsByIdOffre(offre.getIdOffre());
             offre.setNbCandidat(nbCandidat);
 
-            Integer idRecruteur = recrutementSessionBean.chercheIdRecruteurParIdOffre(offre.getIdOffre());
+            Integer idRecruteur = recrutementSessionBean.getIdRecruteurByIdOffre(offre.getIdOffre());
             offre.setIdRecruteur(idRecruteur);
             if(idRecruteur != null) {
-                UtilisateurEntity utilisateurEntity = utilisateurSessionBean.chercheUtilisateurById(idRecruteur);
+                UtilisateurEntity utilisateurEntity = utilisateurSessionBean.getUserById(idRecruteur);
                 offre.setEmailRecruteur(utilisateurEntity.getEmail());
                 offre.setTelephoneRecruteur(utilisateurEntity.getTelephone());
             }else{

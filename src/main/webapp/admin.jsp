@@ -60,7 +60,7 @@
         </div>
         <div class="form-group">
             <label for="prenom">Prénom:</label>
-            <input type="text" class="form-control" id="prenom" name "prenom" value="${utilisateur.prenom}">
+            <input type="text" class="form-control" id="prenom" name ="prenom" value="${utilisateur.prenom}">
         </div>
         <div class="form-group">
             <label for="motDePasse">Mot de passe:</label>
@@ -93,6 +93,7 @@
             <input type="text" name="prenom" class="form-control" placeholder="Prenom" required><br>
             <input type="text" name="email" class="form-control" placeholder="Email" ><br>
             <input type="text" name="telephone" class="form-control" placeholder="Telephone" ><br>
+            <input type="text" name="site" class="form-control" placeholder="site" ><br>
             <input type="submit" name="action" value="ajouter_admin" class="btn btn-primary"/>
         </form>
     </div>
@@ -102,15 +103,15 @@
 </c:if>
 <c:forEach var="admin" items="${listeAdministrateurs}">
     <form action="profil-servlet" method="post">
-        <input type="text" class="form-control" name="adminPseudo" value="${admin.pseudo}">
-        <input type="text" class="form-control" name="adminMotDePasse" value="${admin.motDePasse}">
-        <input type="text" class="form-control" name="adminNom" value="${admin.nom}">
-        <input type="text" class="form-control" name="adminPrenom" value="${admin.prenom}">
-        <input type="text" class="form-control" name="adminEmail" value="${admin.email}">
-        <input type="text" class="form-control" name="adminTelephone" value="${admin.telephone}">
-        <input type="text" class="form-control" name="adminSite" value="${admin.siteWeb}">
-        <input type="hidden" name="adminId" value="${admin.idUtilisateur}" />
-        <button type="submit" name="action" value="sauvegardeAdmin" class="btn btn-primary">Sauvegarder</button>
+        <input type="text" class="form-control" name="pseudo" value="${admin.pseudo}">
+        <input type="text" class="form-control" name="motDePasse" value="${admin.motDePasse}">
+        <input type="text" class="form-control" name="nom" value="${admin.nom}">
+        <input type="text" class="form-control" name="prenom" value="${admin.prenom}">
+        <input type="text" class="form-control" name="email" value="${admin.email}">
+        <input type="text" class="form-control" name="telephone" value="${admin.telephone}">
+        <input type="text" class="form-control" name="site" value="${admin.siteWeb}">
+        <input type="hidden" name="idUtilisateur" value="${admin.idUtilisateur}" />
+        <button type="submit" name="action" value="sauvegarderUtilisateurs" class="btn btn-primary">Sauvegarder</button>
         <button type="submit" name="action" value="supprimerAdmin" class="btn btn-danger">Supprimer</button>
         <br>
     </form>

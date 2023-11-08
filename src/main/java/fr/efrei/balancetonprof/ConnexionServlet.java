@@ -22,10 +22,10 @@ public class ConnexionServlet extends HttpServlet {
         aiguillerVersLaProchainePage(request, response);
     }
     public boolean verifierInfosConnexion(Utilisateur unUtilisateur){
-        int id = UtilisateurSessionBean.verificationExistanceUtilisateur(unUtilisateur.getLoginSaisi(), unUtilisateur.getMotDePasseSaisi());
+        int id = UtilisateurSessionBean.checkIfExist(unUtilisateur.getLoginSaisi(), unUtilisateur.getMotDePasseSaisi());
         boolean check = id != -1;
         if(check){
-            UtilisateurEntity utilisateurEntity = UtilisateurSessionBean.chercheUtilisateurById(id);
+            UtilisateurEntity utilisateurEntity = UtilisateurSessionBean.getUserById(id);
             unUtilisateur.setId_utilisateur(id);
             unUtilisateur.setNom(utilisateurEntity.getNom());
             unUtilisateur.setPrenom(utilisateurEntity.getPrenom());

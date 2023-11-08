@@ -13,18 +13,18 @@ import java.util.List;
 public class OffreSessionBean {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("projet_java_avance");
     EntityManager em = entityManagerFactory.createEntityManager();
-    public List<OffreEmploiEntity> getTousLesOffres(){
+    public List<OffreEmploiEntity> getOffers(){
         Query q = em.createQuery("select e from OffreEmploiEntity e");
         return  q.getResultList();
     }
-    public List<OffreEmploiEntity> chercheOffresNonCandidater(int idEns) {
+    public List<OffreEmploiEntity> getOffersWithNoApplicant(int idEns) {
         Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e " +
-                "LEFT JOIN CandidatureEntity c ON e.idOffre = c.idOffre AND c.idProf = :idEns " +
+                "LEFT JOIN CandidatureEntity c ON e.idOffre = c.idOffre AND c.idProf = :idEnseignant " +
                 "WHERE c.idOffre IS NULL");
-        q.setParameter(Constantes.ID_ENS, idEns);
+        q.setParameter(Constantes.ID_ENSEIGNANT, idEns);
         return q.getResultList();
     }
-    public Integer chercheEntrepriseIdParOffreId(int idOffre){
+    public Integer getEnterpriseByIdOffre(int idOffre){
         Query q = em.createQuery("SELECT o.idEntreprise FROM OffreEmploiEntity o WHERE o.idOffre = :idOffre");
         q.setParameter(Constantes.ID_OFFRE, idOffre);
         Integer idEntreprise ;
@@ -35,33 +35,29 @@ public class OffreSessionBean {
         }
         return idEntreprise;
     }
-    public List<OffreEmploiEntity> chercheOffresPourUnRecruteur(int idRec) {
-        Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e, RecrutementEntity r WHERE e.idOffre = r.idOffre AND r.idRecruteur = :idRec");
-        q.setParameter(Constantes.ID_REC, idRec);
+    public List<OffreEmploiEntity> getOffersByIdRecruteur(int idRec) {
+        Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e, RecrutementEntity r WHERE e.idOffre = r.idOffre AND r.idRecruteur = :idRecruteur");
+        q.setParameter(Constantes.ID_RECRUCTEUR, idRec);
         return q.getResultList();
     }
-    public void modificationOffre(OffreEmploiEntity offreEmploiEntity) {
+    public void updateOffer(OffreEmploiEntity offreEmploiEntity) {
         em.getTransaction().begin();
         em.merge(offreEmploiEntity);
         em.getTransaction().commit();
     }
-    public void insertionOffre(OffreEmploiEntity nouvelleOffre) {
+    public void insertOffer(OffreEmploiEntity nouvelleOffre) {
         em.getTransaction().begin();
         em.persist(nouvelleOffre);
         em.getTransaction().commit();
     }
-    public void suppressionOffre(int id) {
+    public void deleteOffer(int id) {
         em.getTransaction().begin();
         OffreEmploiEntity offre = em.find(OffreEmploiEntity.class, id);
         em.remove(offre);
         em.getTransaction().commit();
     }
-    public OffreEmploiEntity chercheOffreParId(int id){
+    public OffreEmploiEntity getOfferById(int id){
         OffreEmploiEntity offre = em.find(OffreEmploiEntity.class, id);
         return offre;
-    }
-    public List<OffreEmploiEntity> chercherToutesLesOffres(){
-        Query q = em.createQuery("select e from OffreEmploiEntity e");
-        return  q.getResultList();
     }
 }

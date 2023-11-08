@@ -9,20 +9,19 @@ public class RecruteurSessionBean {
 
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("projet_java_avance");
     EntityManager em = entityManagerFactory.createEntityManager();
-    public void insertionRecruteur(RecruteurEntity recruteur) {
+    public void insertRecruiter(RecruteurEntity recruteur) {
         em.getTransaction().begin();
         em.persist(recruteur);
         em.getTransaction().commit();
     }
-    public RecruteurEntity chercheRecruteurParIdUtilisateur(int idUti) {
-        return em.createQuery("SELECT e FROM RecruteurEntity e WHERE e.idUtilisateur = :idUti", RecruteurEntity.class)
-                .setParameter(Constantes.ID_UTI, idUti)
+    public RecruteurEntity getRecruiterByIdUtilisateur(int idUti) {
+        return em.createQuery("SELECT e FROM RecruteurEntity e WHERE e.idUtilisateur = :idUtilisateur", RecruteurEntity.class)
+                .setParameter(Constantes.ID_UTILISATEUR, idUti)
                 .getSingleResult();
     }
-
     public Integer checkIfExist(int idRec, int idEntreprise){
-        Query q = em.createQuery("SELECT COUNT(c.idRecruteur) FROM RecruteurEntity c WHERE c.idEntreprise = :idEntreprise AND c.idUtilisateur = :idRec");
-        q.setParameter(Constantes.ID_REC, idRec);
+        Query q = em.createQuery("SELECT COUNT(c.idRecruteur) FROM RecruteurEntity c WHERE c.idEntreprise = :idEntreprise AND c.idUtilisateur = :idRecruteur");
+        q.setParameter(Constantes.ID_RECRUCTEUR, idRec);
         q.setParameter(Constantes.ID_ENTREPRISE, idEntreprise);
         Long checkIfExist ;
         try {
@@ -32,9 +31,16 @@ public class RecruteurSessionBean {
         }
         return checkIfExist.intValue();
     }
-    public void changementRecruteur(RecruteurEntity recruteur) {
+    public void updateRecruiter(RecruteurEntity recruteur) {
         em.getTransaction().begin();
         em.merge(recruteur);
+        em.getTransaction().commit();
+    }
+    public void deleteRecruiteurByIdRecruteur(int idRec){
+        Query q = em.createQuery("DELETE FROM RecruteurEntity e WHERE e.idUtilisateur = :idRecruteur");
+        em.getTransaction().begin();
+        q.setParameter(Constantes.ID_RECRUCTEUR, idRec);
+        q.executeUpdate();
         em.getTransaction().commit();
     }
 }

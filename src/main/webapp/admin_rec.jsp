@@ -64,15 +64,15 @@
 
 <c:forEach var="recrut" items="${listeRecruteurs}">
     <form action="profil-servlet" method="post">
-        <input type="text" class="form-control" name="recruteurPseudo" value="${recrut.pseudo}">
-        <input type="text" class="form-control" name="recruteurMdp" value="${recrut.motDePasse}">
-        <input type="text" class="form-control" name="recruteurNom" value="${recrut.nom}">
-        <input type="text" class="form-control" name="recruteurPrenom" value="${recrut.prenom}">
-        <input type="text" class="form-control" name="recruteurMail" value="${recrut.email}">
-        <input type="text" class="form-control" name="recruteurTel" value="${recrut.telephone}">
-        <input type="text" class="form-control" name="recruteurSite" value="${recrut.siteWeb}">
-        <input type="hidden" name="recruteurId" value="${recrut.idUtilisateur}" />
-        <button type="submit" name="action" value="sauvegardeRec" class="btn btn-primary">Sauvegarder</button>
+        <input type="text" class="form-control" name="pseudo" value="${recrut.pseudo}">
+        <input type="text" class="form-control" name="motDePasse" value="${recrut.motDePasse}">
+        <input type="text" class="form-control" name="nom" value="${recrut.nom}">
+        <input type="text" class="form-control" name="prenom" value="${recrut.prenom}">
+        <input type="text" class="form-control" name="email" value="${recrut.email}">
+        <input type="text" class="form-control" name="telephone" value="${recrut.telephone}">
+        <input type="text" class="form-control" name="siteWeb" value="${recrut.siteWeb}">
+        <input type="hidden" name="idUtilisateur" value="${recrut.idUtilisateur}" />
+        <button type="submit" name="action" value="sauvegarderUtilisateurs" class="btn btn-primary">Sauvegarder</button>
         <button type="submit" name="action" value="supprimerRec" class="btn btn-danger">Supprimer</button>
         <br>
     </form>

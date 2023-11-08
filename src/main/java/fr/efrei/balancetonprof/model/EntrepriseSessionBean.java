@@ -12,10 +12,10 @@ import java.util.List;
 public class EntrepriseSessionBean {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("projet_java_avance");
     EntityManager em = entityManagerFactory.createEntityManager();
-    public EntrepriseEntity chercheEntrepriseParId(int id){
+    public EntrepriseEntity getEnterpriseById(int id){
         return em.find(EntrepriseEntity.class, id);
     }
-    public List<EntrepriseEntity> getListEntreprise(){
+    public List<EntrepriseEntity> getListEnterprise(){
         Query q = em.createQuery("select e from EntrepriseEntity e");
         return q.getResultList();
     }

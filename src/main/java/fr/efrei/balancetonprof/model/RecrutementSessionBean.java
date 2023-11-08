@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class RecrutementSessionBean {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("projet_java_avance");
     EntityManager em = entityManagerFactory.createEntityManager();
-    public Integer chercheIdRecruteurParIdOffre(int idOffre) {
+    public Integer getIdRecruteurByIdOffre(int idOffre) {
         Query q = em.createQuery("SELECT c.idRecruteur FROM RecrutementEntity c WHERE c.idOffre = :idOffre");
         q.setParameter(Constantes.ID_OFFRE, idOffre);
         Integer idRecruteur;
@@ -19,23 +19,22 @@ public class RecrutementSessionBean {
         }
         return idRecruteur;
     }
-    public RecrutementEntity getRecrutementParIdOffre(int idOffre) {
+    public RecrutementEntity getRecruitmentByIdOffre(int idOffre) {
         return em.createQuery("SELECT c FROM RecrutementEntity c WHERE c.idOffre = :idOffre", RecrutementEntity.class)
                 .setParameter(Constantes.ID_OFFRE, idOffre)
                 .getSingleResult();
     }
-
-    public void insertionRecrutement(RecrutementEntity recrutementEntity) {
+    public void insertRecruitment(RecrutementEntity recrutementEntity) {
         em.getTransaction().begin();
         em.persist(recrutementEntity);
         em.getTransaction().commit();
     }
-    public void modificationRecrutement(RecrutementEntity recrutementEntity) {
+    public void updateRecruitment(RecrutementEntity recrutementEntity) {
         em.getTransaction().begin();
         em.merge(recrutementEntity);
         em.getTransaction().commit();
     }
-    public void suppressionRecrutement(int idOffre) {
+    public void deleteRecruitment(int idOffre) {
         em.getTransaction().begin();
         Query query = em.createQuery("DELETE FROM RecrutementEntity r WHERE  r.idOffre = :idOffre");
         query.setParameter(Constantes.ID_OFFRE, idOffre);

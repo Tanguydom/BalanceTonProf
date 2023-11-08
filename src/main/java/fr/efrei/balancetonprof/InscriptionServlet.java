@@ -44,15 +44,15 @@ public class InscriptionServlet extends HttpServlet {
         nouvelUtilisateur.setEmail(email);
         nouvelUtilisateur.setRole(roleId);
 
-        UtilisateurSessionBean.insertionUtilisateur(nouvelUtilisateur);
+        UtilisateurSessionBean.insertUser(nouvelUtilisateur);
         if(roleId == 1){
             EnseignantEntity enseignant = new EnseignantEntity();
             enseignant.setIdUtilisateur(nouvelUtilisateur.getIdUtilisateur());
-            enseignantSessionBean.insertionEnseignant(enseignant);
+            enseignantSessionBean.insertProfessor(enseignant);
         }else if(roleId == 2){
             RecruteurEntity recruteur = new RecruteurEntity();
             recruteur.setIdUtilisateur(nouvelUtilisateur.getIdUtilisateur());
-            recruteurSessionBean.insertionRecruteur(recruteur);
+            recruteurSessionBean.insertRecruiter(recruteur);
         }
 
         request.getRequestDispatcher(Constantes.INDEX_PATH).forward(request, response);

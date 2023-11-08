@@ -105,7 +105,7 @@
                                 <label for="autresInformations">Autres informations:</label>
                                 <input type="text" class="form-control" id="autresInformations" name="autresInformations" value="${enseignant.autresInformations}">
                             </div>
-                            <input type="hidden" name="idEns" value="${enseignant.idEnseignant}">
+                            <input type="hidden" name="idEnseignant" value="${enseignant.idEnseignant}">
 
 
                             <div class="form-group">
