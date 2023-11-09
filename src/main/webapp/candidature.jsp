@@ -172,11 +172,11 @@
                                             <input type="hidden" name="idCandidature" value="${candidat.idCandidature}">
                                             <button type="submit" class="btn btn-danger" name="action" value="retirer_candidature">Retirer ma candidature</button>
                                         </c:when>
-                                        <c:when test="${offre.statut == 1}">
+                                        <c:when test="${candidat.statut == 1}">
                                             <!-- Statut "Candidature acceptée" en vert -->
                                             <label style="color: green;">Candidature acceptée</label>
                                         </c:when>
-                                        <c:when test="${offre.statut == 2}">
+                                        <c:when test="${candidat.statut == 2}">
                                             <!-- Statut "Refusée" en rouge -->
                                             <label style="color: red;">Candidature refusée</label>
                                         </c:when>

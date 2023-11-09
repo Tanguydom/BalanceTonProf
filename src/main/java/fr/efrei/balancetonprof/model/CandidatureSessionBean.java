@@ -54,8 +54,8 @@ public class CandidatureSessionBean {
         return q.getResultList();
     }
     public List<CandidatureEntity> getApplicationsByIdEnseignant(int idEns) {
-        Query q = em.createQuery("SELECT c FROM OffreEmploiEntity e, RecrutementEntity r, CandidatureEntity c " +
-                "WHERE e.idOffre = r.idOffre AND c.idEnseignant = :idEnseignant AND c.idOffre = e.idOffre");
+        Query q = em.createQuery("SELECT c FROM OffreEmploiEntity e, CandidatureEntity c " +
+                "WHERE c.idEnseignant = :idEnseignant AND c.idOffre = e.idOffre");
         q.setParameter(Constantes.ID_ENSEIGNANT, idEns);
         return q.getResultList();
     }
