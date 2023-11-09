@@ -9,21 +9,21 @@ public final class Constantes {
     public static final String ID_UTILISATEUR = "idUtilisateur";
     public static final String ID_RECRUCTEUR =  "idRecruteur";
     public static final String ID_ENSEIGNANT =  "idEnseignant";
-    public static final String ID_ENTREPRISE = "idEntreprise";
+    public static final String ID_ECOLE = "idEcole";
     public static final String ID_OFFRE = "idOffre";
     public static final String ID_CANDIDATURE = "idCandidature";
     public static final String ENSEIGNANT = "enseignant";
     public static final String RECRUTEUR = "recruteur";
-    public static final String ENTREPRISE = "entreprise";
+    public static final String ECOLE = "ecole";
     public static final String LIST_ADMIN = "listeAdministrateurs";
     public static final String LIST_ENS = "listeProfesseurs";
     public static final String LIST_REC = "listeRecruteurs";
     public static final String LIST_OFFRE = "listeOffres";
     public static final String LIST_CANDIDATURE ="listeCandidatures";
-    public static final String LIST_ENTREPRISE ="listeEntreprises";
+    public static final String LIST_ECOLE ="listeEcoles";
     public static final String COMBOREC= "comboRec";
     public static final String COMBOREC2= "comboRec2";
-    public static final String COMBOENTR= "comboEntr";
+    public static final String COMBOECOLE= "comboEcole";
     public static final String STATUT = "statut";
     public static final String PSEUDO = "pseudo";
     public static final String MOT_DE_PASSE = "motDePasse";
@@ -52,7 +52,7 @@ public final class Constantes {
      ************************************** Action jsp *************************************
      ***************************************************************************************/
     public static final String ACTION = "action";
-    public static final String CHOISIR_ENTREPRISE = "choisirEntreprise";
+    public static final String CHOISIR_ECOLE = "choisirEcole";
     public static final String ATTRIBUER_RECRUTEUR= "attribuerRecruteur";
     public static final String CANDIDATER = "candidater";
     public static final String SAUVEGARDE_UTILISATEUR = "sauvegardeUtilisateur";
@@ -95,7 +95,7 @@ public final class Constantes {
     public static final String MESSAGE_ERREUR_INSERTUSER_KO = "L'utilisateur existe deja avec ces infos";
     public static final String MESSAGE_ERREUR_UPDATEUSER_KO = "L'utilisateur existe deja avec ces infos";
     public static final String MESSAGE_ERREUR_DELETEUSER_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_LINK_KO = "Le recruteur n'est pas associé à cet entreprise";
+    public static final String MESSAGE_ERREUR_LINK_KO = "Le recruteur n'est pas associé à cet ecole";
     public static final String MESSAGE_ERREUR_INSERTOFFER_KO = "L'utilisateur existe deja avec ces infos";
     public static final String MESSAGE_ERREUR_UPDATEOFFER_KO = "L'utilisateur existe deja avec ces infos";
     public static final String MESSAGE_ERREUR_DELETEOFFER_KO = "L'utilisateur existe deja avec ces infos";

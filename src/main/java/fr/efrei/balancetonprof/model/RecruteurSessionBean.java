@@ -19,10 +19,10 @@ public class RecruteurSessionBean {
                 .setParameter(Constantes.ID_UTILISATEUR, idUti)
                 .getSingleResult();
     }
-    public Integer checkIfExist(int idRec, int idEntreprise){
-        Query q = em.createQuery("SELECT COUNT(c.idRecruteur) FROM RecruteurEntity c WHERE c.idEntreprise = :idEntreprise AND c.idUtilisateur = :idRecruteur");
+    public Integer checkIfExist(int idRec, int idEcole){
+        Query q = em.createQuery("SELECT COUNT(c.idRecruteur) FROM RecruteurEntity c WHERE c.idEcole = :idEcole AND c.idUtilisateur = :idRecruteur");
         q.setParameter(Constantes.ID_RECRUCTEUR, idRec);
-        q.setParameter(Constantes.ID_ENTREPRISE, idEntreprise);
+        q.setParameter(Constantes.ID_ECOLE, idEcole);
         Long checkIfExist ;
         try {
             checkIfExist = (Long) q.getSingleResult();

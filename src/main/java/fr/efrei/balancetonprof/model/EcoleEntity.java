@@ -3,12 +3,12 @@ package fr.efrei.balancetonprof.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Entreprise", schema = "balancetonprofbd", catalog = "")
-public class EntrepriseEntity {
+@Table(name = "Ecole", schema = "balancetonprofbd", catalog = "")
+public class EcoleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id_entreprise", nullable = false)
-    private int idEntreprise;
+    @Column(name = "id_ecole", nullable = false)
+    private int idEcole;
     @Basic
     @Column(name = "nom", nullable = true, length = 255)
     private String nom;
@@ -28,12 +28,12 @@ public class EntrepriseEntity {
     @Column(name = "adresse", nullable = true, length = 255)
     private String adresse;
 
-    public int getIdEntreprise() {
-        return idEntreprise;
+    public int getIdEcole() {
+        return idEcole;
     }
 
-    public void setIdEntreprise(int idEntreprise) {
-        this.idEntreprise = idEntreprise;
+    public void setIdEcole(int idEcole) {
+        this.idEcole = idEcole;
     }
 
     public String getNom() {
@@ -89,9 +89,9 @@ public class EntrepriseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        EntrepriseEntity that = (EntrepriseEntity) o;
+        EcoleEntity that = (EcoleEntity) o;
 
-        if (idEntreprise != that.idEntreprise) return false;
+        if (idEcole != that.idEcole) return false;
         if (nom != null ? !nom.equals(that.nom) : that.nom != null) return false;
         if (raisonSociale != null ? !raisonSociale.equals(that.raisonSociale) : that.raisonSociale != null)
             return false;
@@ -105,7 +105,7 @@ public class EntrepriseEntity {
 
     @Override
     public int hashCode() {
-        int result = idEntreprise;
+        int result = idEcole;
         result = 31 * result + (nom != null ? nom.hashCode() : 0);
         result = 31 * result + (raisonSociale != null ? raisonSociale.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);

@@ -9,14 +9,14 @@ public class Offre {
     private int idOffre;
     private Integer idRecruteur;
     private String intitule;
-    private Integer idEntreprise;
+    private Integer idEcole;
     private String description;
     private int nbCandidat ;
-    private String nomEntreprise;
+    private String nomEcole;
     private String emailRecruteur;
     private String telephoneRecruteur;
-    private String siteWebEntreprise;
-    private String adresseEntreprise;
+    private String siteWebEcole;
+    private String adresseEcole;
 
     public Offre(){
     }
@@ -53,12 +53,12 @@ public class Offre {
         this.intitule = intitule;
     }
 
-    public Integer getIdEntreprise() {
-        return idEntreprise;
+    public Integer getIdEcole() {
+        return idEcole;
     }
 
-    public void setIdEntreprise(Integer idEntreprise) {
-        this.idEntreprise = idEntreprise;
+    public void setIdEcole(Integer idEcole) {
+        this.idEcole = idEcole;
     }
 
     public String getDescription() {
@@ -68,12 +68,12 @@ public class Offre {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getNomEntreprise() {
-        return nomEntreprise;
+    public String getNomEcole() {
+        return nomEcole;
     }
 
-    public void setNomEntreprise(String nomEntreprise) {
-        this.nomEntreprise = nomEntreprise;
+    public void setNomEcole(String nomEcole) {
+        this.nomEcole = nomEcole;
     }
 
     public String getEmailRecruteur() {
@@ -92,19 +92,19 @@ public class Offre {
         this.telephoneRecruteur = telephoneRecruteur;
     }
 
-    public String getSiteWebEntreprise() {
-        return siteWebEntreprise;
+    public String getSiteWebEcole() {
+        return siteWebEcole;
     }
 
-    public void setSiteWebEntreprise(String siteWebEntreprise) {
-        this.siteWebEntreprise = siteWebEntreprise;
+    public void setSiteWebEcole(String siteWebEcole) {
+        this.siteWebEcole = siteWebEcole;
     }
 
-    public String getAdresseEntreprise() {
-        return adresseEntreprise;
+    public String getAdresseEcole() {
+        return adresseEcole;
     }
 
-    public void setAdresseEntreprise(String adresseEntreprise) {
-        this.adresseEntreprise = adresseEntreprise;
+    public void setAdresseEcole(String adresseEcole) {
+        this.adresseEcole = adresseEcole;
     }
 }

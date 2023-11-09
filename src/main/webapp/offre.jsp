@@ -83,9 +83,9 @@
                                             </select>
                                         </div>
                                         <div>
-                                            <select name="comboEntr">
-                                                <c:forEach items="${listeEntreprises}" var="entre">
-                                                    <option value="${entre.idEntreprise}">${entre.nom}</option>
+                                            <select name="comboEcole">
+                                                <c:forEach items="${listeEcoles}" var="ecole">
+                                                    <option value="${ecole.idEcole}">${ecole.nom}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -118,13 +118,13 @@
                                 </div>
                                 <form action="offre-servlet" method="post">
                                     <strong>${offre.intitule}</strong>
-                                    <p>Entreprise: ${offre.nomEntreprise}</p>
+                                    <p>Ecole: ${offre.nomEcole}</p>
                                     <p>Description: ${offre.description}</p>
                                     <p>Nombres de candidats: ${offre.nbCandidat}</p>
                                     <p>Email: ${offre.emailRecruteur}</p>
                                     <p>Telephone: ${offre.telephoneRecruteur}</p>
-                                    <p>Site Web: ${offre.siteWebEntreprise}</p>
-                                    <p>Adresse: ${offre.adresseEntreprise}</p>
+                                    <p>Site Web: ${offre.siteWebEcole}</p>
+                                    <p>Adresse: ${offre.adresseEcole}</p>
                                     <input type="hidden" name="idOffre" value="${offre.idOffre}">
                                     <button type="submit" class="btn btn-success" name="action" value="candidater">Candidater</button>
                                 </form>
@@ -135,11 +135,11 @@
                                 </div>
                                 <!-- Champs modifiables pour le rôle 2 -->
                                 <form action="offre-servlet" method="post">
-                                    <input type="hidden" name="idEntreprise" value="${offre.idEntreprise}">
+                                    <input type="hidden" name="idEcole" value="${offre.idEcole}">
                                     <label for="intitule">Initule:</label>
                                     <input type="text" class="form-control" id="intitule" name="intitule" value="${offre.intitule}">
-                                    <label for="nomEntreprise">Nom de l'entreprise:</label>
-                                    <input type="text" class="form-control" id="nomEntreprise" name="nomEntreprise" value="${offre.nomEntreprise}" readonly>
+                                    <label for="nomEcole">Nom de l'ecole:</label>
+                                    <input type="text" class="form-control" id="nomEcole" name="nomEcole" value="${offre.nomEcole}" readonly>
                                     <label for="description">Description:</label>
                                     <input type="text" class="form-control" id="description" name="description" value="${offre.description}">
                                     <label for="nbCandidat">Nombre de candidat:</label>
@@ -162,10 +162,10 @@
                                         <input type="text" class="form-control" id="telephoneRecruteur" name="telephoneRecruteur" value="${offre.telephoneRecruteur}"readonly>
                                     </c:otherwise>
                                 </c:choose>
-                                    <label for="siteWebEntreprise">Site web de l'entreprise:</label>
-                                    <input type="text" class="form-control" id="siteWebEntreprise" name="siteWebEntreprise" value="${offre.siteWebEntreprise}"readonly>
-                                    <label for="adresseEntreprise">Adresse de l'entreprise:</label>
-                                    <input type="text" class="form-control" id="adresseEntreprise" name="adresseEntreprise" value="${offre.adresseEntreprise}"readonly>
+                                    <label for="siteWebEcole">Site web de l'ecole:</label>
+                                    <input type="text" class="form-control" id="siteWebEcole" name="siteWebEcole" value="${offre.siteWebEcole}"readonly>
+                                    <label for="adresseEcole">Adresse de l'ecole:</label>
+                                    <input type="text" class="form-control" id="adresseEcole" name="adresseEcole" value="${offre.adresseEcole}"readonly>
                                     <input type="hidden" name="idOffre" value="${offre.idOffre}">
                                     <button type="submit" class="btn btn-danger" name="action" value="supprimer_offre">Supprimer</button>
                                     <button type="submit" class="btn btn-warning" name="action" value="modifier_offre">Modifier</button>

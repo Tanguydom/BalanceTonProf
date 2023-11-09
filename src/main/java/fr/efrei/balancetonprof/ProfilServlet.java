@@ -22,7 +22,7 @@ public class ProfilServlet extends HttpServlet {
     @EJB
     private CandidatureSessionBean candidatureSessionBean;
     @EJB
-    private EntrepriseSessionBean entrepriseSessionBean;
+    private EcoleSessionBean ecoleSessionBean;
     @EJB
     private EnseignantSessionBean enseignantSessionBean;
     @EJB
@@ -44,8 +44,8 @@ public class ProfilServlet extends HttpServlet {
         int userId = utilisateur.getId_utilisateur();
         request.setAttribute(Constantes.UTILISATEUR, utilisateur);
 
-        List<EntrepriseEntity> entrepriseEntityList = entrepriseSessionBean.getListEnterprise();
-        request.setAttribute(Constantes.LIST_ENTREPRISE, entrepriseEntityList);
+        List<EcoleEntity> ecoleEntityList = ecoleSessionBean.getListSchool();
+        request.setAttribute(Constantes.LIST_ECOLE, ecoleEntityList);
 
         String path = Constantes.PROFIL_PATH;
 
@@ -95,18 +95,18 @@ public class ProfilServlet extends HttpServlet {
 
             case 2 : //cas recruteur
                 RecruteurEntity recruteur = recruteurSessionBean.getRecruiterByIdUtilisateur(userId);
-                Integer idEntreprise;
-                if(action.equals(Constantes.CHOISIR_ENTREPRISE)){
-                    idEntreprise = Integer.valueOf(request.getParameter(Constantes.ID_ENTREPRISE));
-                    recruteur.setIdEntreprise(idEntreprise);
+                Integer idEcole;
+                if(action.equals(Constantes.CHOISIR_ECOLE)){
+                    idEcole = Integer.valueOf(request.getParameter(Constantes.ID_ECOLE));
+                    recruteur.setIdEcole(idEcole);
                     recruteurSessionBean.updateRecruiter(recruteur);
                 }else{
-                    idEntreprise = recruteur.getIdEntreprise();
+                    idEcole = recruteur.getIdEcole();
                 }
-                EntrepriseEntity entrepriseEntity;
-                if(idEntreprise != null){
-                    entrepriseEntity = entrepriseSessionBean.getEnterpriseById(recruteur.getIdEntreprise());
-                    request.setAttribute(Constantes.ENTREPRISE, entrepriseEntity);
+                EcoleEntity ecoleEntity;
+                if(idEcole != null){
+                    ecoleEntity = ecoleSessionBean.getSchoolById(recruteur.getIdEcole());
+                    request.setAttribute(Constantes.ECOLE, ecoleEntity);
                 }
                 request.setAttribute(Constantes.RECRUTEUR, recruteur);
                 break;
@@ -209,7 +209,7 @@ public class ProfilServlet extends HttpServlet {
     public void supprimerEnseignant(HttpServletRequest request){
         try{
             int id = Integer.parseInt(request.getParameter(Constantes.ID_UTILISATEUR));
-            candidatureSessionBean.deleteApplication(id);
+            candidatureSessionBean.deleteApplicationByIdEnseignant(id);
             enseignantSessionBean.deleteProfessorByIdUtilisateur(id);
             utilisateurSessionBean.deleteUser(id);
             request.setAttribute(Constantes.MSG_ERREUR, null);

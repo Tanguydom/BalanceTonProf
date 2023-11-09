@@ -53,7 +53,7 @@
                                 <li class="list-group-item">
                                     <form action="candidature-servlet" method="post">
                                         <strong>${candidat.intitule}</strong>
-                                        <p>Entreprise: ${candidat.nomEntreprise}</p>
+                                        <p>Ecole: ${candidat.nomEcole}</p>
                                         <p>Nom du candidat: ${candidat.nomCandidat}</p>
                                         <p>Prénom du candidat: ${candidat.prenomCandidat}</p>
 
@@ -164,7 +164,7 @@
                             <li class="list-group-item">
                                 <form action="candidature-servlet" method="post">
                                     <strong>${candidat.intitule}</strong>
-                                    <p>Entreprise: ${candidat.nomEntreprise}</p>
+                                    <p>Ecole: ${candidat.nomEcole}</p>
                                     <input type="hidden" name="idOffre" value="${candidat.idOffre}">
                                     <c:choose>
                                         <c:when test="${candidat.statut == 0}">

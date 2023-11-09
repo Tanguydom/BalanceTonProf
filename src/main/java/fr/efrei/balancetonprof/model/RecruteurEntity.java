@@ -10,8 +10,8 @@ public class RecruteurEntity {
     @Column(name = "id_recruteur", nullable = false)
     private int idRecruteur;
     @Basic
-    @Column(name = "id_entreprise", nullable = true)
-    private Integer idEntreprise;
+    @Column(name = "id_ecole", nullable = true)
+    private Integer idEcole;
     @Basic
     @Column(name = "id_utilisateur", nullable = true)
     private Integer idUtilisateur;
@@ -27,12 +27,12 @@ public class RecruteurEntity {
         this.idRecruteur = idRecruteur;
     }
 
-    public Integer getIdEntreprise() {
-        return idEntreprise;
+    public Integer getIdEcole() {
+        return idEcole;
     }
 
-    public void setIdEntreprise(Integer idEntreprise) {
-        this.idEntreprise = idEntreprise;
+    public void setIdEcole(Integer idEcole) {
+        this.idEcole = idEcole;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class RecruteurEntity {
         RecruteurEntity that = (RecruteurEntity) o;
 
         if (idRecruteur != that.idRecruteur) return false;
-        if (idEntreprise != null ? !idEntreprise.equals(that.idEntreprise) : that.idEntreprise != null) return false;
+        if (idEcole != null ? !idEcole.equals(that.idEcole) : that.idEcole != null) return false;
 
         return true;
     }
@@ -51,7 +51,7 @@ public class RecruteurEntity {
     @Override
     public int hashCode() {
         int result = idRecruteur;
-        result = 31 * result + (idEntreprise != null ? idEntreprise.hashCode() : 0);
+        result = 31 * result + (idEcole != null ? idEcole.hashCode() : 0);
         return result;
     }
 

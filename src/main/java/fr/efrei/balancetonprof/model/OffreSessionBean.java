@@ -19,21 +19,21 @@ public class OffreSessionBean {
     }
     public List<OffreEmploiEntity> getOffersWithNoApplicant(int idEns) {
         Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e " +
-                "LEFT JOIN CandidatureEntity c ON e.idOffre = c.idOffre AND c.idProf = :idEnseignant " +
+                "LEFT JOIN CandidatureEntity c ON e.idOffre = c.idOffre AND c.idEnseignant = :idEnseignant " +
                 "WHERE c.idOffre IS NULL");
         q.setParameter(Constantes.ID_ENSEIGNANT, idEns);
         return q.getResultList();
     }
-    public Integer getEnterpriseByIdOffre(int idOffre){
-        Query q = em.createQuery("SELECT o.idEntreprise FROM OffreEmploiEntity o WHERE o.idOffre = :idOffre");
+    public Integer getSchoolByIdOffre(int idOffre){
+        Query q = em.createQuery("SELECT o.idEcole FROM OffreEmploiEntity o WHERE o.idOffre = :idOffre");
         q.setParameter(Constantes.ID_OFFRE, idOffre);
-        Integer idEntreprise ;
+        Integer idEcole ;
         try {
-            idEntreprise = (Integer) q.getSingleResult();
+            idEcole = (Integer) q.getSingleResult();
         } catch (Exception e) {
-            idEntreprise = null ;
+            idEcole = null ;
         }
-        return idEntreprise;
+        return idEcole;
     }
     public List<OffreEmploiEntity> getOffersByIdRecruteur(int idRec) {
         Query q = em.createQuery("SELECT e FROM OffreEmploiEntity e, RecrutementEntity r WHERE e.idOffre = r.idOffre AND r.idRecruteur = :idRecruteur");

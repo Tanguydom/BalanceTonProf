@@ -23,7 +23,7 @@ public class CandidatureServlet extends HttpServlet {
     @EJB
     private CandidatureSessionBean candidatureSessionBean;
     @EJB
-    private EntrepriseSessionBean entrepriseSessionBean;
+    private EcoleSessionBean ecoleSessionBean;
     @EJB
     private EnseignantSessionBean enseignantSessionBean;
     @EJB
@@ -69,7 +69,7 @@ public class CandidatureServlet extends HttpServlet {
 
             case 2 :
                 RecruteurEntity recruteur = recruteurSessionBean.getRecruiterByIdUtilisateur(userId);
-                EntrepriseEntity entrepriseEntity = entrepriseSessionBean.getEnterpriseById(recruteur.getIdEntreprise());
+                EcoleEntity ecoleEntity = ecoleSessionBean.getSchoolById(recruteur.getIdEcole());
 
                 switch (action){
                     case Constantes.ACCEPTER_CANDIDATURE: accepterCandidature(request);break;
@@ -81,7 +81,7 @@ public class CandidatureServlet extends HttpServlet {
 
                 request.setAttribute(Constantes.LIST_CANDIDATURE, listCandidature);
                 request.setAttribute(Constantes.RECRUTEUR, recruteur);
-                request.setAttribute(Constantes.ENTREPRISE, entrepriseEntity);
+                request.setAttribute(Constantes.ECOLE, ecoleEntity);
                 break;
             default:break;
         }
@@ -124,11 +124,11 @@ public class CandidatureServlet extends HttpServlet {
             OffreEmploiEntity offre = offreSessionBean.getOfferById(candidature.getIdOffre());
             candidature.setIntitule(offre.getIntitule());
 
-            Integer idEntreprise = offreSessionBean.getEnterpriseByIdOffre(offre.getIdOffre());
-            EntrepriseEntity entrepriseEntity = entrepriseSessionBean.getEnterpriseById(idEntreprise);
+            Integer idEcole = offreSessionBean.getSchoolByIdOffre(offre.getIdOffre());
+            EcoleEntity ecoleEntity = ecoleSessionBean.getSchoolById(idEcole);
 
-            UtilisateurEntity utilisateur = utilisateurSessionBean.getUserById(candidatureEntity.getIdProf());
-            EnseignantEntity enseignant = enseignantSessionBean.getProfessorByIdUtilisateur(candidatureEntity.getIdProf());
+            UtilisateurEntity utilisateur = utilisateurSessionBean.getUserById(candidatureEntity.getIdEnseignant());
+            EnseignantEntity enseignant = enseignantSessionBean.getProfessorByIdUtilisateur(candidatureEntity.getIdEnseignant());
 
             candidature.setNomCandidat(utilisateur.getNom());
             candidature.setPrenomCandidat(utilisateur.getPrenom());
@@ -139,8 +139,8 @@ public class CandidatureServlet extends HttpServlet {
             candidature.setNiveauSouhaite(enseignant.getNiveauSouhaite());
             candidature.setAutresInformations(enseignant.getAutresInformations());
             candidature.setInteret(enseignant.getInteret());
-            candidature.setIdEntreprise(entrepriseEntity.getIdEntreprise());
-            candidature.setNomEntreprise(entrepriseEntity.getNom());
+            candidature.setIdEcole(ecoleEntity.getIdEcole());
+            candidature.setNomEcole(ecoleEntity.getNom());
             candidature.setStatut(candidatureEntity.getStatut());
             listCandidature.add(candidature);
         }

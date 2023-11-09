@@ -13,7 +13,7 @@ public class CandidatureSessionBean {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("projet_java_avance");
     EntityManager em = entityManagerFactory.createEntityManager();
     public Integer countApplicationsByIdOffre(int idOffre) {
-        Query q = em.createQuery("SELECT COUNT(c.idProf) FROM CandidatureEntity c WHERE c.idOffre = :idOffre");
+        Query q = em.createQuery("SELECT COUNT(c.idEnseignant) FROM CandidatureEntity c WHERE c.idOffre = :idOffre");
         q.setParameter(Constantes.ID_OFFRE, idOffre);
         Integer nbCandidat = 0;
         try {
@@ -28,7 +28,7 @@ public class CandidatureSessionBean {
         em.getTransaction().commit();
     }
     public Integer getApplicationByIdOffreIdEns(int idOffre, int idEns) {
-        Query q = em.createQuery("SELECT COUNT(c.idCandidature) FROM CandidatureEntity c WHERE c.idOffre = :idOffre AND c.idProf = :idEnseignant");
+        Query q = em.createQuery("SELECT COUNT(c.idCandidature) FROM CandidatureEntity c WHERE c.idOffre = :idOffre AND c.idEnseignant = :idEnseignant");
         q.setParameter(Constantes.ID_OFFRE, idOffre);
         q.setParameter(Constantes.ID_ENSEIGNANT, idEns);
         Integer idCandidature ;
@@ -55,7 +55,7 @@ public class CandidatureSessionBean {
     }
     public List<CandidatureEntity> getApplicationsByIdEnseignant(int idEns) {
         Query q = em.createQuery("SELECT c FROM OffreEmploiEntity e, RecrutementEntity r, CandidatureEntity c " +
-                "WHERE e.idOffre = r.idOffre AND c.idProf = :idEnseignant AND c.idOffre = e.idOffre");
+                "WHERE e.idOffre = r.idOffre AND c.idEnseignant = :idEnseignant AND c.idOffre = e.idOffre");
         q.setParameter(Constantes.ID_ENSEIGNANT, idEns);
         return q.getResultList();
     }
@@ -66,7 +66,7 @@ public class CandidatureSessionBean {
         em.getTransaction().commit();
     }
     public void deleteApplicationByIdEnseignant(int idEns){
-        Query q = em.createQuery("DELETE FROM CandidatureEntity e WHERE e.idProf = :idEnseignant");
+        Query q = em.createQuery("DELETE FROM CandidatureEntity e WHERE e.idEnseignant = :idEnseignant");
         em.getTransaction().begin();
         q.setParameter(Constantes.ID_ENSEIGNANT, idEns);
         q.executeUpdate();

@@ -10,8 +10,8 @@ public class CandidatureEntity {
     @Column(name = "id_candidature", nullable = false)
     private int idCandidature;
     @Basic
-    @Column(name = "id_prof", nullable = true)
-    private Integer idProf;
+    @Column(name = "id_enseignant", nullable = true)
+    private Integer idEnseignant;
     @Basic
     @Column(name = "id_offre", nullable = true)
     private Integer idOffre;
@@ -35,12 +35,12 @@ public class CandidatureEntity {
         this.idCandidature = idCandidature;
     }
 
-    public Integer getIdProf() {
-        return idProf;
+    public Integer getIdEnseignant() {
+        return idEnseignant;
     }
 
-    public void setIdProf(Integer idProf) {
-        this.idProf = idProf;
+    public void setIdEnseignant(Integer idEnseignant) {
+        this.idEnseignant = idEnseignant;
     }
 
     public Integer getIdOffre() {

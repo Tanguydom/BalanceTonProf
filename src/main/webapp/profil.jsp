@@ -135,35 +135,35 @@
                     </c:when>
                     <c:when test="${utilisateur.role == 2}">
                         <c:choose>
-                            <c:when test="${not empty entreprise}">
+                            <c:when test="${not empty ecole}">
                                 <div style="color:red">
                                         ${messageErreur}
                                 </div>
                                 <form class="form" action="profil-servlet" method="post">
-                            <h2 class="mt-4">Entreprise ratachée</h2>
+                            <h2 class="mt-4">Ecole ratachée</h2>
                                 <div class="form-group">
-                                    <label for="nomEntreprise">Nom:</label>
-                                    <input type="text" class="form-control" id="nomEntreprise" name="nomEntreprise" value="${entreprise.nom}" readonly>
+                                    <label for="nomEcole">Nom:</label>
+                                    <input type="text" class="form-control" id="nomEcole" name="nomEcole" value="${ecole.nom}" readonly>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="emailEntreprise">Email:</label>
-                                    <input type="text" class="form-control" id="emailEntreprise" name="emailEntreprise" value="${entreprise.email}" readonly>
+                                    <label for="emailEcole">Email:</label>
+                                    <input type="text" class="form-control" id="emailEcole" name="emailEcole" value="${ecole.email}" readonly>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="telephoneEntreprise">Téléphone:</label>
-                                    <input type="text" class="form-control" id="telephoneEntreprise" name="telephoneEntreprise" value="${entreprise.telephone}" readonly>
+                                    <label for="telephoneEcole">Téléphone:</label>
+                                    <input type="text" class="form-control" id="telephoneEcole" name="telephoneEcole" value="${ecole.telephone}" readonly>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="siteWebEntreprise">Site Web:</label>
-                                    <input type="text" class="form-control" id="siteWebEntreprise" name="siteWebEntreprise" value="${entreprise.siteWeb}" readonly>
+                                    <label for="siteWebEcole">Site Web:</label>
+                                    <input type="text" class="form-control" id="siteWebEcole" name="siteWebEcole" value="${ecole.siteWeb}" readonly>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="adresseEntreprise">Adresse:</label>
-                                    <input type="text" class="form-control" id="adresseEntreprise" name="adresseEntreprise" value="${entreprise.adresse}" readonly>
+                                    <label for="adresseEcole">Adresse:</label>
+                                    <input type="text" class="form-control" id="adresseEcole" name="adresseEcole" value="${ecole.adresse}" readonly>
                                 </div>
 
                         </form>
@@ -173,12 +173,12 @@
                                         ${messageErreur}
                                 </div>
                                 <form class="form" action="profil-servlet" method="post">
-                                    <select name="idEntreprise">
-                                        <c:forEach items="${listeEntreprises}" var="entreprise">
-                                            <option value="${entreprise.idEntreprise}">${entreprise.nom}</option>
+                                    <select name="idEcole">
+                                        <c:forEach items="${listeEcoles}" var="ecole">
+                                            <option value="${ecole.idEcole}">${ecole.nom}</option>
                                         </c:forEach>
                                     </select>
-                                    <button type="submit" class="btn btn-primary" name="action" value="choisirEntreprise">Choisir</button>
+                                    <button type="submit" class="btn btn-primary" name="action" value="choisirEcole">Choisir</button>
                                 </form>
                             </c:otherwise>
                         </c:choose>

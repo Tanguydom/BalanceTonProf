@@ -9,14 +9,14 @@ import jakarta.persistence.Query;
 import java.util.List;
 
 @Stateless
-public class EntrepriseSessionBean {
+public class EcoleSessionBean {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("projet_java_avance");
     EntityManager em = entityManagerFactory.createEntityManager();
-    public EntrepriseEntity getEnterpriseById(int id){
-        return em.find(EntrepriseEntity.class, id);
+    public EcoleEntity getSchoolById(int id){
+        return em.find(EcoleEntity.class, id);
     }
-    public List<EntrepriseEntity> getListEnterprise(){
-        Query q = em.createQuery("select e from EntrepriseEntity e");
+    public List<EcoleEntity> getListSchool(){
+        Query q = em.createQuery("select e from EcoleEntity e");
         return q.getResultList();
     }
 }

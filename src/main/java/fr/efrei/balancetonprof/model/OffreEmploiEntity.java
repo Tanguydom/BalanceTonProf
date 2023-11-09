@@ -13,8 +13,8 @@ public class OffreEmploiEntity {
     @Column(name = "intitule", nullable = true, length = 255)
     private String intitule;
     @Basic
-    @Column(name = "id_entreprise", nullable = true)
-    private Integer idEntreprise;
+    @Column(name = "id_ecole", nullable = true)
+    private Integer idEcole;
     @Basic
     @Column(name = "description", nullable = true, length = 255)
     private String description;
@@ -38,12 +38,12 @@ public class OffreEmploiEntity {
         this.intitule = intitule;
     }
 
-    public Integer getIdEntreprise() {
-        return idEntreprise;
+    public Integer getIdEcole() {
+        return idEcole;
     }
 
-    public void setIdEntreprise(Integer idEntreprise) {
-        this.idEntreprise = idEntreprise;
+    public void setIdEcole(Integer idEcole) {
+        this.idEcole = idEcole;
     }
 
     public String getDescription() {
@@ -63,7 +63,7 @@ public class OffreEmploiEntity {
 
         if (idOffre != that.idOffre) return false;
         if (intitule != null ? !intitule.equals(that.intitule) : that.intitule != null) return false;
-        if (idEntreprise != null ? !idEntreprise.equals(that.idEntreprise) : that.idEntreprise != null) return false;
+        if (idEcole != null ? !idEcole.equals(that.idEcole) : that.idEcole != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
 
         return true;
@@ -73,7 +73,7 @@ public class OffreEmploiEntity {
     public int hashCode() {
         int result = idOffre;
         result = 31 * result + (intitule != null ? intitule.hashCode() : 0);
-        result = 31 * result + (idEntreprise != null ? idEntreprise.hashCode() : 0);
+        result = 31 * result + (idEcole != null ? idEcole.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }

@@ -1,27 +1,19 @@
 package fr.efrei.balancetonprof;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-
 public class Candidature {
 
     private int idCandidature;
     private int idOffre;
-    private int idEntreprise;
-    private String nomEntreprise;
+    private int idEcole;
+    private String nomEcole;
     private String intitule;
     private String nomCandidat;
     private String prenomCandidat;
-
     private String experience;
-
     private String competence;
-
     private String interet;
     private String evaluation;
-
     private String niveauSouhaite;
-
     private int statut;
 
     public int getStatut() {
@@ -112,20 +104,20 @@ public class Candidature {
         this.idOffre = idOffre;
     }
 
-    public int getIdEntreprise() {
-        return idEntreprise;
+    public int getIdEcole() {
+        return idEcole;
     }
 
-    public void setIdEntreprise(int idEntreprise) {
-        this.idEntreprise = idEntreprise;
+    public void setIdEcole(int idEntreprise) {
+        this.idEcole = idEcole;
     }
 
-    public String getNomEntreprise() {
-        return nomEntreprise;
+    public String getNomEcole() {
+        return nomEcole;
     }
 
-    public void setNomEntreprise(String nomEntreprise) {
-        this.nomEntreprise = nomEntreprise;
+    public void setNomEcole(String nomEcole) {
+        this.nomEcole = nomEcole;
     }
 
     public String getIntitule() {
