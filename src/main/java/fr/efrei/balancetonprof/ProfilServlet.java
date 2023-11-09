@@ -64,12 +64,16 @@ public class ProfilServlet extends HttpServlet {
                 path = Constantes.ADMIN_PATH;
                 switch (action){
                     case Constantes.AJOUT_ADMIN : createUtilisateur(request, 0); break;
-                    case Constantes.AJOUT_ENS : createUtilisateur(request, 1); break;
-                    case Constantes.AJOUT_REC : createUtilisateur(request, 2); break;
-                    case Constantes.SAUVEGARDER_UTILISATEURS: sauvegarderUtilisateurs(request); break;
-                    case Constantes.SUPPRIMER_PROF: supprimerEnseignant(request); break;
-                    case Constantes.SUPPRIMER_ADMIN: supprimerAdmin(request);break;
-                    case Constantes.SUPPRIMER_RECRUTEUR: supprimerRecruteur(request);break;
+                    case Constantes.AJOUT_ENS : createUtilisateur(request, 1);
+                        path =  Constantes.ADMIN_GESTION_PROF_PATH ; break;
+                    case Constantes.AJOUT_REC : createUtilisateur(request, 2);
+                        path =  Constantes.ADMIN_GESTION_REC_PATH ; break;
+                    case Constantes.SAUVEGARDER_UTILISATEURS: sauvegarderUtilisateurs(request);
+                    case Constantes.SUPPRIMER_PROF: supprimerEnseignant(request);
+                        path =  Constantes.ADMIN_GESTION_PROF_PATH ; break;
+                    case Constantes.SUPPRIMER_ADMIN: supprimerAdmin(request); break;
+                    case Constantes.SUPPRIMER_RECRUTEUR: supprimerRecruteur(request);
+                        path =  Constantes.ADMIN_GESTION_REC_PATH ; break;
                     case Constantes.NAV_PROFIL_PROF: path = Constantes.ADMIN_GESTION_PROF_PATH; break;
                     case Constantes.NAV_PROFIL_REC: path = Constantes.ADMIN_GESTION_REC_PATH; break;
                     default:break;
