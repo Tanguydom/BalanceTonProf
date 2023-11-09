@@ -47,7 +47,6 @@ public final class Constantes {
     //COE -> création offre emploi
     public static final String COE_INTITULE = "coe_intitule";
     public static final String COE_DESCRIPTION = "coe_description";
-    public static final String MESSAGE_ERREUR_CREDENTIALS_KO = "Infos de connexion non valides. Merci de les saisir à nouveau";
 
     /***************************************************************************************
      ************************************** Action jsp *************************************
@@ -88,4 +87,24 @@ public final class Constantes {
     public static final String INSCRIPTION_PATH = "inscription.jsp";
     public static final String PROFIL_SERVLET = "/profil-servlet";
     public static final String INSCRIPTION_SERVLET =  "/inscription-servlet";
+
+    /***************************************************************************************
+     ************************************** exceptions *************************************
+     ***************************************************************************************/
+    public static final String MESSAGE_ERREUR_CREDENTIALS_KO = "Infos de connexion non valides. Merci de les saisir à nouveau";
+    public static final String MESSAGE_ERREUR_INSERTUSER_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_UPDATEUSER_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_DELETEUSER_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_LINK_KO = "Le recruteur n'est pas associé à cet entreprise";
+    public static final String MESSAGE_ERREUR_INSERTOFFER_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_UPDATEOFFER_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_DELETEOFFER_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_INSERTAPPLICATION_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_UPDATEAPPLICATION_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_DELETEAPPLICATION_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_REJECT_APPLICATION_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_ACCEPT_APPLICATION_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_INSERTRECRUITMENT_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_UPDATERECRUITMENT_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_DELETERECRUITMENT_KO = "L'utilisateur existe deja avec ces infos";
 }

@@ -88,16 +88,31 @@ public class CandidatureServlet extends HttpServlet {
         request.getRequestDispatcher(path).forward(request, response);
     }
     public void refuserCandidature(HttpServletRequest request){
-        int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
-        candidatureSessionBean.changeStatut(idCandidature, 2);
+        try{
+            int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
+            candidatureSessionBean.changeStatut(idCandidature, 2);
+            request.setAttribute(Constantes.MSG_ERREUR, null);
+        }catch (Exception e){
+            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_REJECT_APPLICATION_KO);
+        }
     }
     public void accepterCandidature(HttpServletRequest request){
-        int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
-        candidatureSessionBean.changeStatut(idCandidature, 1);
+        try{
+            int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
+            candidatureSessionBean.changeStatut(idCandidature, 1);
+            request.setAttribute(Constantes.MSG_ERREUR, null);
+        }catch (Exception e){
+            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_ACCEPT_APPLICATION_KO);
+        }
     }
     public void retirerCandidature(HttpServletRequest request, int userId){
-        int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
-        candidatureSessionBean.deleteApplication(idCandidature);
+        try{
+            int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
+            candidatureSessionBean.deleteApplication(idCandidature);
+            request.setAttribute(Constantes.MSG_ERREUR, null);
+        }catch (Exception e){
+            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_DELETEAPPLICATION_KO);
+        }
     }
     public List<Candidature> conversion(List<CandidatureEntity> candidatureEntityList){
         List<Candidature> listCandidature = new ArrayList<>();

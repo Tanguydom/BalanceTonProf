@@ -43,19 +43,23 @@ public class InscriptionServlet extends HttpServlet {
         nouvelUtilisateur.setPrenom(prenom);
         nouvelUtilisateur.setEmail(email);
         nouvelUtilisateur.setRole(roleId);
+        try{
+            if(roleId == 1){
+                EnseignantEntity enseignant = new EnseignantEntity();
+                enseignant.setIdUtilisateur(nouvelUtilisateur.getIdUtilisateur());
+                enseignantSessionBean.insertProfessor(enseignant);
+                request.setAttribute(Constantes.MSG_ERREUR, null);
 
-        UtilisateurSessionBean.insertUser(nouvelUtilisateur);
-        if(roleId == 1){
-            EnseignantEntity enseignant = new EnseignantEntity();
-            enseignant.setIdUtilisateur(nouvelUtilisateur.getIdUtilisateur());
-            enseignantSessionBean.insertProfessor(enseignant);
-        }else if(roleId == 2){
-            RecruteurEntity recruteur = new RecruteurEntity();
-            recruteur.setIdUtilisateur(nouvelUtilisateur.getIdUtilisateur());
-            recruteurSessionBean.insertRecruiter(recruteur);
+            }else if(roleId == 2){
+                RecruteurEntity recruteur = new RecruteurEntity();
+                recruteur.setIdUtilisateur(nouvelUtilisateur.getIdUtilisateur());
+                recruteurSessionBean.insertRecruiter(recruteur);
+                request.setAttribute(Constantes.MSG_ERREUR, null);
+            }
+            UtilisateurSessionBean.insertUser(nouvelUtilisateur);
+        }catch (Exception e){
+            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_INSERTUSER_KO);
         }
-
         request.getRequestDispatcher(Constantes.INDEX_PATH).forward(request, response);
-
     }
 }

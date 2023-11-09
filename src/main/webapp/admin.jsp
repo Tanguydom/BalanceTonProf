@@ -49,6 +49,9 @@
 <h2 class="mt-5">Profil de l'Utilisateur</h2>
 
 <div class="information-primaire-utilisateur">
+    <div style="color:red">
+        ${messageErreur}
+    </div>
     <form class="form" action="profil-servlet" method="post">
         <div class="form-group">
             <label for="pseudo">Pseudo:</label>
@@ -86,6 +89,9 @@
 <div id="ajouterAdminModal">
     <div>
         <h2>Ajouter un admin</h2>
+        <div style="color:red">
+            ${messageErreur}
+        </div>
         <form action="profil-servlet" method="post">
             <input type="text" name="pseudo" class="form-control" placeholder="Pseudo" required><br>
             <input type="password" name="motDePasse" class="form-control" placeholder="Mot de passe" required><br>
@@ -101,6 +107,9 @@
 <c:if test="${empty listeAdministrateurs}">
     <p>Aucun administrateur trouvé. "${listeAdministrateurs} vbnjk"</p>
 </c:if>
+<div style="color:red">
+    ${messageErreur}
+</div>
 <c:forEach var="admin" items="${listeAdministrateurs}">
     <form action="profil-servlet" method="post">
         <input type="text" class="form-control" name="pseudo" value="${admin.pseudo}">

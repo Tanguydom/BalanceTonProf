@@ -29,6 +29,9 @@
 
     <div class="form-box">
       <div class="card">
+        <div style="color:red">
+          ${messageErreur}
+        </div>
         <form action="inscription-servlet" method="post">
           <h2 class="form-title">Inscription</h2>
           <div class="grid-2">

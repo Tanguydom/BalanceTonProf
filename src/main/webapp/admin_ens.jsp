@@ -47,6 +47,9 @@
 <div id="ajouterProfesseurModal">
     <div>
         <h2>Ajouter un Professeur</h2>
+        <div style="color:red">
+            ${messageErreur}
+        </div>
         <form action="profil-servlet" method="post">
             <input type="text" name="pseudo" placeholder="Pseudo" required><br>
             <input type="password" name="motDePasse" placeholder="Mot de passe" required><br>
@@ -61,6 +64,9 @@
 <c:if test="${empty listeProfesseurs}">
     <p>Aucun professeur trouvé.</p>
 </c:if>
+<div style="color:red">
+    ${messageErreur}
+</div>
 <c:forEach var="prof" items="${listeProfesseurs}">
     <form action="profil-servlet" method="post">
         <input type="text" class="form-control" name="pseudo" value="${prof.pseudo}">

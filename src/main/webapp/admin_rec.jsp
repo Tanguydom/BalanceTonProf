@@ -47,6 +47,9 @@
 <div id="ajouterRecruteurModal">
     <div>
         <h2>Ajouter un Recruteur</h2>
+        <div style="color:red">
+            ${messageErreur}
+        </div>
         <form action="profil-servlet" method="post">
             <input type="text" name="pseudo" placeholder="Pseudo" required><br>
             <input type="password" name="motDePasse" placeholder="Mot de passe" required><br>
@@ -61,7 +64,9 @@
 <c:if test="${empty listeRecruteurs}">
     <p>Aucun Recruteur trouvé.</p>
 </c:if>
-
+<div style="color:red">
+    ${messageErreur}
+</div>
 <c:forEach var="recrut" items="${listeRecruteurs}">
     <form action="profil-servlet" method="post">
         <input type="text" class="form-control" name="pseudo" value="${recrut.pseudo}">

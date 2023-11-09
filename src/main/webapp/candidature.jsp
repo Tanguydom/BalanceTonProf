@@ -45,6 +45,9 @@
                 <c:when test="${utilisateur.role == 2}">
                     <div class="container">
                         <h2 class="mt-5">Suivi des candidatures</h2>
+                        <div style="color:red">
+                                ${messageErreur}
+                        </div>
                         <form action="candidature-servlet" method="POST">
                             <c:forEach var="candidat" items="${listeCandidatures}">
                                 <li class="list-group-item">
@@ -154,32 +157,33 @@
                 <c:when test="${utilisateur.role == 1}">
                     <div class="container">
                         <h2 class="mt-5">Mes candidatures</h2>
-                        <form action="candidature-servlet" method="post">
-                            <c:forEach var="candidat" items="${listeCandidatures}">
-                                <li class="list-group-item">
-                                    <form action="candidature-servlet" method="post">
-                                        <strong>${candidat.intitule}</strong>
-                                        <p>Entreprise: ${candidat.nomEntreprise}</p>
-                                        <input type="hidden" name="idOffre" value="${candidat.idOffre}">
-                                        <c:choose>
-                                            <c:when test="${candidat.statut == 0}">
-                                                <label style="color: gray;">En attente</label>
-                                                <input type="hidden" name="idCandidature" value="${candidat.idCandidature}">
-                                                <button type="submit" class="btn btn-danger" name="action" value="retirer_candidature">Retirer ma candidature</button>
-                                            </c:when>
-                                            <c:when test="${offre.statut == 1}">
-                                                <!-- Statut "Candidature acceptée" en vert -->
-                                                <label style="color: green;">Candidature acceptée</label>
-                                            </c:when>
-                                            <c:when test="${offre.statut == 2}">
-                                                <!-- Statut "Refusée" en rouge -->
-                                                <label style="color: red;">Candidature refusée</label>
-                                            </c:when>
-                                        </c:choose>
-                                    </form>
-                                </li>
-                            </c:forEach>
-                        </form>
+                        <div style="color:red">
+                                ${messageErreur}
+                        </div>
+                        <c:forEach var="candidat" items="${listeCandidatures}">
+                            <li class="list-group-item">
+                                <form action="candidature-servlet" method="post">
+                                    <strong>${candidat.intitule}</strong>
+                                    <p>Entreprise: ${candidat.nomEntreprise}</p>
+                                    <input type="hidden" name="idOffre" value="${candidat.idOffre}">
+                                    <c:choose>
+                                        <c:when test="${candidat.statut == 0}">
+                                            <label style="color: gray;">En attente</label>
+                                            <input type="hidden" name="idCandidature" value="${candidat.idCandidature}">
+                                            <button type="submit" class="btn btn-danger" name="action" value="retirer_candidature">Retirer ma candidature</button>
+                                        </c:when>
+                                        <c:when test="${offre.statut == 1}">
+                                            <!-- Statut "Candidature acceptée" en vert -->
+                                            <label style="color: green;">Candidature acceptée</label>
+                                        </c:when>
+                                        <c:when test="${offre.statut == 2}">
+                                            <!-- Statut "Refusée" en rouge -->
+                                            <label style="color: red;">Candidature refusée</label>
+                                        </c:when>
+                                    </c:choose>
+                                </form>
+                            </li>
+                        </c:forEach>
                     </div>
                 </c:when>
             </c:choose>

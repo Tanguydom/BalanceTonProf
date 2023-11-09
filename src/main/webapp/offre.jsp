@@ -60,6 +60,9 @@
                 <c:when test="${utilisateur.role != 1}">
                         <div class="container">
                             <h2 class="mt-5">Créer une Offre d'Emploi</h2>
+                            <div style="color:red">
+                                    ${messageErreur}
+                            </div>
                             <form action="offre-servlet" method="POST">
                                 <div class="form-group">
                                     <label for="coe_intitule">Intitulé de l'offre:</label>
@@ -110,6 +113,9 @@
                     <li class="list-group-item">
                         <c:choose>
                             <c:when test="${utilisateur.role == 1}">
+                                <div style="color:red">
+                                        ${messageErreur}
+                                </div>
                                 <form action="offre-servlet" method="post">
                                     <strong>${offre.intitule}</strong>
                                     <p>Entreprise: ${offre.nomEntreprise}</p>
@@ -124,6 +130,9 @@
                                 </form>
                             </c:when>
                             <c:when test="${utilisateur.role != 1}">
+                                <div style="color:red">
+                                        ${messageErreur}
+                                </div>
                                 <!-- Champs modifiables pour le rôle 2 -->
                                 <form action="offre-servlet" method="post">
                                     <input type="hidden" name="idEntreprise" value="${offre.idEntreprise}">

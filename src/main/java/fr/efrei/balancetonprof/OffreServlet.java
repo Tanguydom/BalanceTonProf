@@ -99,15 +99,20 @@ public class OffreServlet extends HttpServlet {
         Integer idRecruteur = Integer.valueOf(request.getParameter(Constantes.COMBOREC2));
         Integer idEntreprise = Integer.valueOf(request.getParameter(Constantes.ID_ENTREPRISE));
         Integer idOffre = Integer.valueOf(request.getParameter(Constantes.ID_OFFRE));
-
-        if(idEntreprise != null && idRecruteur !=null
-                && recruteurSessionBean.checkIfExist(idRecruteur, idEntreprise) != null
-                && recruteurSessionBean.checkIfExist(idRecruteur, idEntreprise) > 0 ){
-            RecrutementEntity recrutementEntity = recrutementSessionBean.getRecruitmentByIdOffre(idOffre);
-            recrutementEntity.setIdRecruteur(idRecruteur);
-            recrutementSessionBean.updateRecruitment(recrutementEntity);
+        try{
+            if(idEntreprise != null && idRecruteur !=null
+                    && recruteurSessionBean.checkIfExist(idRecruteur, idEntreprise) != null
+                    && recruteurSessionBean.checkIfExist(idRecruteur, idEntreprise) > 0 ){
+                RecrutementEntity recrutementEntity = recrutementSessionBean.getRecruitmentByIdOffre(idOffre);
+                recrutementEntity.setIdRecruteur(idRecruteur);
+                recrutementSessionBean.updateRecruitment(recrutementEntity);
+                request.setAttribute(Constantes.MSG_ERREUR, null);
+            }else{
+                request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_LINK_KO);
+            }
+        }catch (Exception e){
+            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_UPDATERECRUITMENT_KO);
         }
-
     }
     public void creationOffre(HttpServletRequest request, int idEntreprise, int idUtilisateur){
         OffreEmploiEntity offreEmploiEntity = new OffreEmploiEntity();
@@ -115,15 +120,20 @@ public class OffreServlet extends HttpServlet {
         String intitule = request.getParameter(Constantes.COE_INTITULE);
         String description = request.getParameter(Constantes.COE_DESCRIPTION);
 
-        offreEmploiEntity.setIntitule(intitule);
-        offreEmploiEntity.setDescription(description);
-        offreEmploiEntity.setIdEntreprise(idEntreprise);
-        offreSessionBean.insertOffer(offreEmploiEntity);
+        try{
+            offreEmploiEntity.setIntitule(intitule);
+            offreEmploiEntity.setDescription(description);
+            offreEmploiEntity.setIdEntreprise(idEntreprise);
+            offreSessionBean.insertOffer(offreEmploiEntity);
 
-        RecrutementEntity recrutementEntity = new RecrutementEntity();
-        recrutementEntity.setIdOffre(offreEmploiEntity.getIdOffre());
-        recrutementEntity.setIdRecruteur(idUtilisateur);
-        recrutementSessionBean.insertRecruitment(recrutementEntity);
+            RecrutementEntity recrutementEntity = new RecrutementEntity();
+            recrutementEntity.setIdOffre(offreEmploiEntity.getIdOffre());
+            recrutementEntity.setIdRecruteur(idUtilisateur);
+            recrutementSessionBean.insertRecruitment(recrutementEntity);
+            request.setAttribute(Constantes.MSG_ERREUR, null);
+        }catch (Exception e){
+            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_INSERTOFFER_KO);
+        }
     }
 
     public void creationOffre(HttpServletRequest request){
@@ -138,43 +148,62 @@ public class OffreServlet extends HttpServlet {
         Integer idEntreprise = Integer.valueOf(request.getParameter(Constantes.COMBOENTR));
         Integer idRecruteur = Integer.valueOf(request.getParameter(Constantes.COMBOREC));
 
-        if(idEntreprise != null && idRecruteur !=null
-                && recruteurSessionBean.checkIfExist(idRecruteur, idEntreprise) != null
-                && recruteurSessionBean.checkIfExist(idRecruteur, idEntreprise) > 0 ){
+        try{
+            if(idEntreprise != null && idRecruteur !=null
+                    && recruteurSessionBean.checkIfExist(idRecruteur, idEntreprise) != null
+                    && recruteurSessionBean.checkIfExist(idRecruteur, idEntreprise) > 0 ){
 
-            offreEmploiEntity.setIdEntreprise(idEntreprise);
-            offreSessionBean.insertOffer(offreEmploiEntity);
+                offreEmploiEntity.setIdEntreprise(idEntreprise);
+                offreSessionBean.insertOffer(offreEmploiEntity);
 
-            RecrutementEntity recrutementEntity = new RecrutementEntity();
-            recrutementEntity.setIdOffre(offreEmploiEntity.getIdOffre());
-            recrutementEntity.setIdRecruteur(idRecruteur);
-            recrutementSessionBean.insertRecruitment(recrutementEntity);
-        }else{
-           //entreprise ou recruteur  id null ou entreprise non lié au recruteur
+                RecrutementEntity recrutementEntity = new RecrutementEntity();
+                recrutementEntity.setIdOffre(offreEmploiEntity.getIdOffre());
+                recrutementEntity.setIdRecruteur(idRecruteur);
+                recrutementSessionBean.insertRecruitment(recrutementEntity);
+                request.setAttribute(Constantes.MSG_ERREUR, null);
+            }else{
+                request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_LINK_KO);
+            }
+        }catch (Exception e){
+            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_INSERTOFFER_KO);
         }
-
     }
     public void suppressionOffre(HttpServletRequest request){
-        int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
-        recrutementSessionBean.deleteRecruitment(idOffre);
-        offreSessionBean.deleteOffer(idOffre);
+        try{
+            int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
+            recrutementSessionBean.deleteRecruitment(idOffre);
+            offreSessionBean.deleteOffer(idOffre);
+            request.setAttribute(Constantes.MSG_ERREUR, null);
+        }catch (Exception e){
+            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_DELETEOFFER_KO);
+        }
     }
     public void modificationOffre(HttpServletRequest request) {
-        int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
-        OffreEmploiEntity offreEmploiEntity = offreSessionBean.getOfferById(idOffre);
-        offreEmploiEntity.setDescription(request.getParameter(Constantes.DESCRIPTION));
-        offreEmploiEntity.setIntitule(request.getParameter(Constantes.INTITULE));
-        offreSessionBean.updateOffer(offreEmploiEntity);
+        try{
+            int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
+            OffreEmploiEntity offreEmploiEntity = offreSessionBean.getOfferById(idOffre);
+            offreEmploiEntity.setDescription(request.getParameter(Constantes.DESCRIPTION));
+            offreEmploiEntity.setIntitule(request.getParameter(Constantes.INTITULE));
+            offreSessionBean.updateOffer(offreEmploiEntity);
+            request.setAttribute(Constantes.MSG_ERREUR, null);
+        }catch (Exception e){
+            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_UPDATEOFFER_KO);
+        }
     }
     public void candidater(HttpServletRequest request, int userId){
-        int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
-        Integer res = candidatureSessionBean.getApplicationByIdOffreIdEns(idOffre,userId);
-        if(res == null || res <= 0){
-            CandidatureEntity candidature = new CandidatureEntity();
-            candidature.setIdProf(userId);
-            candidature.setIdOffre(idOffre);
-            candidature.setStatut(0);
-            candidatureSessionBean.insertApplication(candidature);
+        try{
+            int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
+            Integer res = candidatureSessionBean.getApplicationByIdOffreIdEns(idOffre,userId);
+            if(res == null || res <= 0){
+                CandidatureEntity candidature = new CandidatureEntity();
+                candidature.setIdProf(userId);
+                candidature.setIdOffre(idOffre);
+                candidature.setStatut(0);
+                candidatureSessionBean.insertApplication(candidature);
+                request.setAttribute(Constantes.MSG_ERREUR, null);
+            }
+        }catch (Exception e){
+            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_INSERTAPPLICATION_KO);
         }
     }
     public List<Offre> conversion(List<OffreEmploiEntity> entityList){
