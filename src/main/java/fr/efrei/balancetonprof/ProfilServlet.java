@@ -76,6 +76,7 @@ public class ProfilServlet extends HttpServlet {
                         path =  Constantes.ADMIN_GESTION_REC_PATH ; break;
                     case Constantes.NAV_PROFIL_PROF: path = Constantes.ADMIN_GESTION_PROF_PATH; break;
                     case Constantes.NAV_PROFIL_REC: path = Constantes.ADMIN_GESTION_REC_PATH; break;
+                    case Constantes.AJOUT_ECOLE: creationEcole(request);
                     default:break;
                 }
                 List<UtilisateurEntity> listeAdministrateurs = utilisateurSessionBean.getAdmins(utilisateur.getId_utilisateur());
@@ -156,6 +157,11 @@ public class ProfilServlet extends HttpServlet {
                 request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_INSERTUSER_KO);
             }
         }
+    }
+    public void creationEcole(HttpServletRequest request){
+        EcoleEntity ecoleEntity = new EcoleEntity();
+        //recuperer les champs et set ecole entity
+        ecoleSessionBean.insertSchool(ecoleEntity);
     }
     public void sauvegardeUtilisateur(HttpServletRequest request) {
         Utilisateur utilisateur = (Utilisateur) request.getAttribute(Constantes.UTILISATEUR);

@@ -71,6 +71,7 @@ public final class Constantes {
     public static final String INSCRIPTION = "inscription";
     public static final String ACCEPTER_CANDIDATURE = "accepter_candidature";
     public static final String REFUSER_CANDIDATURE = "refuser_candidature";
+    public static final String AJOUT_ECOLE ="ajouter_ecole" ;
     public static final String NAV_PROFIL_PROF = "navProfilProf";
     public static final String NAV_PROFIL_REC = "navProfilRec";
 
