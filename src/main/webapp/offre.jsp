@@ -12,7 +12,7 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="style/admin.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -54,7 +54,7 @@
     </ul>
 </nav>
 <div class="container">
-    <div class="row">
+    <div class="row card">
         <div class="col-md-4">
             <c:choose>
                 <c:when test="${utilisateur.role != 1}">
@@ -105,10 +105,10 @@
 
 
 
-    <div class="col-md-8">
+    <div  class="card">
         <div class="information-offre mt-4">
             <h2>Offres d'Emploi</h2>
-            <ul class="list-group">
+            <ul id="listOffres" class="list-group">
                 <c:forEach var="offre" items="${listeOffres}">
                     <li class="list-group-item">
                         <c:choose>

@@ -6,6 +6,7 @@
     <title>Profil</title>
     <!-- Include Bootstrap CSS (you should provide the actual URL to Bootstrap CSS) -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/admin.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -37,7 +38,7 @@
                 <div style="color:red">
                     ${messageErreur}
                 </div>
-                <form class="form" action="profil-servlet" method="post">
+                <form class="form card" action="profil-servlet" method="post">
                     <h2 class="mt-5">Profil de l'Utilisateur</h2>
                     <div class="form-group">
                         <label for="pseudo">Pseudo:</label>
@@ -79,7 +80,7 @@
                         <div style="color:red">
                                 ${messageErreur}
                         </div>
-                        <form class="form" action="profil-servlet" method="post">
+                        <form class="form card" action="profil-servlet" method="post">
                             <h2 class="mt-4">Profil d'Enseignant</h2>
 
                             <div class="form-group">
@@ -172,7 +173,7 @@
                                 <div style="color:red">
                                         ${messageErreur}
                                 </div>
-                                <form class="form" action="profil-servlet" method="post">
+                                <form class="form card" action="profil-servlet" method="post">
                                     <select name="idEcole">
                                         <c:forEach items="${listeEcoles}" var="ecole">
                                             <option value="${ecole.idEcole}">${ecole.nom}</option>

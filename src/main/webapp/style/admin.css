@@ -1,0 +1,83 @@
+nav ul li {
+    list-style: none;
+    display: inline-block;
+}
+
+nav ul {
+    margin: 0px;
+    padding: 0px;
+    width:100%;
+    display: flex;
+    justify-content: space-evenly
+}
+nav  {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    width: 100%;
+}
+nav ul {
+    display: flex;
+    flex-direction: row !important;
+    width: 100% !important;
+}
+
+nav form {
+    padding: 0px;
+    margin: 0px;
+}
+
+nav form button{
+    all: unset !important;
+}
+
+.card{
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    padding: 10px;
+    margin: 10px;
+    background-color:#f6f6f9 ;
+}
+
+.customContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+.cardBody{
+    display: flex;
+}
+
+.hide{
+    display: none;
+}
+.p-abs{
+ position: absolute;
+}
+
+
+.admin-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+
+}
+
+
+.list-group-item{
+    margin: 10px;
+}
+.list-group-item+.list-group-item{
+    border-top-width: 1px ;
+}
+#listOffres{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    overflow: auto;
+    width: 100%;
+}

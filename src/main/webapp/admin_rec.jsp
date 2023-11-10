@@ -12,7 +12,7 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+    <link href="style/admin.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -42,6 +42,7 @@
         <li><a href="index.jsp" class="btn btn-primary">Déconnexion</a></li>
     </ul>
 </nav>
+<div class="card">
 <h2>Recruteur</h2>
 <br>
 <div id="ajouterRecruteurModal">
@@ -50,7 +51,7 @@
         <div style="color:red">
             ${messageErreur}
         </div>
-        <form action="profil-servlet" method="post">
+        <form class="admin-item" action="profil-servlet" method="post">
             <input type="text" name="pseudo" placeholder="Pseudo" required><br>
             <input type="password" name="motDePasse" placeholder="Mot de passe" required><br>
             <input type="text" name="nom" placeholder="Nom" required><br>
@@ -68,7 +69,7 @@
     ${messageErreur}
 </div>
 <c:forEach var="recrut" items="${listeRecruteurs}">
-    <form action="profil-servlet" method="post">
+    <form class="admin-item" action="profil-servlet" method="post">
         <input type="text" class="form-control" name="pseudo" value="${recrut.pseudo}">
         <input type="text" class="form-control" name="motDePasse" value="${recrut.motDePasse}">
         <input type="text" class="form-control" name="nom" value="${recrut.nom}">
@@ -82,6 +83,7 @@
         <br>
     </form>
 </c:forEach>
+</div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
