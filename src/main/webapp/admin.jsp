@@ -100,14 +100,10 @@
 
         <div class="card" style="width: 70%">
             <div class="cardHeader">
-                <h2>Administrateurs</h2>
             </div>
             <div class="" class="cardBody">
                 <div>
                     <h2>Ajouter un admin</h2>
-                    <div style="color:red">
-                        ${messageErreur}
-                    </div>
                     <form action="profil-servlet" method="post">
                         <input type="text" name="pseudo" class="form-control" placeholder="Pseudo" required><br>
                         <input type="password" name="motDePasse" class="form-control" placeholder="Mot de passe" required><br>
@@ -118,12 +114,6 @@
                         <input type="text" name="site" class="form-control" placeholder="site" ><br>
                         <input type="submit" name="action" value="ajouter_admin" class="btn btn-primary"/>
                     </form>
-                    <c:if test="${empty listeAdministrateurs}">
-                        <p>Aucun administrateur trouvé. "${listeAdministrateurs}"</p>
-                    </c:if>
-                    <div style="color:red">
-                        ${messageErreur}
-                    </div>
                     <c:forEach var="admin" items="${listeAdministrateurs}">
                         <form class="admin-item" action="profil-servlet" method="post">
                             <input type="text" class="form-control" name="pseudo" value="${admin.pseudo}">

@@ -35,9 +35,6 @@
     <div class="row">
         <div class="col-md-6">
             <div class="information-primaire-utilisateur">
-                <div style="color:red">
-                    ${messageErreur}
-                </div>
                 <form class="form card" action="profil-servlet" method="post">
                     <h2 class="mt-5">Profil de l'Utilisateur</h2>
                     <div class="form-group">
@@ -77,9 +74,6 @@
                 <c:choose>
                     <c:when test="${utilisateur.role == 1}">
                         <!-- Affichage du profil de l'enseignant -->
-                        <div style="color:red">
-                                ${messageErreur}
-                        </div>
                         <form class="form card" action="profil-servlet" method="post">
                             <h2 class="mt-4">Profil d'Enseignant</h2>
 
@@ -137,9 +131,6 @@
                     <c:when test="${utilisateur.role == 2}">
                         <c:choose>
                             <c:when test="${not empty ecole}">
-                                <div style="color:red">
-                                        ${messageErreur}
-                                </div>
                                 <form class="form" action="profil-servlet" method="post">
                             <h2 class="mt-4">Ecole ratachée</h2>
                                 <div class="form-group">
@@ -170,9 +161,6 @@
                         </form>
                             </c:when>
                             <c:otherwise>
-                                <div style="color:red">
-                                        ${messageErreur}
-                                </div>
                                 <form class="form card" action="profil-servlet" method="post">
                                     <select name="idEcole">
                                         <c:forEach items="${listeEcoles}" var="ecole">

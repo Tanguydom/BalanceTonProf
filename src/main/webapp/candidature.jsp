@@ -46,9 +46,6 @@
                 <c:when test="${utilisateur.role == 2}">
                     <div class="container">
                         <h2 class="mt-5">Suivi des candidatures</h2>
-                        <div style="color:red">
-                                ${messageErreur}
-                        </div>
                         <form action="candidature-servlet" method="POST">
                             <c:forEach var="candidat" items="${listeCandidatures}">
                                 <li class="list-group-item">
@@ -158,9 +155,6 @@
                 <c:when test="${utilisateur.role == 1}">
                     <div class="container">
                         <h2 class="mt-5">Mes candidatures</h2>
-                        <div style="color:red">
-                                ${messageErreur}
-                        </div>
                         <c:forEach var="candidat" items="${listeCandidatures}">
                             <li class="list-group-item">
                                 <form action="candidature-servlet" method="post">
