@@ -143,24 +143,25 @@ public class ProfilServlet extends HttpServlet {
                 EnseignantEntity enseignant = new EnseignantEntity();
                 enseignant.setIdUtilisateur(utilisateur.getIdUtilisateur());
                 enseignantSessionBean.insertProfessor(enseignant);
-                request.setAttribute(Constantes.MSG_ERREUR, null);
             }catch(Exception e){
-                request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_INSERTUSER_KO);
             }
         }else if(role == 2){
             try {
                 RecruteurEntity recruteur = new RecruteurEntity();
                 recruteur.setIdUtilisateur(utilisateur.getIdUtilisateur());
                 recruteurSessionBean.insertRecruiter(recruteur);
-                request.setAttribute(Constantes.MSG_ERREUR, null);
             }catch(Exception e){
-                request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_INSERTUSER_KO);
             }
         }
     }
     public void creationEcole(HttpServletRequest request){
         EcoleEntity ecoleEntity = new EcoleEntity();
-        //recuperer les champs et set ecole entity
+        ecoleEntity.setEmail(request.getParameter(Constantes.EMAIL_ECOLE));
+        ecoleEntity.setNom(request.getParameter(Constantes.NOM_ECOLE));
+        ecoleEntity.setTelephone(request.getParameter(Constantes.TELEPHONE_ECOLE));
+        ecoleEntity.setSiteWeb(request.getParameter(Constantes.SITE_ECOLE));
+        ecoleEntity.setRaisonSociale(request.getParameter(Constantes.RAISON_SOCIALE));
+        ecoleEntity.setAdresse(request.getParameter(Constantes.ADRESSE_ECOLE));
         ecoleSessionBean.insertSchool(ecoleEntity);
     }
     public void sauvegardeUtilisateur(HttpServletRequest request) {
@@ -183,9 +184,7 @@ public class ProfilServlet extends HttpServlet {
             utilisateur.setTelephone(utilisateurEntity.getTelephone());
             utilisateur.setEmail(utilisateurEntity.getEmail());
             utilisateur.setSite(utilisateurEntity.getSiteWeb());
-            request.setAttribute(Constantes.MSG_ERREUR, null);
         }catch(Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_UPDATEUSER_KO);
         }
 
     }
@@ -202,18 +201,14 @@ public class ProfilServlet extends HttpServlet {
 
         try{
             utilisateurSessionBean.updateUser(utilisateur);
-            request.setAttribute(Constantes.MSG_ERREUR, null);
         }catch(Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_UPDATEUSER_KO);
         }
     }
     public void supprimerAdmin(HttpServletRequest request){
         try{
             int id = Integer.parseInt(request.getParameter(Constantes.ID_UTILISATEUR));
             utilisateurSessionBean.deleteUser(id);
-            request.setAttribute(Constantes.MSG_ERREUR, null);
         }catch(Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_DELETEUSER_KO);
         }
     }
     public void supprimerEnseignant(HttpServletRequest request){
@@ -227,9 +222,7 @@ public class ProfilServlet extends HttpServlet {
             candidatureSessionBean.deleteApplicationByIdEnseignant(id);
             enseignantSessionBean.deleteProfessorByIdUtilisateur(id);
             utilisateurSessionBean.deleteUser(id);
-            request.setAttribute(Constantes.MSG_ERREUR, null);
         }catch(Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_DELETEUSER_KO);
         }
     }
     public void supprimerRecruteur(HttpServletRequest request){
@@ -243,9 +236,7 @@ public class ProfilServlet extends HttpServlet {
             }
             recruteurSessionBean.deleteRecruiteurByIdRecruteur(id);
             utilisateurSessionBean.deleteUser(id);
-            request.setAttribute(Constantes.MSG_ERREUR, null);
         }catch(Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_DELETEUSER_KO);
         }
     }
     public void sauvegarderDetailsEnseignant(HttpServletRequest request){
@@ -269,9 +260,7 @@ public class ProfilServlet extends HttpServlet {
 
         try{
             enseignantSessionBean.updateProfessor(entity);
-            request.setAttribute(Constantes.MSG_ERREUR, null);
         }catch(Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_UPDATEUSER_KO);
         }
     }
 }

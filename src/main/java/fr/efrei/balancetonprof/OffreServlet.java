@@ -108,10 +108,8 @@ public class OffreServlet extends HttpServlet {
                 recrutementSessionBean.updateRecruitment(recrutementEntity);
                 request.setAttribute(Constantes.MSG_ERREUR, null);
             }else{
-                request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_LINK_KO);
             }
         }catch (Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_UPDATERECRUITMENT_KO);
         }
     }
     public void creationOffre(HttpServletRequest request, int idEcole, int idUtilisateur){
@@ -130,9 +128,7 @@ public class OffreServlet extends HttpServlet {
             recrutementEntity.setIdOffre(offreEmploiEntity.getIdOffre());
             recrutementEntity.setIdRecruteur(idUtilisateur);
             recrutementSessionBean.insertRecruitment(recrutementEntity);
-            request.setAttribute(Constantes.MSG_ERREUR, null);
         }catch (Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_INSERTOFFER_KO);
         }
     }
 
@@ -161,11 +157,8 @@ public class OffreServlet extends HttpServlet {
                 recrutementEntity.setIdRecruteur(idRecruteur);
                 recrutementSessionBean.insertRecruitment(recrutementEntity);
                 request.setAttribute(Constantes.MSG_ERREUR, null);
-            }else{
-                request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_LINK_KO);
             }
         }catch (Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_INSERTOFFER_KO);
         }
     }
     public void suppressionOffre(HttpServletRequest request){
@@ -173,9 +166,7 @@ public class OffreServlet extends HttpServlet {
             int idOffre = Integer.parseInt(request.getParameter(Constantes.ID_OFFRE));
             recrutementSessionBean.deleteRecruitment(idOffre);
             offreSessionBean.deleteOffer(idOffre);
-            request.setAttribute(Constantes.MSG_ERREUR, null);
         }catch (Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_DELETEOFFER_KO);
         }
     }
     public void modificationOffre(HttpServletRequest request) {
@@ -185,9 +176,7 @@ public class OffreServlet extends HttpServlet {
             offreEmploiEntity.setDescription(request.getParameter(Constantes.DESCRIPTION));
             offreEmploiEntity.setIntitule(request.getParameter(Constantes.INTITULE));
             offreSessionBean.updateOffer(offreEmploiEntity);
-            request.setAttribute(Constantes.MSG_ERREUR, null);
         }catch (Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_UPDATEOFFER_KO);
         }
     }
     public void candidater(HttpServletRequest request, int userId){
@@ -200,10 +189,8 @@ public class OffreServlet extends HttpServlet {
                 candidature.setIdOffre(idOffre);
                 candidature.setStatut(0);
                 candidatureSessionBean.insertApplication(candidature);
-                request.setAttribute(Constantes.MSG_ERREUR, null);
             }
         }catch (Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_INSERTAPPLICATION_KO);
         }
     }
     public List<Offre> conversion(List<OffreEmploiEntity> entityList){

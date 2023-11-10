@@ -49,16 +49,13 @@ public class InscriptionServlet extends HttpServlet {
                 EnseignantEntity enseignant = new EnseignantEntity();
                 enseignant.setIdUtilisateur(nouvelUtilisateur.getIdUtilisateur());
                 enseignantSessionBean.insertProfessor(enseignant);
-                request.setAttribute(Constantes.MSG_ERREUR, null);
 
             }else if(roleId == 2){
                 RecruteurEntity recruteur = new RecruteurEntity();
                 recruteur.setIdUtilisateur(nouvelUtilisateur.getIdUtilisateur());
                 recruteurSessionBean.insertRecruiter(recruteur);
-                request.setAttribute(Constantes.MSG_ERREUR, null);
             }
         }catch (Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_INSERTUSER_KO);
         }
         request.getRequestDispatcher(Constantes.INDEX_PATH).forward(request, response);
     }
