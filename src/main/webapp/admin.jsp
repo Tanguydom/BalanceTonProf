@@ -37,6 +37,9 @@
             </c:when>
         </c:choose>
         <li class="nav-item">
+            <a href="addSchoolForm.html">Ajouter ecole</a>
+        </li>
+        <li class="nav-item">
             <form action="offre-servlet" method="post">
                 <button type="submit" class="btn btn-primary" name="action" value="navOffre">Offre</button>
             </form>
@@ -140,6 +143,8 @@
             </div>
         </div>
     </div>
+
+
 
 
 

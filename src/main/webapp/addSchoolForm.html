@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Balance ton prof</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/admin.css">
+
+</head>
+<body>
+<nav>
+    <button id="retour" class="btn btn-primary">
+        Retour
+    </button>
+</nav>
+<div class="card">
+    <form id="ajoutEcoleForm" action="profil-servlet" method="POST">
+        <label for="nomEcole">Nom de l'école:</label>
+        <input type="text" id="nomEcole" name="nomEcole" required><br><br>
+
+        <label for="adresseEcole">Adresse de l'école:</label>
+        <input type="text" id="adresseEcole" name="adresseEcole" required><br><br>
+
+        <label for="emailEcole">Email de l'école:</label>
+        <input type="text" id="emailEcole" name="emailEcole" required><br><br>
+
+        <label for="telephoneEcole">Téléphone de l'école:</label>
+        <input type="text" id="telephoneEcole" name="telephoneEcole" required><br><br>
+
+        <label for="siteEcole">Site Web de l'école:</label>
+        <input type="text" id="siteEcole" name="siteEcole" required><br><br>
+
+        <label for="raisonSociale">Raison Sociale de l'école:</label>
+        <input type="text" id="raisonSociale" name="raisonSociale" required><br><br>
+
+        <input type="submit" name="action" value="ajouter_ecole">
+    </form>
+    <script>
+        document.getElementById('retour').addEventListener('click', function (event) {
+            event.preventDefault();
+            window.location.href = './profil-servlet?action=retour_admin';
+        });
+
+        document.getElementById('ajoutEcoleForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new URLSearchParams();
+            const keys = ['nomEcole', 'adresseEcole', 'emailEcole', 'telephoneEcole', 'siteEcole', 'raisonSociale'];
+
+            for (let key of keys) {
+                formData.append(key, document.getElementById(key).value);
+            }
+            formData.append('action', 'ajouter_ecole');
+
+            fetch('profil-servlet', {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Erreur lors de la requête.');
+                    }
+                })
+                .then(text => {
+                    console.log(text);
+                    window.location.href = './profil-servlet?action=retour_admin';
+                })
+
+        });
+    </script>
+</div>
+
+</body>
+</html>

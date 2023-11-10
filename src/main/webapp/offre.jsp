@@ -34,12 +34,16 @@
                 <button type="submit" class="btn btn-primary" name="action" value="navCandidat">Candidature</button>
             </form>
         </li>
+
             </c:when>
             <c:when test="${utilisateur.role == 0}">
                 <li class="nav-item">
                     <form action="profil-servlet" method="post">
                         <button type="submit" class="btn btn-primary" name="action" value="navProfilProf">Gestion des professeurs</button>
                     </form>
+                </li>
+                <li class="nav-item">
+                    <a href="addSchoolForm.html">Ajouter ecole</a>
                 </li>
                 <li class="nav-item">
                     <form action="profil-servlet" method="post">

@@ -1,5 +1,4 @@
 target/
-src/main/resources/META-INF/persistence.xml
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
