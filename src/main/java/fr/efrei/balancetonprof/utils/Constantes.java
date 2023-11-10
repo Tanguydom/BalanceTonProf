@@ -92,19 +92,16 @@ public final class Constantes {
      ************************************** exceptions *************************************
      ***************************************************************************************/
     public static final String MESSAGE_ERREUR_CREDENTIALS_KO = "Infos de connexion non valides. Merci de les saisir à nouveau";
-    public static final String MESSAGE_ERREUR_INSERTUSER_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_UPDATEUSER_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_DELETEUSER_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_LINK_KO = "Le recruteur n'est pas associé à cet ecole";
-    public static final String MESSAGE_ERREUR_INSERTOFFER_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_UPDATEOFFER_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_DELETEOFFER_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_INSERTAPPLICATION_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_UPDATEAPPLICATION_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_DELETEAPPLICATION_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_REJECT_APPLICATION_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_ACCEPT_APPLICATION_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_INSERTRECRUITMENT_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_UPDATERECRUITMENT_KO = "L'utilisateur existe deja avec ces infos";
-    public static final String MESSAGE_ERREUR_DELETERECRUITMENT_KO = "L'utilisateur existe deja avec ces infos";
+    public static final String MESSAGE_ERREUR_INSERTUSER_KO = "Erreur dans l'insertion d'un utilisateur";
+    public static final String MESSAGE_ERREUR_UPDATEUSER_KO = "Erreur dans la modification d'un utilisateur";
+    public static final String MESSAGE_ERREUR_DELETEUSER_KO = "Erreur dans la suppression d'un utilisateur";
+    public static final String MESSAGE_ERREUR_LINK_KO = "Erreur de link";
+    public static final String MESSAGE_ERREUR_INSERTOFFER_KO = "Erreur dans l'insertion de l'offre";
+    public static final String MESSAGE_ERREUR_UPDATEOFFER_KO = "Erreur dans la modification de l'offre";
+    public static final String MESSAGE_ERREUR_DELETEOFFER_KO = "Erreur dans la suppresion de l'offre";
+    public static final String MESSAGE_ERREUR_INSERTAPPLICATION_KO = "Erreur dans l'insertion de la candidature";
+    public static final String MESSAGE_ERREUR_DELETEAPPLICATION_KO = "Erreur dans la suppression de la candidature";
+    public static final String MESSAGE_ERREUR_REJECT_APPLICATION_KO = "Erreur dans le rejet de la candidature";
+    public static final String MESSAGE_ERREUR_ACCEPT_APPLICATION_KO = "Erreur dans la validation de la candidature";
+    public static final String MESSAGE_ERREUR_UPDATERECRUITMENT_KO = "Erreur dans la modofication";
 }

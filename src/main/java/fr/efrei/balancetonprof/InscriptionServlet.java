@@ -43,6 +43,7 @@ public class InscriptionServlet extends HttpServlet {
         nouvelUtilisateur.setPrenom(prenom);
         nouvelUtilisateur.setEmail(email);
         nouvelUtilisateur.setRole(roleId);
+        UtilisateurSessionBean.insertUser(nouvelUtilisateur);
         try{
             if(roleId == 1){
                 EnseignantEntity enseignant = new EnseignantEntity();
@@ -56,7 +57,6 @@ public class InscriptionServlet extends HttpServlet {
                 recruteurSessionBean.insertRecruiter(recruteur);
                 request.setAttribute(Constantes.MSG_ERREUR, null);
             }
-            UtilisateurSessionBean.insertUser(nouvelUtilisateur);
         }catch (Exception e){
             request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_INSERTUSER_KO);
         }

@@ -213,6 +213,11 @@ public class ProfilServlet extends HttpServlet {
     public void supprimerEnseignant(HttpServletRequest request){
         try{
             int id = Integer.parseInt(request.getParameter(Constantes.ID_UTILISATEUR));
+            Integer nbCandidature = candidatureSessionBean.countApplicationsByIdEns(id);
+            if(nbCandidature != null && nbCandidature > 0)
+            {
+                utilisateurSessionBean.deleteRecruiterFromRecruitment(id);
+            }
             candidatureSessionBean.deleteApplicationByIdEnseignant(id);
             enseignantSessionBean.deleteProfessorByIdUtilisateur(id);
             utilisateurSessionBean.deleteUser(id);
@@ -225,7 +230,11 @@ public class ProfilServlet extends HttpServlet {
         try{
             int id = Integer.parseInt(request.getParameter(Constantes.ID_UTILISATEUR));
             RecruteurEntity recruteur = recruteurSessionBean.getRecruiterByIdUtilisateur(id);
-            utilisateurSessionBean.deleteRecruiterFromRecruitment(recruteur.getIdRecruteur());
+            Integer nbRecrutement = recrutementSessionBean.countRecruitmentByIdRecruteur(recruteur.getIdRecruteur());
+            if(nbRecrutement != null &&nbRecrutement > 0)
+            {
+                utilisateurSessionBean.deleteRecruiterFromRecruitment(recruteur.getIdRecruteur());
+            }
             recruteurSessionBean.deleteRecruiteurByIdRecruteur(id);
             utilisateurSessionBean.deleteUser(id);
             request.setAttribute(Constantes.MSG_ERREUR, null);

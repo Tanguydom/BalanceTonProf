@@ -41,4 +41,16 @@ public class RecrutementSessionBean {
         query.executeUpdate();
         em.getTransaction().commit();
     }
+
+    public Integer countRecruitmentByIdRecruteur(int idRec){
+        Query q = em.createQuery("SELECT COUNT(r.idRecrutement) FROM RecrutementEntity r WHERE r.idRecruteur = :idRecruteur");
+        q.setParameter(Constantes.ID_RECRUCTEUR, idRec);
+        Integer nbRecrutement ;
+        try {
+            nbRecrutement = (Integer) q.getSingleResult();
+        } catch (Exception e) {
+            nbRecrutement = null;
+        }
+        return nbRecrutement;
+    }
 }

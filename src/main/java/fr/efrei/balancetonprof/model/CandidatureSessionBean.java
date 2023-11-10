@@ -39,6 +39,18 @@ public class CandidatureSessionBean {
         }
         return idCandidature;
     }
+
+    public Integer countApplicationsByIdEns(int idEns){
+        Query q = em.createQuery("SELECT COUNT(r.idCandidature) FROM CandidatureEntity r WHERE r.idEnseignant = :idEnseignant");
+        q.setParameter(Constantes.ID_ENSEIGNANT, idEns);
+        Integer nbCandidature ;
+        try {
+            nbCandidature = (Integer) q.getSingleResult();
+        } catch (Exception e) {
+            nbCandidature = null;
+        }
+        return nbCandidature;
+    }
     public void changeStatut(int idCandidature, int statut){
         em.getTransaction().begin();
         Query q = em.createQuery("UPDATE CandidatureEntity c SET c.statut = :statut WHERE c.idCandidature = :idCandidature");
