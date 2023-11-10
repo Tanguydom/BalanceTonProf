@@ -91,27 +91,21 @@ public class CandidatureServlet extends HttpServlet {
         try{
             int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
             candidatureSessionBean.changeStatut(idCandidature, 2);
-            request.setAttribute(Constantes.MSG_ERREUR, null);
         }catch (Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_REJECT_APPLICATION_KO);
         }
     }
     public void accepterCandidature(HttpServletRequest request){
         try{
             int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
             candidatureSessionBean.changeStatut(idCandidature, 1);
-            request.setAttribute(Constantes.MSG_ERREUR, null);
         }catch (Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_ACCEPT_APPLICATION_KO);
         }
     }
     public void retirerCandidature(HttpServletRequest request, int userId){
         try{
             int idCandidature = Integer.parseInt(request.getParameter(Constantes.ID_CANDIDATURE));
             candidatureSessionBean.deleteApplication(idCandidature);
-            request.setAttribute(Constantes.MSG_ERREUR, null);
         }catch (Exception e){
-            request.setAttribute(Constantes.MSG_ERREUR, Constantes.MESSAGE_ERREUR_DELETEAPPLICATION_KO);
         }
     }
     public List<Candidature> conversion(List<CandidatureEntity> candidatureEntityList){

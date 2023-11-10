@@ -19,4 +19,9 @@ public class EcoleSessionBean {
         Query q = em.createQuery("select e from EcoleEntity e");
         return q.getResultList();
     }
+    public void insertSchool(EcoleEntity ecoleEntity) {
+        em.getTransaction().begin();
+        em.persist(ecoleEntity);
+        em.getTransaction().commit();
+    }
 }

@@ -43,6 +43,12 @@ public final class Constantes {
     public static final String MSG_ERREUR = "messageErreur";
     public static final String DESCRIPTION = "description";
     public static final String INTITULE = "intitule";
+    public static final String NOM_ECOLE ="nomEcole";
+    public static final String RAISON_SOCIALE = "raisonSociale";
+    public static final String EMAIL_ECOLE = "emailEcole";
+    public static final String TELEPHONE_ECOLE = "telephoneEcole";
+    public static final String ADRESSE_ECOLE = "adresseEcole";
+    public static final String SITE_ECOLE = "siteEcole";
 
     //COE -> création offre emploi
     public static final String COE_INTITULE = "coe_intitule";
@@ -71,6 +77,7 @@ public final class Constantes {
     public static final String INSCRIPTION = "inscription";
     public static final String ACCEPTER_CANDIDATURE = "accepter_candidature";
     public static final String REFUSER_CANDIDATURE = "refuser_candidature";
+    public static final String AJOUT_ECOLE ="ajouter_ecole" ;
     public static final String NAV_PROFIL_PROF = "navProfilProf";
     public static final String NAV_PROFIL_REC = "navProfilRec";
 
@@ -92,16 +99,5 @@ public final class Constantes {
      ************************************** exceptions *************************************
      ***************************************************************************************/
     public static final String MESSAGE_ERREUR_CREDENTIALS_KO = "Infos de connexion non valides. Merci de les saisir à nouveau";
-    public static final String MESSAGE_ERREUR_INSERTUSER_KO = "Erreur dans l'insertion d'un utilisateur";
-    public static final String MESSAGE_ERREUR_UPDATEUSER_KO = "Erreur dans la modification d'un utilisateur";
-    public static final String MESSAGE_ERREUR_DELETEUSER_KO = "Erreur dans la suppression d'un utilisateur";
-    public static final String MESSAGE_ERREUR_LINK_KO = "Erreur de link";
-    public static final String MESSAGE_ERREUR_INSERTOFFER_KO = "Erreur dans l'insertion de l'offre";
-    public static final String MESSAGE_ERREUR_UPDATEOFFER_KO = "Erreur dans la modification de l'offre";
-    public static final String MESSAGE_ERREUR_DELETEOFFER_KO = "Erreur dans la suppresion de l'offre";
-    public static final String MESSAGE_ERREUR_INSERTAPPLICATION_KO = "Erreur dans l'insertion de la candidature";
-    public static final String MESSAGE_ERREUR_DELETEAPPLICATION_KO = "Erreur dans la suppression de la candidature";
-    public static final String MESSAGE_ERREUR_REJECT_APPLICATION_KO = "Erreur dans le rejet de la candidature";
-    public static final String MESSAGE_ERREUR_ACCEPT_APPLICATION_KO = "Erreur dans la validation de la candidature";
-    public static final String MESSAGE_ERREUR_UPDATERECRUITMENT_KO = "Erreur dans la modofication";
+
 }
